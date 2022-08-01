@@ -1,262 +1,262 @@
 [role="pagenumrestart"]
 [[whatis_chapter]]
-== What Is Ethereum?
+== Что такое Ethereum?
 
-((("Ethereum (generally)","about", id="ix_01what-is-asciidoc0", range="startofrange")))Ethereum ((("world computer, Ethereum as")))is often described as "the world computer.&#x201d; But what does that mean? Let's start with a computer science–focused description, and then try to decipher that with a more practical analysis of Ethereum's capabilities and characteristics, while comparing it to Bitcoin and other decentralized information exchange platforms (or "blockchains" for short).
+((("Ethereum (generally)","about", id="ix_01 what-is-asciidoc0", range="startofrange")))Ethereum ((("world computer, Ethereum as"))) часто описывается как "мировой компьютер". Но что это значит? Давайте начнем с описания, ориентированного на компьютерную науку, а затем попытаемся расшифровать его с помощью более практического анализа возможностей и характеристик Ethereum, сравнивая его с Биткоином и другими децентрализованными платформами обмена информацией (или сокращенно "блокчейнами").
 
-From a computer science perspective, Ethereum is a deterministic but practically unbounded state machine, consisting of a globally accessible singleton state and a virtual machine that applies changes to that state.
+С точки зрения информатики, Ethereum - это детерминированный, но практически неограниченный конечный автомат, состоящий из глобально доступного единого состояния и виртуальной машины, которая применяет изменения к этому состоянию.
 
-From a more practical perspective, Ethereum is an open source, globally decentralized computing infrastructure that executes programs called _smart contracts_. It uses a blockchain to synchronize and store the system’s state changes, along with a cryptocurrency called _ether_ to meter and constrain execution resource costs.
+С более практической точки зрения, Ethereum - это глобальная децентрализованная вычислительная инфраструктура с открытым исходным кодом, которая выполняет программы, называемые _смарт-контрактами_ (_smart contracts_). Она использует блокчейн для синхронизации и хранения изменений состояния системы, а также криптовалюту под названием _эфир_ (_ether_) для измерения и ограничения затрат ресурсов на выполнение смарт-контрактов.
 
-The Ethereum platform enables developers to build powerful decentralized applications with built-in economic functions. While providing high availability, auditability, transparency, and neutrality, it also reduces or eliminates censorship and reduces certain counterparty risks.
+Платформа Ethereum позволяет разработчикам создавать мощные децентрализованные приложения со встроенными экономическими функциями. Обеспечивая высокую доступность, проверяемость, прозрачность и нейтральность, она также снижает или устраняет цензуру и снижает определенные риски для контрагентов.
 
 [[bitcoin_comparison]]
-=== Compared to Bitcoin
+=== По сравнению с Биткоином
 
-((("Bitcoin","Ethereum compared to")))((("Ethereum (generally)","Bitcoin compared to")))Many people will come to Ethereum with some prior experience of cryptocurrencies, specifically Bitcoin. Ethereum shares many common elements with other open blockchains: a peer-to-peer network connecting participants, a Byzantine fault&#x2013;tolerant consensus algorithm for synchronization of state updates (a proof-of-work blockchain), the use of cryptographic primitives such as digital signatures and hashes, and a digital currency (ether).
+((("Bitcoin","Ethereum compared to")))((("Ethereum (generally)","Bitcoin compared to")))Многие люди придут в Ethereum с некоторым предыдущим опытом работы с криптовалютами, в частности с Биткоином. Ethereum имеет много общих элементов с другими открытыми блокчейнами: одноранговая сеть, соединяющая участников, Византийский отказоустойчивый алгоритм консенсуса для синхронизации обновлений состояния (подтверждение работы блокчейна – proof-of-work), использование криптографических примитивов, таких как цифровые подписи и хэши, и цифровой валюты (эфир).
 
-Yet in many ways, both the purpose and construction of Ethereum are strikingly different from those of the open blockchains that preceded it, including Bitcoin.
+И всё же во многих отношениях, таких как назначение и конструкция, Ethereum разительно отличается от тех открытых блокчейнов, которые ему предшествовали, включая Биткойн.
 
-((("Ethereum (generally)","purpose of")))Ethereum's purpose is not primarily to be a digital currency payment network. ((("utility currency, ether as")))While the digital currency ether is both integral to and necessary for the operation of Ethereum, ether is intended as a _utility currency_ to pay for use of the Ethereum platform as the world computer.
+((("Ethereum (generally)","purpose of")))Целью Ethereum в первую очередь не является платежная сеть в цифровой валюте. ((("utility currency, ether as")))В то время как цифровая валюта ether является неотъемлемой частью и необходимой для работы Ethereum, эфир предназначен в качестве _полезной валюты_ для оплаты использования платформы Ethereum в качестве мирового компьютера.
 
-Unlike Bitcoin, which has a very limited scripting language, Ethereum is designed to be a general-purpose programmable blockchain that runs a _virtual machine_ capable of executing code of arbitrary and unbounded complexity. Where Bitcoin's Script language is, intentionally, constrained to simple true/false evaluation of spending conditions, Ethereum's language is _Turing complete_, meaning that Ethereum can straightforwardly function as a general-purpose computer.
+В отличие от Биткойна, который имеет очень ограниченный язык сценариев, Ethereum разработан как программируемый блокчейн общего назначения, который запускает _виртуальную машину_, способную выполнять код произвольной и неограниченной сложности. Там, где язык сценариев Биткойна намеренно ограничен простой оценкой условий расходов "true / false", язык Ethereum является _полным по Тьюрингу_, что означает, что Ethereum может функционировать как компьютер общего назначения.
 
 [[blockchain_components]]
-=== Components of a Blockchain
+=== Компоненты блокчейна
 
-((("blockchain","components of")))((("Ethereum (generally)","blockchain components")))The components of an open, public blockchain are (usually):
+((("blockchain","components of")))((("Ethereum (generally)","blockchain components")))Компонентами открытого, публичного блокчейна являются (обычно):
 
-* A peer-to-peer (P2P) network connecting participants and propagating transactions and blocks of verified transactions, based on a standardized "gossip" pass:[<span class="keep-together">protocol</span>]
-* Messages, in the form of transactions, representing state transitions
-* A set of consensus rules, governing what constitutes a transaction and what makes for a valid state transition
-* A state machine that processes transactions according to the consensus rules
-* A chain of cryptographically secured blocks that acts as a journal of all the verified and accepted state transitions
-* A consensus algorithm that decentralizes control over the blockchain, by forcing participants to cooperate in the enforcement of the consensus rules
-* A game-theoretically sound incentivization scheme (e.g., proof-of-work costs plus block rewards) to economically secure the state machine in an open pass:[<span class="keep-together">environment</span>]
-* One or more open source software implementations of the above ("clients")
+* Одноранговая сеть (P2P), соединяющая участников и распространяющая транзакции и блоки подтверждённых транзакций на основе стандартизированного "gossip" pass:[<span class="keep-together">протокола</span>]
+* Сообщения в форме транзакций, представляющие переходы состояний
+* Набор согласованных правил, определяющих, что представляет собой транзакция и что обеспечивает валидный переход состояния.
+* Конечный автомат, который обрабатывает транзакции в соответствии с правилами консенсуса
+* Цепочка криптографически защищенных блоков, которая действует как журнал всех проверенных и одобренных переходов состояний
+* Алгоритм консенсуса, который децентрализует контроль над блокчейном, заставляя участников сотрудничать для обеспечения соблюдений правил консенсуса.
+* Теоретически обоснованная игровая схема стимулирования (например, затраты на подтверждение работы плюс вознаграждение за блок) для экономической защиты машины состояний в открытой pass:[<span class="keep-together">среде</span>]
+* Одна или несколько реализаций (вышеуказанных правил) программного обеспечения с открытым исходным кодом ("клиенты")
 
-All or most of these components are usually combined in a single software client. For example, in ((("Bitcoin Core")))((("bitcoind client")))Bitcoin, the reference implementation is developed by the _Bitcoin Core_ open source project and implemented as the _bitcoind_ client. In Ethereum, rather than a reference implementation there is a ((("reference specification")))_reference specification_, a mathematical description of the system in the Yellow Paper (see <<references>>). There are a number of clients, which are built according to the reference specification.
+Все или большинство из этих компонентов обычно объединяются в одном программном клиенте. Например, в ((("Bitcoin Core")))((("bitcoind client")))Bitcoin эталонная реализация разработана проектом _Bitcoin Core_ с открытым исходным кодом и реализована как _bitcoind_ клиент. В Ethereum вместо эталонной реализации есть ((("reference specification")))_reference specification_, математическое описание системы в Yellow Paper (см. <<references>>). Существует ряд клиентов, которые построены в соответствии с эталонной спецификацией.
 
-In the past, we used the term "blockchain" to represent all of the components just listed, as a shorthand reference to the combination of technologies that encompass all of the characteristics described. Today, however, there are a huge variety of blockchains with different properties. We need qualifiers to help us understand the characteristics of the blockchain in question, such as _open, public, global, decentralized, neutral,_ and _censorship-resistant_, to identify the important emergent characteristics of a "blockchain" system that these components allow.
+В прошлом мы использовали термин "блокчейн" для обозначения всех только что перечисленных компонентов в качестве сокращенной ссылки на комбинацию технологий, которые охватывают все описанные характеристики. Однако сегодня существует огромное разнообразие блокчейнов с различными свойствами. Нам нужны определения, которые помогут нам понять характеристики рассматриваемого блокчейна, такие как _открытый, публичный, глобальный, децентрализованный, нейтральный,_ и _устойчивый к цензуре_, чтобы определить важные характеристики системы "блокчейн", которые предоставляют эти компоненты.
 
-Not all blockchains are created equal. When someone tells you that something is a blockchain, you have not received an answer; rather, you need to start asking a lot of questions to clarify what they mean when they use the word "blockchain." Start by asking for a description of the components in the preceding list, then ask whether this "blockchain" exhibits the characteristics of being _open, public_, etc.
+Не все блокчейны созданы равными. Когда кто-то говорит вам, что что-то является блокчейном, вы не получили ответа что это; скорее, вам нужно начать задавать много вопросов, чтобы уточнить, что они имеют в виду, когда используют слово "блокчейн". Начните с запроса описания компонентов в предыдущем списке, затем спросите, обладает ли этот "блокчейн" характеристиками _открытости, общедоступности_ и т.д.
 
 [[ethereum_birth]]
-=== The Birth of Ethereum
+=== Рождение Эфириума
 
-((("Ethereum (generally)","birth of")))All great innovations solve real problems, and Ethereum is no exception. Ethereum was conceived at a time when people recognized the power of the Bitcoin model, and were trying to move beyond cryptocurrency applications. But developers faced a conundrum: they either needed to build on top of Bitcoin or start a new blockchain. ((("Bitcoin","limitations of")))Building upon Bitcoin meant living within the intentional constraints of the network and trying to find workarounds. The limited set of transaction types, data types, and sizes of data storage seemed to limit the sorts of applications that could run directly on Bitcoin; anything else needed additional off-chain layers, and that immediately negated many of the advantages of using a public blockchain. For projects that needed more freedom and flexibility while staying on-chain, a new blockchain was the only option. But that meant a lot of work: bootstrapping all the infrastructure elements, exhaustive testing, etc.
+((("Ethereum (generally)","birth of")))Все великие инновации решают реальные проблемы, и Ethereum не исключение. Ethereum был задуман в то время, когда люди осознали мощь модели Биткойна и пытались выйти за рамки приложений для криптовалют. Но разработчики столкнулись с головоломкой: им нужно было либо строить поверх Биткоина, либо запускать новый блокчейн. ((("Bitcoin","limitations of")))Опираться на Биткойн означало жить в рамках преднамеренных ограничений сети и пытаться найти обходные пути. Ограниченные набор типов транзакций, набор типов данных и размеры хранилища данных, казалось, ограничивал виды приложений, которые могли работать непосредственно на биткойне; что-то другое требовало дополнительных уровней вне цепочки, и это сразу же сводило на нет многие преимущества использования общедоступного блокчейна. Для проектов, которым требовалось больше свободы и гибкости, оставаясь при этом в блокчейне, новый блокчейн был единственным вариантом. Но это означало много работы: создание всех элементов инфраструктуры, тщательное тестирование и т.д.
 
-((("Buterin, Vitalik","and birth of Ethereum")))Toward the end of 2013, Vitalik Buterin, a young programmer and Bitcoin enthusiast, started thinking about further extending the capabilities of Bitcoin and Mastercoin (an overlay protocol that extended Bitcoin to offer rudimentary smart contracts). In October of that year, Vitalik proposed a more generalized approach to the Mastercoin team, one that allowed flexible and scriptable (but not Turing-complete) contracts to replace the specialized contract language of Mastercoin. While the Mastercoin team were impressed, this proposal was too radical a change to fit into their development roadmap.
+((("Buterin, Vitalik","and birth of Ethereum")))Ближе к концу 2013 года Виталик Бутерин, молодой программист и биткоин-энтузиаст, начал задумываться о дальнейшем расширении возможностей Биткоина и Mastercoin (протокол наложения, который расширил Биткоин, предложив элементарные смарт-контракты). В октябре того же года Виталик предложил более общий подход к команде Mastercoin, который позволил гибким и скриптовым (но не полным по Тьюрингу) контрактам заменить специализированный язык контрактов Mastercoin. Хотя команда Mastercoin была впечатлена, это предложение было слишком радикальным изменением, чтобы вписаться в их дорожную карту развития.
 
-In December 2013, Vitalik started sharing a whitepaper that outlined the idea behind Ethereum: a Turing-complete, general-purpose blockchain. A few dozen people saw this early draft and offered feedback, helping Vitalik evolve the proposal.
+В декабре 2013 года Виталик начал делиться техническим документом, в котором излагалась идея Ethereum: блокчейн общего назначения, полный по Тьюрингу. Несколько десятков человек увидели этот ранний проект и высказали свои мнения, помогая Виталику доработать проект.
 
-Both of the authors of this book received an early draft of the whitepaper and commented on it. Andreas M. Antonopoulos was intrigued by the idea and asked Vitalik many questions about the use of a separate blockchain to enforce consensus rules on smart contract execution and the implications of a Turing-complete language. Andreas continued to follow Ethereum's progress with great interest but was in the early stages of writing his book _Mastering Bitcoin_, and did not participate directly in Ethereum until much later. ((("Wood, Dr. Gavin","and birth of Ethereum")))Dr. Gavin Wood, however, was one of the first people to reach out to Vitalik and offer to help with his C++ programming skills. Gavin became Ethereum's cofounder, codesigner, and CTO.
+Оба автора этой книги получили ранний вариант технического документа и прокомментировали его. Андреас M. Antonopoulos был заинтригован этой идеей и задал Виталику много вопросов об использовании отдельного блокчейна для обеспечения соблюдения согласованных правил исполнения смарт-контрактов и о последствиях языка, полного по Тьюрингу. Андреас продолжал с большим интересом следить за прогрессом Ethereum, но находился на ранних стадиях написания своей книги _Mastering Bitcoin_ и не принимал непосредственного участия в Ethereum до позднего времени. ((("Wood, Dr. Gavin","and birth of Ethereum")))Доктор Гэвин Wood, однако, был одним из первых, кто обратился к Виталику и предложил помочь имея навыки программирования на C++. Гэвин стал соучредителем Ethereum, разработчиком кода и техническим директором.
 
-As Vitalik recounts in his http://bit.ly/2T2t6zs["Ethereum Prehistory" post]: 
+Как рассказывает Виталик в своем http://bit.ly/2T2t6zs["Ethereum Prehistory" post]: 
 
 ____
-This was the time when the Ethereum protocol was entirely my own creation. From here on, however, new participants started to join the fold. By far the most prominent on the protocol side was Gavin Wood...
+Это было время, когда протокол Ethereum был полностью моим собственным творением. Однако с этого момента к нам начали присоединяться новые участники. Безусловно, самым выдающимся специалистом по протоколу был Гэвин Wood...
 
-Gavin can also be largely credited for the subtle change in vision from viewing Ethereum as a platform for building programmable money, with blockchain-based contracts that can hold digital assets and transfer them according to pre-set rules, to a general-purpose computing platform. This started with subtle changes in emphasis and terminology, and later this influence became stronger with the increasing emphasis on the “Web 3” ensemble, which saw Ethereum as being one piece of a suite of decentralized technologies, the other two being Whisper and Swarm.
+Гэвину также можно в значительной степени приписать деликатное изменение видения: от рассмотрения Ethereum как платформы для создания программируемых денег с контрактами на основе блокчейна, которые могут хранить цифровые активы и передавать их в соответствии с заранее установленными правилами, к вычислительной платформе общего назначения. Это началось с незначительных изменений в акцентах и терминологии, а позже это влияние усилилось с увеличением акцента на “Web 3”, который рассматривал Ethereum как одну часть набора децентрализованных технологий. Две другие - Whisper и Swarm.
 ____
 
-Starting in December 2013, Vitalik and Gavin refined and evolved the idea, together building the protocol layer that became Ethereum.
+Начиная с декабря 2013 года, Виталик и Гэвин усовершенствовали и развили эту идею, вместе создав протокол, который стал Ethereum.
 
-Ethereum's founders were thinking about a blockchain without a specific purpose, that could support a broad variety of applications by being _programmed_. The idea was that by using a general-purpose blockchain like Ethereum, a developer could program their particular application without having to implement the underlying mechanisms of peer-to-peer networks, blockchains, consensus algorithms, etc. The Ethereum platform was designed to abstract these details and provide a deterministic and secure programming environment for decentralized blockchain applications.
+Основатели Ethereum думали о блокчейне без определенной цели, который мог бы поддерживать широкий спектр приложений, будучи _программируемым_. Идея заключалась в том, что, используя блокчейн общего назначения, такой как Ethereum, разработчик мог программировать свое конкретное приложение без необходимости внедрять базовые механизмы одноранговых сетей, блокчейнов, алгоритмов консенсуса и т.д. Платформа Ethereum была разработана для того, чтобы абстрагировать эти детали и обеспечить детерминированную и безопасную среду программирования для децентрализованных блокчейн-приложений.
 
-Much like Satoshi, Vitalik and Gavin didn't just invent a new technology; they combined new inventions with existing technologies in a novel way and delivered the prototype code to prove their ideas to the world.
+Подобно Сатоши, Виталик и Гэвин не просто изобрели новую технологию; они по-новому объединили новые изобретения с существующими технологиями и представили прототип кода, чтобы доказать свои идеи миру.
 
-The founders worked for years, building and refining the vision. And on July 30, 2015, the first Ethereum block was mined. The world's computer started serving the world.
+Основатели работали в течение многих лет, создавая и совершенствуя концепцию. А 30 июля 2015 года был добыт первый блок Ethereum. Мировой компьютер начал служить миру.
 
-[NOTE]
+[ПРИМЕЧАНИЕ]
 ====
-Vitalik Buterin's article "A Prehistory of Ethereum" was published in September 2017 and provides a fascinating first-person view of Ethereum's earliest moments.
+Статья Виталика Бутерина "Предыстория Ethereum" была опубликована в сентябре 2017 года и представляет собой увлекательный взгляд от первого лица на самые ранние моменты существования Ethereum.
 
-You can read it at
+Вы можете прочитать его по адресу
 https://vitalik.ca/general/2017/09/14/prehistory.html[].
 ====
 
 [[development_stages]]
-=== Ethereum's Four Stages of Development
+=== Четыре этапа развития Ethereum
 
-((("Ethereum (generally)","four stages of development")))Ethereum's development was planned over four distinct stages, with major changes occurring at each stage. ((("hard forks", seealso="DAO; other specific hard forks, e.g.: Spurious Dragon")))A stage may include subreleases, known as "hard forks," that change functionality in a way that is not backward compatible.
+((("Ethereum (generally)","four stages of development")))Разработка Ethereum планировалась в четыре отдельных этапа, на каждом из которых происходили серьезные изменения. ((("hard forks", seealso="DAO; other specific hard forks, e.g.: Spurious Dragon")))Этап может включать в себя субрелизы, известные как "хардфорки", которые изменяют функциональность таким образом, который не является обратно совместимым.
 
-The four main development stages are codenamed _Frontier_, _Homestead_, _Metropolis_, and _Serenity_. The intermediate hard forks that have occurred to date are codenamed _Ice Age_, _DAO_, _Tangerine Whistle_, _Spurious Dragon_, _Byzantium_, _Constantinople/St. Petersburg_, _Istanbul_ and _Muir Glacier_. Both the development stages and the intermediate hard forks are shown on the following timeline, which is "dated" by  block number:
+Четыре основных этапа развития имеют кодовые названия _Frontier_, _Homestead_, _Metropolis_ и _Serenity_. Промежуточные хардфорки, которые произошли на сегодняшний день, имеют кодовые названия _Ice Age_, _DAO_, _Tangerine Whistle_, _Spurious Dragon_, _Byzantium_, _Constantinople/St. Petersburg_, _Istanbul_ и _Muir Glacier_. Как этапы разработки, так и промежуточные хардфорки показаны на следующей временной шкале, которая "датирована" номером блока:
 
 
-Block #0:: ((("Frontier")))__Frontier__&#x2014;The initial stage of Ethereum, lasting from July 30, 2015, to March 2016.
+Block #0:: ((("Frontier")))__Frontier__&#x2014;Начальный этап Ethereum, длящийся с 30 июля 2015 года по март 2016 года.
 
-Block #200,000:: ((("Ice Age")))__Ice Age__&#x2014;A hard fork to introduce an exponential difficulty increase, to motivate a transition to PoS when ready.
+Block #200,000:: ((("Ice Age")))__Ice Age__&#x2014;Хардфорк для экспоненциального увеличения сложности, чтобы мотивировать переход на PoS, когда он будет готов.
 
-Block #1,150,000:: ((("Homestead")))__Homestead__&#x2014;The second stage of Ethereum, launched in March 2016.
+Block #1,150,000:: ((("Homestead")))__Homestead__&#x2014;Вторая стадия Ethereum, запущенная в марте 2016 года.
 
-Block #1,192,000:: ((("DAO (Decentralized Autonomous Organization)")))__DAO__&#x2014;A hard fork that reimbursed victims of the hacked DAO contract and caused Ethereum and Ethereum Classic to split into two competing systems.
+Block #1,192,000:: ((("DAO (Decentralized Autonomous Organization)")))__DAO__&#x2014;Хард-форк, который возместил ущерб жертвам взломанного DAO контракта и привел к разделению на две конкурирующие системы: Ethereum и Ethereum Classic.
 
-Block #2,463,000:: ((("Tangerine Whistle")))__Tangerine Whistle__&#x2014;A hard fork to change the gas calculation for certain I/O-heavy operations and to clear the accumulated state from a denial-of-service (DoS) attack that exploited the low gas cost of those operations.
+Block #2,463,000:: ((("Tangerine Whistle")))__Tangerine Whistle__&#x2014;Хардфорк для изменения расчета газа для определенных операций ввода-вывода и очистки накопленного состояния от атаки типа "Отказ в обслуживании" (DoS), которая использовала низкую стоимость газа для этих операций.
 
-Block #2,675,000:: ((("Spurious Dragon")))__Spurious Dragon__&#x2014;A hard fork to address more DoS attack vectors, and another state clearing. Also, a replay attack protection mechanism.
+Block #2,675,000:: ((("Spurious Dragon")))__Spurious Dragon__&#x2014;Хардфорк для устранения большего количества векторов DoS-атак и еще одна очистка состояния. Кроме того, механизм защиты от повторных атак.
 
-Block #4,370,000:: ((("Metropolis")))((("Byzantium fork")))__Metropolis Byzantium__&#x2014;Metropolis is the third stage of Ethereum. Launched in October 2017, Byzantium is the first part of Metropolis, adding low-level functionalities and adjusting the block reward and difficulty.
+Block #4,370,000:: ((("Metropolis")))((("Byzantium fork")))__Metropolis Byzantium__&#x2014;Metropolis - это третья стадия Ethereum. Запущенный в октябре 2017 года, Byzantium является первой частью Metropolis, добавляющей низкоуровневые функции и регулирующей вознаграждение за блок и сложность.
 
-Block #7,280,000:: ((("Constantinople fork")))((("St. Petersburg fork")))__Constantinople / St. Petersburg__&#x2014;Constantinople was planned to be the second part of Metropolis with similar improvements. A few hours before its activation, a https://bit.ly/2Ast7rz[critical bug] was discovered. The hard fork was therefore postponed and renamed St. Petersburg.
+Block #7,280,000:: ((("Constantinople fork")))((("St. Petersburg fork")))__Constantinople / St. Petersburg__&#x2014;Константинополь планировался как вторая часть Метрополии с аналогичными улучшениями. За несколько часов до его активации, была обнаружена https://bit.ly/2Ast7rz[критическая ошибка]. Поэтому хардфорк был отложен и переименован в Санкт-Петербург.
 
-Block #9,069,000:: ((("Istanbul fork")))__Istanbul__&#x2014;An additional hard fork with the same approach, and naming convention, as for the prior two.
+Block #9,069,000:: ((("Istanbul fork")))__Istanbul__&#x2014;Дополнительный хард-форк с тем же подходом и соглашением об именовании, что и для двух предыдущих.
 
-Block #9,200,000:: ((("Muir Glacier fork")))__Muir Glacier__&#x2014;A hard fork whose sole purpose was to adjust the difficulty again due to the exponential increase introduced by Ice Age.
+Block #9,200,000:: ((("Muir Glacier fork")))__Muir Glacier__&#x2014;Хардфорк, единственной целью которого было снова скорректировать сложность из-за экспоненциального увеличения, представленного в "Ice Age".
 
-((("Serenity")))((("Ethereum 2.0")))Two hard forks, Berlin and London, have also been announced, and we are now in the final stage of Ethereum development, codenamed Serenity. Serenity involves a profound reorganization of the infrastructure that will make Ethereum more scalable, more secure, and more sustainable. It is presented as the second version of Ethereum, "Ethereum 2.0".
+((("Serenity")))((("Ethereum 2.0")))Также было объявлено о двух хардфорках, Berlin и London, и сейчас мы находимся на заключительной стадии разработки Ethereum под кодовым названием Serenity. Serenity предполагает глубокую реорганизацию инфраструктуры, которая сделает Ethereum более масштабируемым, более безопасным и более устойчивым. Она представлена как вторая версия Ethereum, "Ethereum 2.0".
 
 
 [[general_purpose_blockchain]]
-=== Ethereum: A General-Purpose Blockchain
+=== Ethereum: Блокчейн общего назначения
 
-((("Bitcoin","Ethereum blockchain compared to Bitcoin blockchain")))((("Ethereum (generally)","as general-purpose blockchain")))The original blockchain, namely Bitcoin's blockchain, tracks the state of units of bitcoin and their ownership. ((("distributed state machine, Ethereum as")))You can think of Bitcoin as a distributed consensus _state machine_, where transactions cause a global _state transition_, altering the ownership of coins. The state transitions are constrained by the rules of consensus, allowing all participants to (eventually) converge on a common (consensus) state of the system, after several blocks are mined.
+((("Bitcoin","Ethereum blockchain compared to Bitcoin blockchain")))((("Ethereum (generally)","as general-purpose blockchain")))Оригинальный блокчейн, а именно блокчейн Биткойна, отслеживает состояние единиц биткойна и их владение. ((("distributed state machine, Ethereum as")))Вы можете думать о Биткойне как о распределенном консенсусном _конечном автомате_ (_state machine_), где транзакции вызывают глобальное _изменение состояния_ (_state transition_), изменяя право собственности на монеты. Переходы между состояниями ограничены правилами консенсуса, что позволяет всем участникам (в конечном итоге) прийти к общему (консенсусному) состоянию системы после того, как будет добыто несколько блоков.
 
-Ethereum is also a distributed state machine. But instead of tracking only the state of currency ownership, ((("key-value tuple")))Ethereum tracks the state transitions of a general-purpose data store, i.e., a store that can hold any data expressible as a _key–value tuple_. A key–value data store holds arbitrary values, each referenced by some key; for example, the value "Mastering Ethereum" referenced by the key "Book Title". In some ways, this serves the same purpose as the data storage model of _Random Access Memory_ (RAM) used by most general-purpose computers. Ethereum has memory that stores both code and data, and it uses the Ethereum blockchain to track how this memory changes over time. Like a general-purpose stored-program computer, Ethereum can load code into its state machine and _run_ that code, storing the resulting state changes in its blockchain. Two of the critical differences from most general-purpose computers are that Ethereum state changes are governed by the rules of consensus and the state is distributed globally. Ethereum answers the question: "What if we could track any arbitrary state and program the state machine to create a world-wide computer operating under consensus?"
+Ethereum также является распределенным конечным автоматом. Но вместо того, чтобы отслеживать только состояние владения валютой, ((("key-value tuple")))Ethereum отслеживает переходы состояний хранилища данных общего назначения, т.е. хранилища, которое может содержать любые данные вида _ключ-значение_ (_key–value tuple_). Хранилище данных ключ–значение содержит произвольные значения, на каждое из которых ссылается некоторый ключ; например, значение "Освоение Эфириума", на которое ссылается ключ "Название книги". В некотором смысле это служит той же цели, что и модель хранения данных в _памяти с произвольным доступом_ (_RAM_), используемая большинством компьютеров общего назначения. У Ethereum есть память, в которой хранятся как код, так и данные, и он использует блокчейн Ethereum для отслеживания того, как эта память меняется с течением времени. Подобно компьютеру с сохраненной программой общего назначения, Ethereum может загружать код в свой конечный автомат и запускать этот код, сохраняя результирующие изменения состояния в свой блокчейн. Два критических отличия от большинства компьютеров общего назначения заключаются в том, что изменения состояния Ethereum регулируются правилами консенсуса, а состояние распределяется по всему миру. Ethereum отвечает на вопрос: "Что, если бы мы могли отслеживать любое произвольное состояние и программировать конечный автомат для создания всемирного компьютера, работающего на основе консенсуса?"
 
 [[ethereum_components]]
-=== Ethereum's Components
+=== Компоненты Ethereum
 
-((("blockchain","components of")))((("Ethereum (generally)","blockchain components")))In Ethereum, the components of a blockchain system described in <<blockchain_components>> are, more specifically:
+((("blockchain","components of")))((("Ethereum (generally)","blockchain components")))Рассмотрим компоненты блокчейн-системы в Ethereum (<<blockchain_components>>) более подробно:
 
 
-P2P network:: Ethereum runs on the _Ethereum main network_, which is addressable on TCP port 30303, and runs a protocol called _ÐΞVp2p_.
+Сеть P2P:: Ethereum работает в _основной сети Ethereum_ (_Ethereum main network_), которая может быть адресована через TCP-порт 30303, и использует протокол под названием _ÐΞVp2p_.
 
-Consensus rules:: Ethereum's consensus rules are defined in the reference specification, the Yellow Paper (see <<references>>).
+Согласованные правила:: Правила консенсуса Ethereum определены в справочной спецификации – Yellow Paper (см. <<references>>).
 
-Transactions:: Ethereum transactions are network messages that include (among other things) a sender, recipient, value, and data payload.
+Транзакции:: Транзакции Ethereum - это сетевые сообщения, которые включают (помимо прочего) отправителя, получателя, значение и полезные данные.
 
 [role="pagebreak-before"]
-State machine:: Ethereum state transitions are processed by the _Ethereum Virtual Machine_ (EVM), a stack-based virtual machine that executes _bytecode_ (machine-language instructions). EVM programs, called "smart contracts," are written in high-level languages (e.g., Solidity) and compiled to bytecode for execution on the EVM.
+Конечный автомат:: Переходы состояний Ethereum обрабатываются _Ethereum Virtual Machine_ (EVM), виртуальной машиной на основе стека, которая выполняет _bytecode_ (инструкции машинного языка). Программы EVM, называемые "смарт-контрактами", написаны на языках высокого уровня (например, Solidity) и скомпилированы в байт-код для выполнения на EVM.
 
-Data structures:: Ethereum's state is stored locally on each node as a _database_ (usually Google's LevelDB), which contains the transactions and system state in a serialized hashed data structure called a _Merkle Patricia Tree_.
+Структуры данных:: Состояние Ethereum хранится локально на каждом узле в виде _базы данных_ (обычно LevelDB от Google), которая содержит транзакции и состояние системы в сериализованной хэшированной структуре данных, называемой _Merkle Patricia Tree_.
 
-Consensus algorithm:: Ethereum uses Bitcoin's consensus model, Nakamoto Consensus, which uses sequential single-signature blocks, weighted in importance by PoW to determine the longest chain and therefore the current state. However, there are plans to move to a PoS weighted voting system, codenamed _Casper_, in the near future.
+Алгоритм консенсуса:: Ethereum использует консенсусную модель Биткойна – Консенсус Накамото, которая использует последовательные блоки с одной подписью, взвешенные по важности по proof-of-work (PoW), для определения самой длинной цепочки и, следовательно, текущего состояния. Однако в ближайшем будущем планируется перейти на PoS-взвешенную (proof-of-stake) систему голосования под кодовым названием _Casper_.
 
-Economic security:: Ethereum currently uses a PoW algorithm called _Ethash_, but this will eventually be dropped with the move to PoS at some point in the future.
+Экономическая безопасность:: В настоящее время Ethereum использует алгоритм PoW под названием _Thrash_, но в конечном итоге он будет отменен с переходом на PoS в какой-то момент в будущем.
 
-Clients:: Ethereum has several interoperable implementations of the client software, the most prominent of which are _Go-Ethereum_ (_Geth_) and _Parity_.
+Клиенты:: Ethereum имеет несколько совместимых реализаций клиентского программного обеспечения, наиболее известными из которых являются _Go-Ethereum_ (_Geth_) и _Parity_.
 
 [[references]]
-==== Further Reading
+==== Дальнейшее чтение
 
-The following references provide additional information on the technologies mentioned here:
+Следующие ссылки содержат дополнительную информацию об упомянутых здесь технологиях:
 
-* The Ethereum Yellow Paper:
+* Ethereum Yellow Paper:
 https://ethereum.github.io/yellowpaper/paper.pdf
 
-* The Beige Paper, a rewrite of the Yellow Paper for a broader audience in less formal language:
+* Beige Paper - переписанный вариант Yellow Paper для более широкой аудитории на менее формальном языке.:
 https://github.com/chronaeon/beigepaper
 
-* ÐΞVp2p network protocol:
+* ÐΞVP2P сетевой протокол:
 https://github.com/ethereum/devp2p/blob/master/rlpx.md
 
-* Ethereum Virtual Machine list of resources:
+* Список ресурсов виртуальной машины Ethereum:
 https://eth.wiki/en/concepts/evm/ethereum-virtual-machine-(evm)-awesome-list
 
-* LevelDB database (used most often to store the local copy of the blockchain):
+* База данных LevelDB (чаще всего используется для хранения локальной копии блокчейна):
 https://github.com/google/leveldb
 
-* Merkle Patricia trees:
+* Деревья Merkle Patricia:
 https://eth.wiki/en/fundamentals/patricia-tree
 
-* Ethash PoW algorithm:
+* Алгоритм Ethash PoW:
 https://eth.wiki/en/concepts/ethash/ethash
 
-* Casper PoS v1 Implementation Guide:
+* Руководство по внедрению Casper PoS v1:
 http://bit.ly/2DyPr3l
 
-* Go-Ethereum (Geth) client:
+* Go-клиент Ethereum (Geth):
 https://geth.ethereum.org/
 
-* Parity Ethereum client:
+* Клиент Parity Ethereum:
 https://parity.io/
 
 [[turing_completeness]]
-=== Ethereum and Turing Completeness
+=== Ethereum и полнота по Тьюрингу
 
-((("Ethereum (generally)","Turing completeness and")))((("Turing completeness","Ethereum and")))As soon as you start reading about Ethereum, you will immediately encounter the term "Turing complete." Ethereum, they say, unlike Bitcoin, is Turing complete. What exactly does that mean?
+((("Ethereum (generally)","Turing completeness and")))((("Turing completeness","Ethereum and")))Как только вы начнете читать об Ethereum, вы сразу же столкнетесь с термином "Тьюринг-полный". Говорят, что Эфириум, в отличие от Биткоина, является полным по Тьюрингу. Что именно это значит?
 
-((("Turing, Alan")))The term refers to English mathematician Alan Turing, who is considered the father of computer science. In 1936 he created a mathematical model of a computer consisting of a state machine that manipulates symbols by reading and writing them on sequential memory (resembling an infinite-length paper tape). With this construct, Turing went on to provide a mathematical foundation to answer (in the negative) questions about _universal computability_, meaning whether all problems are solvable. He proved that there are classes of problems that are uncomputable. ((("halting problem")))Specifically, he proved that the _halting problem_ (whether it is possible, given an arbitrary program and its input, to determine whether the program will eventually stop running) is not solvable.
+((("Turing, Alan")))Этот термин относится к английскому математику Алану Тьюрингу, который считается отцом информатики. В 1936 году он создал математическую модель компьютера, состоящего из конечного автомата, который манипулирует символами, считывая и записывая их в последовательную память (напоминающую бумажную ленту бесконечной длины). С помощью этой конструкции Тьюринг предложил математическую основу для ответа (отрицательного) на вопросы об _универсальной вычислимости_, то есть о том, разрешимы ли все проблемы. Он доказал, что существуют классы задач, которые не поддаются вычислению. ((("halting problem")))В частности, он доказал, что _проблема остановки_ (возможно ли, взяв произвольную программу и ее входные данные, определить, прекратит ли программа в конечном итоге выполнение) не разрешима.
 
-((("Universal Turing machine (UTM)")))((("UTM (Universal Turing machine)")))Alan Turing further defined a system to be _Turing complete_ if it can be used to simulate any Turing machine. Such a system is called a _Universal Turing machine_ (UTM).
+((("Universal Turing machine (UTM)")))((("UTM (Universal Turing machine)")))Алан Тьюринг далее определил систему как _Тьюринг-полную_, если ее можно использовать для имитации любой машины Тьюринга. Такая система называется _универсальной машиной Тьюринга_ (UTM).
 
-Ethereum's ability to execute a stored program, in a state machine called the Ethereum Virtual Machine, while reading and writing data to memory makes it a Turing-complete system and therefore a UTM. Ethereum can compute any algorithm that can be computed by any Turing machine, given the limitations of finite memory.
+Способность Ethereum выполнять сохраненную программу в конечном автомате, называемом виртуальной машиной Ethereum, одновременно считывая и записывая данные в память, делает его Тьюринг-полной системой и, следовательно, UTM. Ethereum может вычислить любой алгоритм, который может быть вычислен любой машиной Тьюринга, учитывая ограничения конечной памяти.
 
-Ethereum's groundbreaking innovation is to combine the general-purpose computing architecture of a stored-program computer with a decentralized blockchain, thereby creating a distributed single-state (singleton) world computer. Ethereum programs run "everywhere," yet produce a common state that is secured by the rules of pass:[<span class="keep-together">consensus</span>].
+Инновация Ethereum заключается в объединении вычислительной архитектуры компьютера общего назначения с хранимыми программами и децентрализованного блокчейна, создавая тем самым распределенный мировой компьютер с единым для всех состоянием. Программы Ethereum работают "везде", но при этом создают общее состояние, которое защищено правилами pass:[<span class="keep-together">консенсуса</span>].
 
 [[turing_completeness_feature]]
-==== Turing Completeness as a "Feature"
+==== Полнота Тьюринга как "Особенность"
 
-((("Turing completeness","as feature")))Hearing that Ethereum is Turing complete, you might arrive at the conclusion that this is a _feature_ that is somehow lacking in a system that is Turing incomplete. Rather, it is the opposite. Turing completeness is very easy to achieve; in fact, http://bit.ly/2ABft33[the simplest Turing-complete state machine known]  has 4 states and uses 6 symbols, with a state definition that is only 22 instructions long. Indeed, sometimes systems are found to be "accidentally Turing complete." A fun reference of such systems can be found at http://bit.ly/2Og1VgX[].
+((("Turing completeness","as feature")))Услышав, что Ethereum полный по Тьюрингу, вы можете прийти к выводу, что это _особенность_, которой каким-то образом не хватает в системе, которая является неполной по Тьюрингу. Скорее, все наоборот. Полноты по Тьюрингу достичь очень легко; на самом деле, http://bit.ly/2ABft33[простейший известный конечный Тьюринг-полный автомат] имеет 4 состояния и использует 6 символов, а определение состояния составляет всего 22 инструкции. Действительно, иногда системы оказываются "случайно полными по Тьюрингу". Интересный справочник по таким системам можно найти по адресу http://bit.ly/2Og1VgX[].
 
-However, Turing completeness is very dangerous, particularly in open access systems like public blockchains, because of the halting problem we touched on earlier. For example, modern printers are Turing complete and can be given files to print that send them into a frozen state. The fact that Ethereum is Turing complete means that any program of any complexity can be computed by Ethereum. But that flexibility brings some thorny security and resource management problems. An unresponsive printer can be turned off and turned back on again. That is not possible with a public blockchain.
+Однако, полнота по Тьюрингу очень опасна, особенно в системах открытого доступа, таких как публичные блокчейны, из-за проблемы остановки, которую мы затронули ранее. Например, современные принтеры являются полными по Тьюрингу, и им могут быть предоставлены файлы для печати, которые переводят их в замороженное состояние. Тот факт, что Ethereum является полным по Тьюрингу, означает, что любая программа любой сложности может быть вычислена с помощью Ethereum. Но такая гибкость порождает некоторые острые проблемы с безопасностью и управлением ресурсами. Не отвечающий на запросы принтер можно выключить и снова включить. Это невозможно с публичным блокчейном.
 
 [[turing_completeness_implications]]
-==== Implications of Turing Completeness
+==== Последствия полноты Тьюринга
 
-((("Turing completeness","implications of")))Turing proved that you cannot predict whether a program will terminate by simulating it on a computer. In simple terms, we cannot predict the path of a program without running it. ((("infinite loops")))Turing-complete systems can run in "infinite loops," a term used (in oversimplification) to describe a program that does not terminate. It is trivial to create a program that runs a loop that never ends. But unintended never-ending loops can arise without warning, due to complex interactions between the starting conditions and the code. In Ethereum, this poses a challenge: every participating node (client) must validate every transaction, running any smart contracts it calls. But as Turing proved, Ethereum can't predict if a smart contract will terminate, or how long it will run, without actually running it (possibly running forever). Whether by accident or on purpose, a smart contract can be created such that it runs forever when a node attempts to validate it. This is effectively a DoS attack. And of course, between a program that takes a millisecond to validate and one that runs forever are an infinite range of nasty, resource-hogging, memory-bloating, CPU-overheating programs that simply waste resources. In a world computer, a program that abuses resources gets to abuse the world's resources. How does Ethereum constrain the resources used by a smart contract if it cannot predict resource use in advance?
+((("Turing completeness","implications of")))Тьюринг доказал, что вы не можете предсказать, завершится ли программа, смоделировав ее на компьютере. Проще говоря, мы не можем предсказать путь программы, не запустив ее. ((("infinite loops")))Системы, полные по Тьюрингу, могут выполняться в "бесконечных циклах", термин, используемый (в упрощении) для описания программ, которые не завершаются. Тривиально создать программу, которая запускает цикл, который никогда не заканчивается. Но непреднамеренные бесконечные циклы могут возникать без предупреждения из-за сложных взаимодействий между начальными условиями и кодом. В Ethereum это создает проблему: каждый участвующий узел (клиент) должен проверять каждую транзакцию, выполняя любые смарт-контракты, которые он вызывает. Но, как доказал Тьюринг, Ethereum не может предсказать не запуская смарт-контракт, завершится ли его действие или как долго он будет работать (возможно, бесконечно долго). Случайно или намеренно, смарт-контракт может быть создан таким образом, чтобы он выполнялся вечно, когда узел сети попытается его проверить. По сути, это DoS-атака. И, конечно же, между программой, проверка которой занимает миллисекунду, и программой, которая выполняется вечно, находится бесконечный ряд неприятных, забивающих ресурсы, раздувающих память, перегревающих процессор программ, которые просто тратят ресурсы впустую. В мировом компьютере программа, злоупотребляющая ресурсами, получает возможность злоупотреблять мировыми ресурсами. Как Ethereum ограничивает ресурсы, используемые смарт-контрактом, если он не может заранее предсказать использование ресурсов?
 
-((("EVM (Ethereum Virtual Machine)","gas and")))((("gas","as counter to Turing completeness")))To answer this challenge, Ethereum introduces a metering mechanism called _gas_. As the EVM executes a smart contract, it carefully accounts for every instruction (computation, data access, etc.). Each instruction has a predetermined cost in units of gas. When a transaction triggers the execution of a smart contract, it must include an amount of gas that sets the upper limit of what can be consumed running the smart contract. The EVM will terminate execution if the amount of gas consumed by computation exceeds the gas available in the transaction. Gas is the mechanism Ethereum uses to allow Turing-complete computation while limiting the resources that any program can consume.
+((("EVM (Ethereum Virtual Machine)","gas and")))((("gas","as counter to Turing completeness")))Чтобы ответить на этот вызов, Ethereum вводит механизм учета, называемый _газ_ (_gas_). Поскольку EVM выполняет смарт-контракт, он тщательно учитывает каждую инструкцию (вычисление, доступ к данным и т.д.), которая имеет заранее определенную стоимость в единицах газа. Когда транзакция запускает выполнение смарт-контракта, она должна включать то количество газа, которое равно верхнему пределу того, что может быть потреблено при выполнении смарт-контракта. EVM прекратит выполнение, если количество газа, потребляемого вычислением, превысит газ, доступный в транзакции. Газ - это механизм, который Ethereum использует для обеспечения Тьюринг-полных вычислений при ограничении ресурсов, которые может потреблять любая программа.
 
-The next question is, 'how does one get gas to pay for computation on the Ethereum world computer?' You won't find gas on any exchanges. ((("ether (generally)","gas and")))It can only be purchased as part of a transaction, and can only be bought with ether. Ether needs to be sent along with a transaction and it needs to be explicitly earmarked for the purchase of gas, along with an acceptable gas price. Just like at the pump, the price of gas is not fixed. Gas is purchased for the transaction, the computation is executed, and any unused gas is refunded back to the sender of the transaction.
+Следующий вопрос: "Как можно получить газ для оплаты вычислений на всемирном компьютере Ethereum?" Вы не найдете газ ни на каких биржах. ((("ether (generally)","gas and")))Он может быть приобретен только как часть транзакции и может быть куплен только с помощью эфира. Эфир должен быть отправлен вместе с транзакцией, и он должен быть явно предназначен для покупки газа, вместе с приемлемой ценой на газ. Так же, как и на заправке, цена на газ не фиксирована. Газ приобретается для транзакции, затем вычисление выполняется, и любой неиспользованный газ возвращается обратно отправителю транзакции.
 
 [[DApp]]
-=== From General-Purpose Blockchains to Decentralized Applications (DApps)
+=== От блокчейнов общего назначения до децентрализованных приложений (DApps)
 
-((("DApps (decentralized applications)","Ethereum as platform for")))((("Ethereum (generally)","DApps and")))Ethereum started as a way to make a general-purpose blockchain that could be programmed for a variety of uses. But very quickly, Ethereum's vision expanded to become a platform for programming DApps. DApps represent a broader perspective than smart contracts. A DApp is, at the very least, a smart contract and a web user interface. More broadly, a DApp is a web application that is built on top of open, decentralized, peer-to-peer infrastructure services.
+((("DApps (decentralized applications)","Ethereum as platform for")))((("Ethereum (generally)","DApps and")))Ethereum начинался как способ создания блокчейна общего назначения, который можно было бы запрограммировать для различных целей. Но очень быстро видение Ethereum расширилось и превратилось в платформу для программирования DApps. DApps представляют собой более широкую перспективу, чем смарт-контракты. DApp - это, по крайней мере, смарт-контракт и веб-пользовательский интерфейс. В более широком смысле DApp - это веб-приложение, построенное поверх открытых, децентрализованных одноранговых инфраструктурных сервисов.
 
-A DApp is composed of at least:
+Приложение DApp состоит, по крайней мере, из:
 
-- Smart contracts on a blockchain
-- A web frontend user interface
+- Смарт-контракты на блокчейне
+- Пользовательский веб-интерфейса
 
-In addition, many DApps include other decentralized components, such as:
+Кроме того, многие DApps включают в себя другие децентрализованные компоненты, такие как:
 
-- A decentralized (P2P) storage protocol and platform
-- A decentralized (P2P) messaging protocol and platform
+- Децентрализованный протокол и платформу хранения данных (P2P)
+- Децентрализованный (P2P) протокол обмена сообщениями и платформу
 
-[TIP]
+[СОВЕТ]
 ====
-You may see DApps spelled as _&#208;Apps_. The &#208; character is the Latin character called "ETH," alluding to Ethereum. To display this character, use the Unicode codepoint +0xD0+, or if necessary the HTML character entity +eth+ (or decimal entity +#208+).
+Вы можете увидеть, что DApps пишется как _&#208;Apps_. Символ &#208; - это латинский символ под названием "ETH", намекающий на Ethereum. Чтобы отобразить этот символ, используйте кодовую точку Юникода +0xD0+ или, при необходимости, символ HTML +eth+ (или десятичную сущность +#208+).
 ====
 
 [[evolving_WWW]]
-=== The Third Age of the Internet
+=== Третья эпоха Интернета
 
-((("DApps (decentralized applications)","web3 and")))((("Ethereum (generally)","web3 and")))((("web3")))In 2004 the term "Web 2.0" came to prominence, describing an evolution of the web toward user-generated content, responsive interfaces, and interactivity. Web 2.0 is not a technical specification, but rather a term describing the new focus of web pass:[<span class="keep-together">applications</span>].
+((("DApps (decentralized applications)","web3 and")))((("Ethereum (generally)","web3 and")))((("web3")))В 2004 году появился термин "Веб 2.0", описывающий эволюцию Интернета в сторону пользовательского контента, адаптивных интерфейсов и интерактивности. Web 2.0 - это не техническая спецификация, а скорее термин, описывающий новую направленность web pass:[<span class="keep-together">приложений</span>].
 
-The concept of DApps is meant to take the World Wide Web to its next natural evolutionary stage, introducing decentralization with peer-to-peer protocols into every aspect of a web application. The term used to describe this evolution is _web3_, meaning the third "version" of the web. ((("Wood, Dr. Gavin","and web3")))First proposed by Dr. Gavin Wood, web3 represents a new vision and focus for web applications: from centrally owned and managed applications, to applications built on decentralized protocols.
+Концепция DApps призвана вывести Всемирную паутину на следующую естественную эволюционную стадию, внедряя децентрализацию с помощью одноранговых протоколов в каждый аспект веб-приложения. Термин, используемый для описания этой эволюции, - _web3_, что означает третью "версию" интернета. ((("Wood, Dr. Gavin","and web3")))Впервые предложенный доктором Гэвином Вудом, web3 представляет собой новое видение и фокус для веб-приложений: от централизованного владения и управления приложениями, к приложениям, построенным на децентрализованных протоколах.
 
-In later chapters we'll explore the Ethereum web3.js JavaScript library, which bridges JavaScript applications that run in your browser with the Ethereum blockchain. The web3.js library also includes an interface to a P2P storage network called _Swarm_ and a P2P messaging service called _Whisper_. With these three components included in a JavaScript library running in your web browser, developers have a full application development suite that allows them to build web3 DApps.
+В последующих главах мы рассмотрим Ethereum web3.js (JavaScript библиотека), которая соединяет приложения JavaScript, работающие в вашем браузере, с блокчейном Ethereum. Библиотека web3.js также включает в себя интерфейс сети хранения данных P2P под названием _Swarm_ и службу обмена сообщениями P2P под названием _Whisper_. Благодаря этим трем компонентам, включенным в библиотеку JavaScript, работающую в вашем веб-браузере, разработчики получают полный набор для разработки приложений, который позволяет им создавать DApps web3.
 
 [[development_culture]]
-=== Ethereum's Development Culture
+=== Культура разработки Ethereum
 
-((("development culture, Ethereum")))((("Ethereum (generally)","development culture")))So far we've talked about how Ethereum's goals and technology differ from those of other blockchains that preceded it, like Bitcoin. Ethereum also has a very different development culture.
+((("development culture, Ethereum")))((("Ethereum (generally)","development culture")))До сих пор мы говорили о том, как цели и технологии Ethereum отличаются от целей и технологий других блокчейнов, которые предшествовали ему, таких как Биткоин. Ethereum также имеет совершенно иную культуру разработки.
 
-((("Bitcoin","development culture")))In Bitcoin, development is guided by conservative principles: all changes are carefully studied to ensure that none of the existing systems are disrupted. For the most part, changes are only implemented if they are backward compatible. Existing clients are allowed to opt-in, but will continue to operate if they decide not to upgrade.
+((("Bitcoin","development culture")))В Биткойне разработка руководствуется консервативными принципами: все изменения тщательно изучаются, чтобы гарантировать, что ни одна из существующих систем не будет нарушена. По большей части изменения внедряются только в том случае, если они обратно совместимы. Существующим клиентам разрешено принять участие, но они продолжат работать, даже если решат не обновляться.
 
-((("backward compatibility, Ethereum vs. Bitcoin")))In Ethereum, by comparison, the community's development culture is focused on the future rather than the past. The (not entirely serious) mantra is "move fast and break things." If a change is needed, it is implemented, even if that means invalidating prior assumptions, breaking compatibility, or forcing clients to update. Ethereum's development culture is characterized by rapid innovation, rapid evolution, and a willingness to deploy forward-looking improvements, even if this is at the expense of some backward compatibility.
+((("backward compatibility, Ethereum vs. Bitcoin")))В Ethereum, для сравнения, культура развития сообщества ориентирована на будущее, а не на прошлое. (Не совсем серьезная) мантра гласит: "действуй быстро и ломай вещи". Если требуется изменение, оно внедряется, даже если это означает аннулирование предыдущих предположений, нарушение совместимости или принуждение клиентов к обновлению. Культура разработки Ethereum характеризуется быстрыми инновациями, быстрой эволюцией и готовностью внедрять перспективные улучшения, даже если это происходит за счет некоторой обратной совместимости.
 
-What this means to you as a developer is that you must remain flexible and be prepared to rebuild your infrastructure as some of the underlying assumptions change. One of the big challenges facing developers in Ethereum is the inherent contradiction between deploying code to an immutable system and a development platform that is still evolving. You can't simply "upgrade" your smart contracts. You must be prepared to deploy new ones, migrate users, apps, and funds, and start over.
+Что это означает для вас как разработчика, так это то, что вы должны сохранять гибкость и быть готовыми перестраивать свою инфраструктуру по мере изменения некоторых базовых предположений. Одной из больших проблем, с которыми сталкиваются разработчики в Ethereum, является внутреннее противоречие между развертыванием кода в неизменяемой системе и платформой разработки, которая все еще развивается. Вы не можете просто "обновить" свои смарт-контракты. Вы должны быть готовы развернуть новые, перенести пользователей, приложения и средства и начать все сначала.
 
-Ironically, this also means that the goal of building systems with more autonomy and less centralized control is still not fully realized. Autonomy and decentralization require a bit more stability in the platform than you're likely to get in Ethereum in the next few years. In order to "evolve" the platform, you have to be ready to scrap and restart your smart contracts, which means you have to retain a certain degree of control over them.
+По иронии судьбы, это также означает, что цель создания систем с большей автономией и менее централизованным управлением все еще не полностью реализована. Автономия и децентрализация требуют немного большей стабильности платформы, чем вы, вероятно, получите в Ethereum в ближайшие несколько лет. Чтобы платформа "эволюционировала", вы должны быть готовы отказаться от своих смарт-контрактов и перезапустить их, что означает, что вы должны сохранить определенную степень контроля над ними.
 
-But, on the positive side, Ethereum is moving forward very fast. There's little opportunity for "bike-shedding," an expression that means holding up development by arguing over minor details such as how to build the bicycle shed at the back of a nuclear power station. If you start bike-shedding, you might suddenly discover that while you were distracted the rest of the development team changed the plan and ditched bicycles in favor of autonomous hovercraft.
+Но, с положительной стороны, Ethereum движется вперед очень быстро. Существует мало возможностей для "отказа от велосипедов", выражение, которое означает задержку развития, споря о незначительных деталях, таких как то, как построить навес для велосипедов позади атомной электростанции. Если вы начнете отказываться от велосипедов, вы можете внезапно обнаружить, что, пока вы были отвлечены, остальная команда разработчиков изменила план и отказалась от велосипедов в пользу автономных судов на воздушной подушке.
 
-Eventually, the development of the Ethereum platform will slow down and its interfaces will become fixed. But in the meantime, innovation is the driving principle. You'd better keep up, because no one will slow down for you.
+В конце концов, развитие платформы Ethereum замедлится, и ее интерфейсы станут фиксированными. Но в то же время движущим принципом являются инновации. Вам лучше не отставать, потому что никто не замедлится ради вас.
 
 [[why_learn]]
-=== Why Learn Ethereum?
+=== Зачем изучать Ethereum?
 
-((("blockchain","Ethereum as developer&#39;s blockchain")))((("Ethereum (generally)","reasons to learn")))Blockchains have a very steep learning curve, as they combine multiple disciplines into one domain: programming, information security, cryptography, economics, distributed systems, peer-to-peer networks, etc. Ethereum makes this learning curve a lot less steep, so you can get started quickly. But just below the surface of a deceptively simple environment lies a lot more. As you learn and start looking deeper, there's always another layer of complexity and wonder.
+((("blockchain","Ethereum as developer&#39;s blockchain")))((("Ethereum (generally)","reasons to learn")))Блокчейны имеют очень крутую кривую обучения, поскольку они объединяют несколько дисциплин в одной области: программирование, информационная безопасность, криптография, экономика, распределенные системы, одноранговые сети и т.д. Ethereum делает эту кривую обучения намного менее крутой, так что вы можете быстро приступить к работе. Но под поверхностью обманчиво простой среды скрывается гораздо больше. По мере того, как вы учитесь и начинаете смотреть глубже, всегда возникает еще один уровень сложности и удивления.
 
-Ethereum is a great platform for learning about blockchains and it's building a massive community of developers, faster than any other blockchain platform. More than any other, Ethereum is a _developer's blockchain_, built by developers for developers. A developer familiar with JavaScript applications can drop into Ethereum and start producing working code very quickly. For the first few years of Ethereum's life, it was common to see T-shirts announcing that you can create a token in just five lines of code. Of course, this is a double-edged sword. It's easy to write code, but it's very hard to write _good_ and _secure_ code.
+Ethereum - отличная платформа для изучения блокчейнов, и она создает огромное сообщество разработчиков быстрее, чем любая другая блокчейн-платформа. Больше, чем любой другой, Ethereum - это _блокчейн разработчика_, созданный разработчиками для разработчиков. Разработчик, знакомый с приложениями на JavaScript, может зайти в Ethereum и очень быстро начать создавать рабочий код. В течение первых нескольких лет существования Ethereum было обычным делом видеть футболки с объявлениями о том, что вы можете создать токен всего за пять строк кода. Конечно, это палка о двух концах. Писать код легко, но очень сложно написать хороший и безопасный код.
 
 [[teaching_objectives]]
-=== What This Book Will Teach You
+=== Чему вас научит эта книга
 
-This book dives into Ethereum and examines every component. You will start with a simple transaction, dissect how it works, build a simple contract, make it better, and follow its journey through the Ethereum system.
+Эта книга погружается в Ethereum и исследует каждый компонент. Вы начнете с простой транзакции, проанализируете, как она работает, создадите простой контракт, улучшите его и проследите за его путешествием по системе Ethereum.
 
-You will learn not only how to use Ethereum&#x2014;how it works&#x2014;but also why it is designed the way it is. You will be able to understand how each of the pieces works, and how they fit together and why.(((range="endofrange", startref="ix_01what-is-asciidoc0")))((("account","contract", see="smart contracts")))((("assymetric cryptography", see="public key cryptography")))((("BIPs", see="Bitcoin improvement proposals")))((("burn", see="ether burn")))((("cryptography","asymmetric", see="public key cryptography")))((("decentralized applications", see="DApps")))((("Decentralized Autonomous Organization", see="DAO")))((("default function", see="fallback function")))((("deterministic (seeded) wallets","hierarchical", see="hierarchical deterministic wallets")))((("DoS attacks", see="denial of service attacks")))((("ECDSA", see="Elliptic Curve Digital Signature Algorithm")))((("ETC", see="Ethereum Classic")))((("Ethereum (generally)","clients", see="clients, Ethereum")))((("Ethereum Improvement Proposals", see="EIP entries")))((("Ethereum Name Service", see="ENS")))((("Ethereum Virtual Machine", see="EVM")))((("Externally Owned Account", see="EOA")))((("fees", see="gas")))((("ICOs", see="Initial Coin Offerings")))((("Mastering Ethereum Token", see="METoken")))((("MEW", see="MyEtherWallet")))((("names/naming", see="ENS (Ethereum Name Service)")))((("NFTs", see="nonfungible tokens")))((("PoS", see="proof of stake")))((("PoW", see="proof of work")))((("PoWHC", see="Proof of Weak Hands Coin")))((("Remote Procedure Call (RPC) commands", see="JSON-RPC API")))((("RPC (Remote Procedure Call) commands", see="JSON-RPC API")))((("Secure Hash Algorithm", see="SHA entries")))((("seeded wallets", see="deterministic wallets")))((("smart contracts","Vyper and", see="Vyper")))((("smartphones", see="mobile (smartphone) wallets")))((("storage", see="data storage")))((("SUICIDE", see="SELFDESTRUCT opcode")))((("synchronization", see="fast synchronization")))((("synchronization", see="first synchronization")))((("transaction fees", see="gas")))((("wallets","HD", see="hierarchical deterministic wallets")))((("wallets","MetaMask", see="MetaMask")))
+Вы узнаете не только о том, как использовать Ethereum&#x2014;как он работает&#x2014;но и о том, почему он разработан таким, какой он есть. Вы сможете понять, как работает каждая из частей, как они сочетаются друг с другом и почему.(((range="endofrange", startref="ix_01what-is-asciidoc0")))((("account","contract", see="smart contracts")))((("assymetric cryptography", see="public key cryptography")))((("BIPs", see="Bitcoin improvement proposals")))((("burn", see="ether burn")))((("cryptography","asymmetric", see="public key cryptography")))((("decentralized applications", see="DApps")))((("Decentralized Autonomous Organization", see="DAO")))((("default function", see="fallback function")))((("deterministic (seeded) wallets","hierarchical", see="hierarchical deterministic wallets")))((("DoS attacks", see="denial of service attacks")))((("ECDSA", see="Elliptic Curve Digital Signature Algorithm")))((("ETC", see="Ethereum Classic")))((("Ethereum (generally)","clients", see="clients, Ethereum")))((("Ethereum Improvement Proposals", see="EIP entries")))((("Ethereum Name Service", see="ENS")))((("Ethereum Virtual Machine", see="EVM")))((("Externally Owned Account", see="EOA")))((("fees", see="gas")))((("ICOs", see="Initial Coin Offerings")))((("Mastering Ethereum Token", see="METoken")))((("MEW", see="MyEtherWallet")))((("names/naming", see="ENS (Ethereum Name Service)")))((("NFTs", see="nonfungible tokens")))((("PoS", see="proof of stake")))((("PoW", see="proof of work")))((("PoWHC", see="Proof of Weak Hands Coin")))((("Remote Procedure Call (RPC) commands", see="JSON-RPC API")))((("RPC (Remote Procedure Call) commands", see="JSON-RPC API")))((("Secure Hash Algorithm", see="SHA entries")))((("seeded wallets", see="deterministic wallets")))((("smart contracts","Vyper and", see="Vyper")))((("smartphones", see="mobile (smartphone) wallets")))((("storage", see="data storage")))((("SUICIDE", see="SELFDESTRUCT opcode")))((("synchronization", see="fast synchronization")))((("synchronization", see="first synchronization")))((("transaction fees", see="gas")))((("wallets","HD", see="hierarchical deterministic wallets")))((("wallets","MetaMask", see="MetaMask")))
