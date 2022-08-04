@@ -173,7 +173,7 @@ Localhost 8545:: Подключается к узлу, работающему н
 
 ((("ether (generally)","testnet")))((("MetaMask","and testnet ether")))((("test ether","obtaining")))((("testnet","ether for")))((("wallets","testnet ether and")))Ваша первая задача - пополнить свой кошелек. Вы не будете делать этого в основной сети, потому что реальный трафик стоит денег, а для его обработки требуется немного больше опыта. На данный момент вы загрузите в свой кошелек немного "тестового" эфира.
 
-((("Ropsten Test Network")))Переключите метамаску на _тестовую сеть Ropsten_. Нажмите кнопку "Внести депозит", затем нажмите кнопку "Ropsten Test Faucet". MetaMask откроет новую веб-страницу, как показано на <<metamask_ropsten_faucet>>.
+((("Ropsten Test Network")))Переключите MetaMask на _тестовую сеть Ropsten_. Нажмите кнопку "Внести депозит", затем нажмите кнопку "Ropsten Test Faucet". MetaMask откроет новую веб-страницу, как показано на <<metamask_ropsten_faucet>>.
 
 [[metamask_ropsten_faucet]]
 .MetaMask Ropsten Test Faucet
@@ -223,9 +223,9 @@ image::images/send_to_faucet.png["Sending 1 ether to the faucet"]
 
 Все это для того, чтобы сказать: совершение транзакции в 1 ETH стоит 1.000063 ETH. MetaMask сбивает с толку округляя вниз до 1 ETH при отображении общей суммы, но фактическая сумма, которая вам нужна, составляет 1.000063 ETH, а у вас есть только 1 ETH. Нажмите кнопку Отклонить, чтобы отменить эту транзакцию.
 
-Давайте возьмем еще немного тестового эфира! Снова нажмите зеленую кнопку "запросить 1 эфир с крана" и подождите несколько секунд. Не волнуйтесь, в сети должно быть много эфира, и она даст вам больше, если вы попросите.
+Давайте возьмем еще немного тестового эфира! Снова нажмите зеленую кнопку "запросить 1 эфир с крана" и подождите несколько секунд. Не волнуйтесь, в кране должно быть много эфира, и он даст вам больше, если вы попросите.
 
-Как только у вас будет баланс в 2 ETH, вы можете попробовать еще раз. На этот раз, когда вы нажимаете оранжевую кнопку пожертвования "1 эфира", у вас есть достаточный баланс для завершения транзакции. Нажмите кнопку Отправить, когда откроется окно оплаты MetaMask. После всего этого вы должны увидеть баланс в размере 0,999937 ETH, потому что вы отправили 1 ETH в сеть с 0,000063 ETH в газе.(((range="endofrange", startref="ix_02intro-asciidoc7")))(((range="endofrange", startref="ix_02intro-asciidoc6")))
+Как только у вас будет баланс в 2 ETH, вы можете попробовать еще раз. На этот раз, когда вы нажимаете оранжевую кнопку пожертвования "1 эфира", у вас есть достаточный баланс для завершения транзакции. Нажмите кнопку Отправить, когда откроется окно оплаты MetaMask. После всего этого вы должны увидеть баланс в размере 0,999937 ETH, потому что вы отправили 1 ETH в кран с 0,000063 ETH в газе.(((range="endofrange", startref="ix_02intro-asciidoc7")))(((range="endofrange", startref="ix_02intro-asciidoc6")))
 
 [[explore_tx_history]]
 ==== Изучение истории транзакций по адресу
@@ -265,14 +265,14 @@ EVM - это глобальный синглтон, что означает, ч�
 В следующих нескольких разделах мы напишем наш первый контракт. Затем вы узнаете, как создать, финансировать и использовать этот контракт с вашим кошельком MetaMask, а также протестировать эфир в тестовой сети Ropsten.
 
 [[simple_contract_example]]
-=== A Simple Contract: A Test Ether Faucet
+=== Простой контракт: тестовый эфирный кран
 
-((("contract accounts","creating", seealso="Faucet.sol contract", id="ix_02intro-asciidoc10", range="startofrange")))((("Faucet.sol contract (test example)","creating", id="ix_02intro-asciidoc11", range="startofrange")))Ethereum has many different high-level languages, all of which can be used to write a contract and produce EVM bytecode. You can read about many of the most prominent and interesting ones in <<high_level_languages>>. One high-level language is by far the dominant choice for smart contract programming: Solidity. ((("Wood, Dr. Gavin","and Solidity")))Solidity was created by Dr. Gavin Wood, the coauthor of this book, and has become the most widely used language in Ethereum (and beyond). We'll use Solidity to write our first contract.
+((("contract accounts","creating", seealso="Faucet.sol contract", id="ix_02intro-asciidoc10", range="startofrange")))((("Faucet.sol contract (test example)","creating", id="ix_02intro-asciidoc11", range="startofrange")))В Ethereum есть много различных языков высокого уровня, все из которых можно использовать для написания контракта и создания байт-кода виртуальной машины. Вы можете прочитать о многих наиболее выдающихся и интересных из них в <<высокоуровневые языки>>. Один язык высокого уровня на сегодняшний день является доминирующим выбором для программирования смарт-контрактов: Solidity. ((("Wood, Dr. Gavin","and Solidity")))Solidity был создан доктором Гэвином Вудом, соавтором этой книги, и стал наиболее широко используемым языком в Ethereum (и за его пределами). Мы будем использовать Solidity для написания нашего первого контракта.
 
-((("Solidity","faucet.sol and")))For our first example (<<solidity_faucet_example>>), we will write a contract that controls a _faucet_. You've already used a faucet to get test ether on the Ropsten test network. A faucet is a relatively simple thing: it gives out ether to any address that asks, and can be refilled periodically. You can implement a faucet as a wallet controlled by a human or a web server.
+((("Solidity","faucet.sol and")))Для нашего первого примера (<<solidity_faucet_example>>), мы напишем контракт, который управляет _краном_ (_faucet_). Вы уже использовали кран для получения тестового эфира в тестовой сети Ropsten. Кран - это относительно простая вещь: он выдает эфир на любой адрес, который запрашивает эфир, и может периодически пополняться. Вы можете реализовать кран как кошелек, управляемый человеком или веб-сервером.
 
 [[solidity_faucet_example]]
-.Faucet.sol: A Solidity contract implementing a faucet
+.Faucet.sol: Solidity контракт, реализующий кран
 ====
 [source,solidity,linenums]
 ----
@@ -282,16 +282,16 @@ include::code/Solidity/Faucet.sol[]
 
 [NOTE]
 ====
-You will find all the code samples for this book in the _code_ subdirectory of https://github.com/ethereumbook/ethereumbook/[the book's GitHub repository]. Specifically, our _Faucet.sol_ contract is in:
+Вы найдете все примеры кода для этой книги в подкаталоге _code_ https://github.com/ethereumbook/ethereumbook/[репозиторий книги на GitHub]. В частности, наш контракт _Faucet.sol_ находится в:
 
 ----
 code/Solidity/Faucet.sol
 ----
 ====
 
-This is a very simple contract, about as simple as we can make it. It is also a _flawed_ contract, demonstrating a number of bad practices and security vulnerabilities. We will learn by examining all of its flaws in later sections. But for now, let's look at what this contract does and how it works, line by line. You will quickly notice that many elements of Solidity are similar to existing programming languages, such as JavaScript, Java, or Cpass:[++].
+Это очень простой контракт, настолько простой, насколько мы можем его составить. Это также _уязвимый_ (_flawed_) контракт, демонстрирующий ряд плохих практик и уязвимостей в системе безопасности. Мы узнаем, изучив все его недостатки в последующих разделах. Но пока давайте рассмотрим, что делает этот контракт и как он работает, строка за строкой. Вы быстро заметите, что многие элементы Solidity похожи на существующие языки программирования, такие как JavaScript, Java или Cpass:[++].
 
-The first line is a comment:
+Первая строка - это комментарий:
 
 [[comment]]
 [source,solidity]
@@ -299,9 +299,9 @@ The first line is a comment:
 // SPDX-License-Identifier: CC-BY-SA-4.0
 ----
 
-Comments are for humans to read and are not included in the executable EVM bytecode. We usually put them on the line before the code we are trying to explain, or sometimes on the same line. Comments start with two forward slashes: +//+. Everything from the first slash until the end of that line is treated the same as a blank line and ignored.
+Комментарии предназначены для чтения людьми и не включаются в байт-код исполняемой виртуальной машины. Обычно мы помещаем их в строку перед кодом, который пытаемся объяснить, а иногда и в ту же строку. Комментарии начинаются с двух косых черт: +//+. Все, начиная с первой косой черты и заканчивая концом этой строки, обрабатывается так же, как пустая строка, и игнорируется.
 
-A few lines later is where our actual contract starts:
+Несколькими строками позже начинается наш фактический контракт:
 
 [[contract_definition]]
 [source,solidity]
@@ -309,9 +309,9 @@ A few lines later is where our actual contract starts:
 contract Faucet {
 ----
 
-This line declares a +contract+ object, similar to a +class+ declaration in other object-oriented languages. The contract definition includes all the lines between the curly braces (pass:[<code>{}</code>]), which define a _scope_, much like how curly braces are used in many other programming languages.
+Эта строка объявляет объект +contract+, аналогично объявлению +class+ в других объектно-ориентированных языках. Определение контракта включает в себя все строки, заключенные в фигурные скобки (pass:[<code>{}</code>]), которые определяют _область видимости_ (_scope_), очень похоже на то, как фигурные скобки используются во многих других языках программирования.
 
-Next, we enable the contract to accept any incoming amount:
+Далее мы разрешаем контракту принимать любую входящую сумму:
 
 [[receive_function]]
 [source,solidity]
@@ -319,9 +319,9 @@ Next, we enable the contract to accept any incoming amount:
 receive () external payable {}
 ----
 
-((("receive function")))The receive function is called if the transaction that triggered the contract didn't name any of the declared functions in the contract, or didn't contain data and thus was a plain Ether transfer. Contracts can have one such receive function (without a name) and it is used to receive ether. That's why it is defined as an external and payable function, which means it can accept ether into the contract. It doesn't do anything, other than accept the ether, as indicated by the empty definition in the curly braces pass:[(<code>{}</code>)]. If we make a transaction that sends ether to the contract address, as if it were a wallet, this function will handle it.
+((("receive function")))Функция приема вызывается, если транзакция, которая инициировала контракт, не называла ни одну из объявленных функций в контракте или не содержала данных и, таким образом, была простой передачей эфира. Контракты могут иметь одну такую функцию приема (без имени), и она используется для получения эфира. Вот почему он определяется как внешняя и оплачиваемая функция, что означает, что он может принимать эфир в контракт. Он ничего не делает, кроме как принимает эфир, на что указывает пустое определение в фигурных скобках pass:[(<code>{}</code>)]. Если мы совершим транзакцию, которая отправит эфир на адрес контракта, как если бы это был кошелек, эта функция обработает его.
 
-After this, we declare the first function of the +Faucet+ contract:
+После этого мы объявляем первую функцию +Faucet+ контракта:
 
 [[withdraw_function]]
 [source,solidity]
@@ -329,7 +329,7 @@ After this, we declare the first function of the +Faucet+ contract:
 function withdraw(uint withdraw_amount) public {
 ----
 
-The function is named +withdraw+, and it takes one unsigned integer (+uint+) argument named +withdraw_amount+. It is declared as a public function, meaning it can be called by other contracts. The function definition follows, between curly braces. The first part of the +withdraw+ function sets a limit on withdrawals:
+Функция называется +withdraw+, и она принимает один аргумент: целое число без знака (+uint+) с именем +withdraw_amount+. Она объявлена как общедоступная функция, что означает, что она может быть вызвана другими контрактами. Ниже приводится определение функции, заключенное в фигурные скобки. Первая часть функции +withdraw_amount+ устанавливает лимит на вывод средств:
 
 [[withdraw_limit]]
 [source,solidity]
@@ -337,11 +337,11 @@ The function is named +withdraw+, and it takes one unsigned integer (+uint+) arg
 require(withdraw_amount <= 100000000000000000);
 ----
 
-It uses the built-in Solidity function +require+ to test a precondition, that the +withdraw_amount+ is less than or equal to 100,000,000,000,000,000 wei, which is the base unit of ether (see <<ether_denominations>>) and equivalent to 0.1 ether. If the +withdraw+ function is called with a +withdraw_amount+ greater than that amount, the +require+ function here will cause contract execution to stop and fail with an _exception_. Note that statements need to be terminated with a semicolon in Solidity.
+Она использует встроенную в Solidity функцию +require+ для проверки предварительного условия, что +withdraw_amount+ меньше или равно 100 000 000 000 000 000 wei, что является базовой единицей эфира (см. <<ether_denominations>>) и эквивалентно 0.1 эфира. Если функция +withdraw+ вызывается с +withdraw_amount+, превышающим эту сумму, функция +require+ здесь приведет к остановке выполнения контракта и сбою с _исключением_ (_exception_). Обратите внимание, что операторы должны завершаться точкой с запятой в Solidity.
 
-This part of the contract is the main logic of our faucet. It controls the flow of funds out of the contract by placing a limit on withdrawals. It's a very simple control but can give you a glimpse of the power of a programmable blockchain: decentralized software controlling money.
+Эта часть контракта является основной логикой нашей работы. Он контролирует поток средств из контракта, устанавливая лимит на снятие средств. Это очень простое управление, но оно может дать вам представление о мощи программируемого блокчейна: децентрализованного программного обеспечения, управляющего деньгами.
 
-Next comes the actual withdrawal:
+Далее следует фактический вывод средств:
 
 [[withdraw_command]]
 [source,solidity]
@@ -349,55 +349,55 @@ Next comes the actual withdrawal:
 msg.sender.transfer(withdraw_amount);
 ----
 
-A couple of interesting things are happening here. The +msg+ object is one of the inputs that all contracts can access. It represents the transaction that triggered the execution of this contract. The attribute +sender+ is the sender address of the transaction. The function +transfer+ is a built-in function that transfers ether from the current contract to the address of the sender. Reading it backward, this means +transfer+ to the +sender+ of the +msg+ that triggered this contract execution. The +transfer+ function takes an amount as its only argument. We pass the +withdraw_amount+ value that was the parameter to the +withdraw+ function declared a few lines earlier.
+Здесь происходит пара интересных вещей. Объект +msg+ является одним из входных данных, к которому могут получить доступ все контракты. Он представляет транзакцию, которая привела к исполнению этого контракта. Атрибут +sender+ - это адрес отправителя транзакции. Функция +transfer+ - это встроенная функция, которая переводит эфир из текущего контракта на адрес отправителя. Читая его в обратном порядке, это означает _переведи отправителю транзакции_ (_transfer to the sender of the msg_), которое инициировало выполнение этого контракта. Функция +transfer+ принимает сумму в качестве своего единственного аргумента. Мы передаем значение +withdraw_amount+, которое было параметром, функции +withdraw+, объявленной несколькими строками ранее.
 
-The very next line is the closing curly brace, indicating the end of the definition of our +withdraw+ function.
+Следующая строка - это закрывающая фигурная скобка, указывающая на конец определения нашей функции +withdraw+.
 
-Right below our default function is the final closing curly brace, which closes the definition of the contract +Faucet+. That's it!(((range="endofrange", startref="ix_02intro-asciidoc11")))(((range="endofrange", startref="ix_02intro-asciidoc10")))
+Прямо под нашей функцией по умолчанию находится заключительная закрывающая фигурная скобка, которая закрывает определение контракта +Faucet+. Вот и все!(((range="endofrange", startref="ix_02intro-asciidoc11")))(((range="endofrange", startref="ix_02intro-asciidoc10")))
 
 [[compile_faucet_contract]]
-=== Compiling the Faucet Contract
+=== Компиляция контракта Faucet
 
-((("compiling","Faucet.sol contract", id="ix_02intro-asciidoc12", range="startofrange")))((("Faucet.sol contract (test example)","compiling", id="ix_02intro-asciidoc13", range="startofrange")))Now that we have our first example contract, we need to use a Solidity compiler to convert the Solidity code into EVM bytecode so it can be executed by the EVM on the blockchain itself.
+((("compiling","Faucet.sol contract", id="ix_02intro-asciidoc12", range="startofrange")))((("Faucet.sol contract (test example)","compiling", id="ix_02intro-asciidoc13", range="startofrange")))Теперь, когда у нас есть наш первый пример контракта, нам нужно использовать компилятор Solidity для преобразования кода Solidity в байт-код EVM, чтобы он мог быть выполнен EVM на самом блокчейне.
 
-The Solidity compiler comes as a standalone executable, as part of various frameworks, and bundled in Integrated Development Environments (IDEs). To keep things simple, we will use one of the more popular IDEs, called _Remix_.
+Компилятор Solidity поставляется в виде отдельного исполняемого файла, как часть различных фреймворков, а также в комплекте с интегрированными средами разработки (IDE). Чтобы упростить задачу, мы будем использовать одну из наиболее популярных IDE, называемую _Remix_.
 
-((("Remix IDE")))Use your Chrome browser (with the MetaMask wallet you installed earlier) to navigate to the Remix IDE at https://remix.ethereum.org[].
+((("Remix IDE")))Используйте свой браузер Chrome (с кошельком MetaMask, который вы установили ранее), чтобы перейти к Remix IDE по адресу https://remix.ethereum.org[].
 
-When you first load Remix, it will start with a sample contract called _ballot.sol_. We don't need that, so close it by clicking the +x+ on the corner of the tab, as seen in <<remix_close_tab>>.
+Когда вы впервые загрузите Remix, он запустится с примером контракта с именем _ballot.sol_. Нам это не нужно, поэтому закройте его, нажав +x+ в углу вкладки, как показано на <<remix_close_tab>>.
 
 [[remix_close_tab]]
-.Close the default example tab
+.Закройте вкладку с примером по умолчанию
 image::images/remix_close_tab.png["Close the default example tab"]
 
-Now, add a new tab by clicking on the circular plus sign in the top-left toolbar, as seen in <<remix_toolbar>>. Name the new file _Faucet.sol_.
+Теперь добавьте новую вкладку, нажав на круглый знак плюс на верхней левой панели инструментов, как показано на <<remix_toolbar>>. Назовите новый файл _Faucet.sol_.
 
 [[remix_toolbar]]
-.Click the plus sign to open a new tab
+.Нажмите на знак плюс, чтобы открыть новую вкладку
 image::images/remix_toolbar.png["Click the plus sign to open a new tab"]
 
-Once you have the new tab open, copy and paste the code from our example _Faucet.sol_, as seen in <<remix_faucet_load>>.
+Как только у вас откроется новая вкладка, скопируйте и вставьте код из нашего примера _Faucet.sol_, как показано на <<remix_faucet_load>>.
 
 [[remix_faucet_load]]
-.Copy the Faucet example code into the new tab
+.Скопируйте пример кода крана в новую вкладку
 image::images/remix_faucet_load.png["Copy the Faucet example code into the new tab"]
 
-Once you have loaded the _Faucet.sol_ contract into the Remix IDE, the IDE will automatically compile the code. If all goes well, you will see a green box with "Faucet" in it appear on the right, under the Compile tab, confirming the successful compilation (see <<remix_compile>>).
+Как только вы загрузили контракт _Faucet.sol_ в среду разработки Remix IDE, среда разработки автоматически скомпилирует код. Если все пройдет хорошо, вы увидите справа, под вкладкой Компиляции, зеленое поле с надписью "Faucet", подтверждающее успешную компиляцию (см. <<remix_compile>>).
 
 [[remix_compile]]
-.Remix successfully compiles the Faucet.sol contract
+.Remix успешно компилирует контракт Faucet.sol
 image::images/remix_compile.png[""]
 
-If something goes wrong, the most likely problem is that the Remix IDE is using a version of the Solidity compiler that is different from 0.6. In that case, our pragma directive will prevent _Faucet.sol_ from compiling. To change the compiler version, go to the Settings tab, set the version to 0.6.0, and try again.
+Если что-то пойдет не так, наиболее вероятная проблема заключается в том, что среда разработки Remix использует версию компилятора Solidity, отличную от версии 0.6. В этом случае наша директива pragma предотвратит компиляцию _Faucet.sol_. Чтобы изменить версию компилятора, перейдите на вкладку "Настройки", установите версию 0.6.0 и повторите попытку.
 
-The Solidity compiler has now compiled our _Faucet.sol_ into EVM bytecode. If you are curious, the bytecode looks like this:
+Компилятор Solidity теперь скомпилировал наш файл _Faucet.sol_ в байт-код виртуальной машины. Если вам интересно, байт-код выглядит следующим образом:
 
 [[faucet_bytecode]]
 ----
 PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0xF4 DUP1 PUSH2 0x1F PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x4 CALLDATASIZE LT PUSH1 0x1F JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x2E1A7D4D EQ PUSH1 0x2A JUMPI PUSH1 0x25 JUMP JUMPDEST CALLDATASIZE PUSH1 0x25 JUMPI STOP JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST CALLVALUE DUP1 ISZERO PUSH1 0x35 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x5F PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH1 0x4A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 ADD SWAP1 DUP1 DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD SWAP1 SWAP3 SWAP2 SWAP1 POP POP POP PUSH1 0x61 JUMP JUMPDEST STOP JUMPDEST PUSH8 0x16345785D8A0000 DUP2 GT ISZERO PUSH1 0x75 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST CALLER PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND PUSH2 0x8FC DUP3 SWAP1 DUP2 ISZERO MUL SWAP1 PUSH1 0x40 MLOAD PUSH1 0x0 PUSH1 0x40 MLOAD DUP1 DUP4 SUB DUP2 DUP6 DUP9 DUP9 CALL SWAP4 POP POP POP POP ISZERO DUP1 ISZERO PUSH1 0xBA JUMPI RETURNDATASIZE PUSH1 0x0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x0 REVERT JUMPDEST POP POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 STOP CODECOPY 0xDC DUP16 0xD SGT PUSH6 0xD2245039EDD7 RETURN CALLDATALOAD 0xC2 0xE4 SWAP9 0xF6 0x2C 0xF8 0xB3 OR JUMPDEST 0xAC 0xD8 CREATE2 SSTORE 0x4E SIGNEXTEND PUSH4 0x3164736F PUSH13 0x634300060C0033000000000000
 ----
 
-Aren't you glad you are using a high-level language like Solidity instead of programming directly in EVM bytecode? Me too!(((range="endofrange", startref="ix_02intro-asciidoc13")))(((range="endofrange", startref="ix_02intro-asciidoc12")))
+Разве вы не рады, что используете язык высокого уровня, такой как Solidity, вместо программирования непосредственно в байт-коде виртуальной машины? Я рад!(((range="endofrange", startref="ix_02intro-asciidoc13")))(((range="endofrange", startref="ix_02intro-asciidoc12")))
 
 [[create_contract]]
 === Creating the Contract on the Blockchain
