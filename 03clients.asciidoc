@@ -1,184 +1,184 @@
 [[ethereum_clients_chapter]]
-== Ethereum Clients
+== Клиенты Ethereum
 
-((("clients, Ethereum", id="ix_03clients-asciidoc0", range="startofrange")))An Ethereum client is a software application that implements the Ethereum specification and communicates over the peer-to-peer network with other Ethereum clients. Different Ethereum clients _interoperate_ if they comply with the reference specification and the standardized communications protocols. While these different clients are implemented by different teams and in different programming languages, they all "speak" the same protocol and follow the same rules. As such, they can all be used to operate and interact with the same Ethereum network.
+((("clients, Ethereum", id="ix_03clients-asciidoc0", range="startofrange")))Клиент Ethereum - это программное приложение, которое реализует спецификацию Ethereum и взаимодействует по одноранговой сети с другими клиентами Ethereum. Различные клиенты Ethereum _взаимодействуют_ (_interoperate_), если они соответствуют эталонной спецификации и стандартизированным протоколам связи. Хотя эти разные клиенты реализуются разными командами и на разных языках программирования, все они "говорят" по одному и тому же протоколу и следуют одним и тем же правилам. Таким образом, все они могут использоваться для работы и взаимодействия с одной и той же сетью Ethereum.
 
-Ethereum is an open source project, and the source code for all the major clients is available under open source licenses (e.g., LGPL v3.0), free to download and use for any purpose. _Open source_ means more than simply free to use, though. It also means that Ethereum is developed by an open community of volunteers and can be modified by anyone. More eyes means more trustworthy code.
+Ethereum - это проект с открытым исходным кодом, и исходный код для всех основных клиентов доступен по лицензиям с открытым исходным кодом (например, LGPL v3.0), который можно бесплатно скачать и использовать для любых целей. Однако _Open source_ означает нечто большее, чем просто бесплатное использование. Это также означает, что Ethereum разрабатывается открытым сообществом добровольцев и может быть изменен кем угодно. Больше глаз означает более надежный код.
 
-((("Yellow Paper specification")))Ethereum is defined by a formal specification called the "Yellow Paper" (see <<references>>).
+((("Yellow Paper specification")))Ethereum определяется формальной спецификацией, называемой "Yellow Paper" (см. <<references>>).
 
-((("Bitcoin","Ethereum definition compared to")))This is in contrast to, for example, Bitcoin, which is not defined in any formal way. Where Bitcoin's "specification" is the reference implementation Bitcoin Core, Ethereum's specification is documented in a paper that combines an English and a mathematical (formal) specification. This formal specification, in addition to various Ethereum Improvement Proposals, defines the standard behavior of an Ethereum pass:[<span class="keep-together">client</span>]. The Yellow Paper is periodically updated as major changes are made to pass:[<span class="keep-together">Ethereum</span>].
+((("Bitcoin","Ethereum definition compared to")))Это отличается, например, от биткойна, который не определен каким-либо формальным образом. Там, где "спецификация" Биткойна является эталонной реализацией Bitcoin Core, спецификация Ethereum задокументирована в документе, который сочетает в себе английскую и математическую (формальную) спецификацию. Эта официальная спецификация, в дополнение к различным предложениям по улучшению Ethereum, определяет стандартное поведение Ethereum pass:[<span class="keep-together">клиена</span>]. Yellow Paper периодически обновляется по мере внесения серьезных изменений вo pass:[<span class="keep-together">Ethereum</span>].
 
-As a result of Ethereum's clear formal specification, there are a number of independently developed, yet interoperable, software implementations of an Ethereum client. Ethereum has a greater diversity of implementations running on the network than any other blockchain, which is generally regarded as a good thing. Indeed, it has, for example, proven itself to be an excellent way of defending against attacks on the network, because exploitation of a particular client's implementation strategy simply hassles the developers while they patch the exploit, while other clients keep the network running almost unaffected.
+В результате четкой формальной спецификации Ethereum существует ряд независимо разработанных, но совместимых программных реализаций клиента Ethereum. Ethereum имеет большее разнообразие реализаций, работающих в сети, чем любой другой блокчейн, что обычно считается хорошей вещью. Действительно, он, например, зарекомендовал себя как отличный способ защиты от атак в сети, потому что использование стратегии реализации конкретного клиента просто доставляет неудобства разработчикам, пока они исправляют эксплойт, в то время как другие клиенты поддерживают работу сети практически без изменений.
 
-=== Ethereum Networks
+=== Сети Ethereum
 
-((("clients, Ethereum","Ethereum-based networks and", id="ix_03clients-asciidoc1", range="startofrange")))((("networks (Ethereum)","clients and", id="ix_03clients-asciidoc2", range="startofrange")))There exist a variety of Ethereum-based networks that largely conform to the formal specification defined in the Ethereum Yellow Paper, but which may or may not interoperate with each other.
+((("clients, Ethereum","Ethereum-based networks and", id="ix_03clients-asciidoc1", range="startofrange")))((("networks (Ethereum)","clients and", id="ix_03clients-asciidoc2", range="startofrange")))Существует множество сетей на базе Ethereum, которые в значительной степени соответствуют формальной спецификации, определенной в Yellow Paper Ethereum, но которые могут взаимодействовать, а могут и не взаимодействовать друг с другом.
 
-Among these Ethereum-based networks are Ethereum, Ethereum Classic, Ella, Expanse, Ubiq, Musicoin, and many others. While mostly compatible at the protocol level, these networks often have features or attributes that require maintainers of Ethereum client software to make small changes in order to support each network. Because of this, not every version of Ethereum client software runs every Ethereum-based blockchain.
+Среди этих сетей, основанных на Ethereum есть Ethereum, Ethereum Classic, Ella, Expanse, Ubiq, Musicoin и многие другие. Несмотря на то, что эти сети в основном совместимы на уровне протокола, они часто имеют функции или атрибуты, которые требуют от разработчиков клиентского программного обеспечения Ethereum внесения небольших изменений для поддержки каждой сети. Из-за этого не каждая версия клиентского программного обеспечения Ethereum запускает каждый блокчейн на основе Ethereum.
 
-Currently, there are six main implementations of the Ethereum protocol, written in six different languages:
+В настоящее время существует шесть основных реализаций протокола Ethereum, написанных на шести разных языках:
 
-* Parity, written in Rust
-* Geth, written in Go
-* +cpp-ethereum+, written in Cpass:[++]
-* +pyethereum+, written in Python
-* Mantis, written in Scala
-* Harmony, written in Java
+* Parity, написанная на Rust
+* Geth, написанная на языке Gо
+* +cpp-ethereum+, написанный на Cpass:[++]
+* +pyethereum+, написанный на Python
+* Mantis, написанный на Scala
+* Harmony, написанный на Java
 
-In this section, we will look at the two most common clients, Parity and Geth. We'll show how to set up a node using each client, and explore some of their command-line options and application programming interfaces (APIs).
+В этом разделе мы рассмотрим два наиболее распространенных клиента - Parity и Geth. Мы покажем, как настроить узел с использованием каждого клиента, и рассмотрим некоторые из их параметров командной строки и интерфейсов прикладного программирования (API).
 
 [[full_node_importance]]
-==== Should I Run a Full Node?
+==== Должен ли я запустить Полный узел?
 
-((("full node","Ethereum-based networks and", id="ix_03clients-asciidoc3", range="startofrange")))((("networks (Ethereum)","full nodes and", id="ix_03clients-asciidoc4", range="startofrange")))The health, resilience, and censorship resistance of blockchains depend on them having many independently operated and geographically dispersed full nodes. Each full node can help other new nodes obtain the block data to bootstrap their operation, as well as offering the operator an authoritative and independent verification of all transactions and contracts.
+((("full node","Ethereum-based networks and", id="ix_03clients-asciidoc3", range="startofrange")))((("networks (Ethereum)","full nodes and", id="ix_03clients-asciidoc4", range="startofrange")))Работоспособность, отказоустойчивость и устойчивость к цензуре блокчейнов зависят от того, что они имеют множество независимо управляемых и географически распределенных полных узлов. Каждый полный узел может помочь другим новым узлам получить данные блока для начальной загрузки их работы, а также предложить оператору авторитетную и независимую проверку всех транзакций и контрактов.
 
-However, running a full node will incur a cost in hardware resources and bandwidth. A full node may download up to 300 GB of data (as of March 2021, depending on the client configuration) and store it on a local hard drive. This data burden increases quite rapidly every day as new transactions and blocks are added. We discuss this topic in greater detail in <<requirements>>.
+Однако запуск полного узла потребует затрат на аппаратные ресурсы и пропускную способность. Полный узел может загружать до 300 ГБ данных (по состоянию на март 2021 года, в зависимости от конфигурации клиента) и сохранять их на локальном жестком диске. Эта нагрузка на данные растет довольно быстро каждый день по мере добавления новых транзакций и блоков. Мы обсуждаем эту тему более подробно в разделе <<требования>>.
 
-A full node running on a live _mainnet_ network is not necessary for Ethereum development. You can do almost everything you need to do with a _testnet_ node (which connects you to one of the smaller public test blockchains), with a local private blockchain like Ganache, or with a cloud-based Ethereum client offered by a service provider like Infura.
+Полноценный узел, работающий в живой сети _mainnet_, не является необходимым для разработки Ethereum. Вы можете делать почти все, что вам нужно, с узлом _testnet_ (который соединяет вас с одним из небольших публичных тестовых блокчейнов), с локальным частным блокчейном, таким как Ganache, или с облачным клиентом Ethereum, предлагаемым поставщиком услуг, таким как Infura.
 
-You also have the option of running a remote client, which does not store a local copy of the blockchain or validate blocks and transactions. These clients offer the functionality of a wallet and can create and broadcast transactions. Remote clients can be used to connect to existing networks, such as your own full node, a public blockchain, a public or permissioned (proof-of-authority) testnet, or a private local blockchain. In practice, you will likely use a remote client such as MetaMask, Emerald Wallet, pass:[<span class="keep-together">MyEtherWallet</span>], or MyCrypto as a convenient way to switch between all of the different node options.
+У вас также есть возможность запустить _удаленный_ (_remote_) клиент, который не хранит локальную копию блокчейна и не проверяет блоки и транзакции. Эти клиенты предлагают функциональность кошелька и могут создавать и транслировать транзакции. Удаленные клиенты могут использоваться для подключения к существующим сетям, таким как ваш собственный полный узел, общедоступному блокчейну, общедоступной или разрешенной тестовой сети (proof-of-authority) или к частному локальному блокчейну. На практике вы, скорее всего, будете использовать удаленный клиент, такой как MetaMask, Emerald Wallet, pass:[<span class="keep-together">MyEtherWallet</span>], oили My Crypto как удобный способ переключения между всеми различными вариантами узлов.
 
-((("remote clients","wallet compared to")))((("wallets","remote clients compared to")))The terms "remote client" and "wallet" are used interchangeably, though there are some differences. Usually, a remote client offers an API (such as the web3.js API) in addition to the transaction functionality of a wallet.
+((("remote clients","wallet compared to")))((("wallets","remote clients compared to")))Термины "удаленный клиент" (remote client) и "кошелек" (wallet) используются взаимозаменяемо, хотя и имеют некоторые различия. Обычно удаленный клиент предлагает API (например, web3.js API) в дополнение к функциональности транзакций кошелька.
 
-((("light/lightweight client")))Do not confuse the concept of a remote wallet in Ethereum with that of a _light client_ (which is analogous to a Simplified Payment Verification client in Bitcoin). Light clients validate block headers and use Merkle proofs to validate the inclusion of transactions in the blockchain and determine their effects, giving them a similar level of security to a full node. Conversely, Ethereum remote clients do not validate block headers or transactions. They entirely trust a full client to give them access to the blockchain, and hence lose significant security and anonymity guarantees. You can mitigate these problems by using a full client you run yourself.
+((("light/lightweight client")))Не путайте концепцию удаленного кошелька в Ethereum с концепцией легкого клиента (который аналогичен упрощенному клиенту проверки платежей в Биткойне). Клиенты Light проверяют заголовки блоков и используют доказательства Merkle для проверки включения транзакций в блокчейн и определения их последствий, обеспечивая им уровень безопасности, аналогичный полному узлу. И наоборот, удаленные клиенты Ethereum не проверяют заголовки блоков или транзакции. Они полностью доверяют полноценному клиенту, который предоставит им доступ к блокчейну, и, следовательно, теряют значительные гарантии безопасности и анонимности. Вы можете устранить эти проблемы, используя полноценный клиент, который вы запускаете самостоятельно.
 
 [[full_node_adv_disadv]]
-==== Full Node Advantages and Disadvantages
+==== Преимущества и недостатки полного узла
 
-((("full node","advantages/disadvantages")))Choosing to run a full node helps with the operation of the networks you connect it to, but also incurs some mild to moderate costs for you. Let's look at some of the advantages and disadvantages.
+((("full node","advantages/disadvantages")))Выбор для запуска полного узла помогает в работе сетей, к которым вы его подключаете, но также влечет за собой некоторые незначительные или умеренные затраты для вас. Давайте рассмотрим некоторые преимущества и недостатки.
 
-*Advantages:*
+*Преимущества:*
 
-* Supports the resilience and censorship resistance of Ethereum-based networks
-* Authoritatively validates all transactions
-* Can interact with any contract on the public blockchain without an intermediary
-* Can directly deploy contracts into the public blockchain without an intermediary
-* Can query (read-only) the blockchain status (accounts, contracts, etc.) offline
-* Can query the blockchain without letting a third party know the information you're reading
+* Поддерживает отказоустойчивость и устойчивость к цензуре сетей, основанных на Ethereum
+* Авторитетно проверяет все транзакции
+* Может взаимодействовать с любым контрактом на публичном блокчейне без посредника
+* Может напрямую внедрять контракты в публичный блокчейн без посредника
+* Может запрашивать (только для чтения) статус блокчейна (учетные записи, контракты и т.д.) в автономном режиме
+* Может запрашивать блокчейн, не сообщая третьей стороне информацию, которую вы читаете
 
-*Disadvantages:*
+*Недостатки:*
 
-* Requires significant and growing hardware and bandwidth resources
-* May require several days to fully sync when first started
-* Must be maintained, upgraded, and kept online to remain synced(((range="endofrange", startref="ix_03clients-asciidoc4")))(((range="endofrange", startref="ix_03clients-asciidoc3")))
+* Требует значительных и растущих аппаратных средств и ресурсов полосы пропускания
+* Может потребоваться несколько дней для полной синхронизации при первом запуске
+* Необходимо поддерживать, обновлять и поддерживать в режиме онлайн, чтобы оставаться синхронизированным(((диапазон ="endofrange", startref="ix_03clients-asciidoc4")))(((диапазон ="endofrange", startref="ix_03clients-asciidoc3")))
 
 [[pub_test_adv_disadv]]
-==== Public Testnet Advantages and Disadvantages
+==== Преимущества и недостатки общедоступной тестовой сети (public testnet)
 
-((("networks (Ethereum)","public testnet advantages/disadvantages")))((("public testnets")))((("testnet","public")))Whether or not you choose to run a full node, you will probably want to run a public testnet node. Let's look at some of the advantages and disadvantages of using a public testnet.
+((("networks (Ethereum)","public testnet advantages/disadvantages")))((("public testnets")))((("testnet","public")))Независимо от того, решите вы запустить полный узел или нет, вы, вероятно, захотите запустить общедоступный узел testnet. Давайте рассмотрим некоторые преимущества и недостатки использования общедоступной тестовой сети.
 
-*Advantages:*
+*Преимущества:*
 
-* A testnet node needs to sync and store significantly less data compared to mainnet&#x2014;about 75 GB depending on the network.
-* A testnet node can sync fully in much less time.
-* Deploying contracts or making transactions requires test ether, which has no value and can be acquired for free from several "faucets."
-* Testnets are public blockchains with many other users and contracts, running "live."
+* Узлу тестовой сети требуется синхронизировать и хранить значительно меньше данных по сравнению с основной сетью - около 75 ГБ в зависимости от сети.
+* Узел testnet может полностью синхронизироваться за гораздо меньшее время.
+* Для развертывания контрактов или совершения транзакций требуется тестовый эфир, который не имеет никакой ценности и может быть приобретен бесплатно из нескольких "кранов".
+* Тестовые сети - это публичные блокчейны со многими другими пользователями и контрактами, работающие "вживую".
 
-*Disadvantages:*
+*Недостатки:*
 
-* You can't use "real" money on a testnet; it runs on test ether. Consequently, you can't test security against real adversaries, as there is nothing at stake.
-* There are some aspects of a public blockchain that you cannot test realistically on a testnet. For example, transaction fees, although necessary to send transactions, are not a consideration on a testnet, since gas is free. Further, the testnets do not experience network congestion like the public mainnet sometimes does.
+* Вы не можете использовать "реальные" деньги в тестовой сети; она работает на тестовом эфире. Следовательно, вы не можете протестировать безопасность против реальных противников, поскольку на карту ничего не поставлено.
+* Существуют некоторые аспекты публичного блокчейна, которые вы не можете реально протестировать в тестовой сети. Например, плата за транзакцию, хотя и необходима для отправки транзакций, не учитывается в тестовой сети, поскольку gas является бесплатным. Кроме того, тестовые сети не испытывают перегрузки сети, как это иногда происходит в общедоступной основной сети.
 
 [[localtest_adv_dis]]
-==== Local Blockchain Simulation Advantages and Disadvantages
+==== Преимущества и недостатки локальной симуляции блокчейна
 
-((("Ganache","advantages/disadvantages")))((("local blockchain simulation")))((("networks (Ethereum)","local blockchain simulation advantages/disadvantages")))((("private blockchain")))((("single-instance private blockchain")))For many testing purposes, the best option is to launch a single-instance private blockchain. Ganache (formerly named +testrpc+) is one of the most popular local blockchain simulations that you can interact with, without any other participants. It shares many of the advantages and disadvantages of the public testnet, but also has some differences.
+((("Ganache","advantages/disadvantages")))((("local blockchain simulation")))((("networks (Ethereum)","local blockchain simulation advantages/disadvantages")))((("private blockchain")))((("single-instance private blockchain")))Для многих целей тестирования лучшим вариантом является запуск частного блокчейна с одним экземпляром. Ganache (ранее называвшийся +testrpc+) - одна из самых популярных локальных симуляций блокчейна, с которой вы можете взаимодействовать без каких-либо других участников. Он разделяет многие преимущества и недостатки общедоступной тестовой сети, но также имеет некоторые отличия.
 
-*Advantages:*
+*Преимущества:*
 
-* No syncing and almost no data on disk; you mine the first block yourself
-* No need to obtain test ether; Ganache is initialized with accounts that already hold ether for testing
-* No other users, just you
-* No other contracts, just the ones you deploy after you launch it unless you use the option of forking off an existing Ethereum node
+* Нет синхронизации и почти нет данных на диске; вы добываете первый блок самостоятельно
+* Нет необходимости получать тестовый эфир; Ganache инициализируется учетными записями, которые уже содержат эфир для тестирования
+* Никаких других пользователей, только вы
+* Никаких других контрактов, только те, которые вы развертываете после его запуска, если только вы не используете возможность разветвления существующего узла Ethereum.
 
-*Disadvantages:*
+*Недостатки:*
 
-* Having no other users means that it doesn't behave the same as a public blockchain. There's no competition for transaction space or sequencing of pass:[<span class="keep-together">transactions</span>].
-* No miners other than you means that mining is more predictable; therefore, you can't test some scenarios that occur on a public blockchain.
-* If you are forking off an existing Ethereum node, it will need to be an archival node for you to interact with state from blocks that may have been pruned otherwise
+* Отсутствие других пользователей означает, что он ведет себя не так, как публичный блокчейн. Нет конкуренции за пространство транзакций или последовательность pass:[<span class="keep-together">транзакций</span>].
+* Отсутствие других майнеров, кроме вас, означает, что майнинг более предсказуем; следовательно, вы не можете протестировать некоторые сценарии, которые происходят в общедоступном блокчейне.
+* Если вы разветвляете существующий узел Ethereum, он должен быть архивным узлом, чтобы вы могли взаимодействовать с состоянием из блоков, которые могли быть удалены в противном случае
 
 (((range="endofrange", startref="ix_03clients-asciidoc2")))(((range="endofrange", startref="ix_03clients-asciidoc1")))
 
 
 [[running_client]]
-=== Running an Ethereum Client
+=== Запуск клиента Ethereum
 
-((("clients, Ethereum","running", id="ix_03clients-asciidoc5", range="startofrange")))If you have the time and resources, you should attempt to run a full node, even if only to learn more about the process. In this section we cover how to download, compile, and run the Ethereum clients Parity and Geth. This requires some familiarity with using the command-line interface on your operating system. It's worth installing these clients, whether you choose to run them as full nodes, as testnet nodes, or as clients to a local private blockchain.
+((("clients, Ethereum","running", id="ix_03clients-asciidoc5", range="startofrange")))Если у вас есть время и ресурсы, вы должны попытаться запустить полный узел, даже если только для того, чтобы узнать больше об этом процессе. В этом разделе мы расскажем, как загрузить, скомпилировать и запустить клиенты Ethereum Parity и Geth. Это требует некоторого знакомства с использованием интерфейса командной строки в вашей операционной системе. Стоит установить эти клиенты, независимо от того, решите ли вы запускать их как полные узлы, как узлы тестовой сети или как клиенты для локального частного блокчейна.
 
 [[requirements]]
-==== Hardware Requirements for a Full Node
+==== Требования к оборудованию для полного узла
 
-((("clients, Ethereum","full node hardware requirements")))((("full node","hardware requirements")))Before we get started, you should ensure you have a computer with sufficient resources to run an Ethereum full node. You will need at least 300 GB of disk space to store a full copy of the Ethereum blockchain. If you also want to run a full node on the Ethereum testnet, you will need at least an additional 75 GB. Downloading 375 GB of blockchain data can take a long time, so it's recommended that you work on a fast internet connection.
+((("clients, Ethereum","full node hardware requirements")))((("full node","hardware requirements")))Прежде чем мы начнем, вы должны убедиться, что у вас есть компьютер с достаточными ресурсами для запуска полного узла Ethereum. Вам потребуется не менее 300 ГБ дискового пространства для хранения полной копии блокчейна Ethereum. Если вы также хотите запустить полный узел в тестовой сети Ethereum, вам потребуется как минимум дополнительные 75 ГБ. Загрузка 375 ГБ данных блокчейна может занять много времени, поэтому рекомендуется использовать быстрое подключение к Интернету.
 
-Syncing the Ethereum blockchain is very input/output (I/O) intensive. It is best to have a solid-state drive (SSD). If you have a mechanical hard disk drive (HDD), you will need at least 8 GB of RAM to use as cache. Otherwise, you may discover that your system is too slow to keep up and sync fully.
+Синхронизация блокчейна Ethereum требует очень больших затрат на ввод-вывод (I/O). Лучше всего иметь твердотельный накопитель (SSD). Если у вас есть механический жесткий диск (HDD), вам потребуется не менее 8 ГБ оперативной памяти для использования в качестве кэша. В противном случае вы можете обнаружить, что ваша система работает слишком медленно, чтобы поддерживать полную синхронизацию.
 
-*Minimum requirements:*
+*Минимальные требования:*
 
-* CPU with 2+ cores
-* At least 300 GB free storage space
-* 4 GB RAM minimum with an SSD, 8 GB+ if you have an HDD
-* 8 MBit/sec download internet service
+* Процессор с 2+ ядрами
+* Не менее 300 ГБ свободного места для хранения
+* Минимум 4 ГБ оперативной памяти с SSD, 8 ГБ+, если у вас HDD
+* Интернет-соединение со скоростью 8 Мбит/сек
 
-These are the minimum requirements to sync a full (but pruned) copy of an Ethereum-based blockchain.
+Это минимальные требования для синхронизации полной (но сокращенной) копии блокчейна на основе Ethereum.
 
-At the time of writing the Parity codebase is lighter on resources, so if you're running with limited hardware you'll likely see better results using Parity.
+На момент написания кодовая база Parity требует меньших ресурсов, поэтому, если вы работаете с ограниченным оборудованием, вы, вероятно, увидите лучшие результаты при использовании Parity.
 
-If you want to sync in a reasonable amount of time and store all the development tools, libraries, clients, and blockchains we discuss in this book, you will want a more capable computer.
+Если вы хотите выполнить синхронизацию за разумное время и сохранить все инструменты разработки, библиотеки, клиенты и цепочки блоков, которые мы обсуждаем в этой книге, вам понадобится более производительный компьютер.
 
-*Recommended specifications:*
+*Рекомендуемые технические характеристики:*
 
-* Fast CPU with 4+ cores
-* 16 GB+ RAM
-* Fast SSD with at least 500 GB free space
-* 25+ MBit/sec download internet service
+* Быстрый процессор с более чем 4 ядрами
+* 16 ГБ+ оперативной памяти
+* Быстрый твердотельный накопитель со свободным пространством не менее 500 ГБ
+* Загрузка интернет-сервиса со скоростью более 25 Мбит/сек
 
-It’s difficult to predict how fast a blockchain's size will increase and when more disk space will be required, so it’s recommended to check the blockchain's latest size before you start syncing.
+Трудно предсказать, как быстро увеличится размер блокчейна и когда потребуется больше места на диске, поэтому рекомендуется проверить последний размер блокчейна перед началом синхронизации.
 
 [NOTE]
 ====
-The disk size requirements listed here assume you will be running a node with default settings, where the blockchain is "pruned" of old state data. If you instead run a full "archival" node, where all state is kept on disk, it will likely require more than 1 TB of disk space.
+Требования к размеру диска, перечисленные здесь, предполагают, что вы будете запускать узел с настройками по умолчанию, где блокчейн "очищен" от старых данных о состоянии. Если вместо этого вы запустите полный "архивный" узел, где все состояние хранится на диске, скорее всего, потребуется более 1 ТБ дискового пространства.
 ====
 
-These links provide up-to-date estimates of the blockchain size:
+Эти ссылки предоставляют актуальные оценки размера блокчейна:
 
 * https://bitinfocharts.com/ethereum/[Ethereum]
 
 * https://bitinfocharts.com/ethereum%20classic/[Ethereum Classic]
 
 [[sw_reqs]]
-==== Software Requirements for Building and Running a Client (Node)
+==== Требования к программному обеспечению для создания и запуска Клиента (узла)
 
-((("clients, Ethereum","software requirements for building/running", id="ix_03clients-asciidoc6", range="startofrange")))This section covers Parity and Geth client software. It also assumes you are using a Unix-like command-line environment. The examples show the commands and output as they appear on an Ubuntu GNU/Linux operating system running the bash shell (command-line execution environment).
+((("clients, Ethereum","software requirements for building/running", id="ix_03clients-asciidoc6", range="startofrange")))В этом разделе рассматривается клиентское программное обеспечение Parity и Geth. Это также предполагает, что вы используете Unix-подобную среду командной строки. В примерах показаны команды и выходные данные в том виде, в каком они отображаются в операционной системе Ubuntu GNU/Linux, работающей под управлением оболочки bash (среда выполнения командной строки).
 
-Typically every blockchain will have its own version of Geth, while Parity provides support for multiple Ethereum-based blockchains (Ethereum, Ethereum Classic, pass:[<span class="keep-together">Ellaism</span>], Expanse, Musicoin) with the same client download.
+Как правило, каждый блокчейн будет иметь свою собственную версию Geth, в то время как Parity обеспечивает поддержку нескольких блокчейнов на базе Ethereum (Ethereum, Ethereum Classic, pass:[<span class="keep-together">Ellaism</span>], Expanse, Musicoin) одним и тем же клиентом.
 
 [TIP]
 =====
-((("$ symbol")))((("command-line interface")))((("shell commands")))((("terminal applications")))In many of the examples in this chapter, we will be using the operating system's command-line interface (also known as a "shell"), accessed via a "terminal" application. The shell will display a prompt; you type a command, and the shell responds with some text and a new prompt for your next command. The prompt may look different on your system, but in the following examples, it is denoted by a +$+ symbol. In the examples, when you see text after a +$+ symbol, don't type the +$+ symbol but type the command immediately following it (shown in bold), then press Enter to execute the command. In the examples, the lines below each command are the operating system's responses to that command. When you see the next +$+ prefix, you'll know it's a new command and you should repeat the process.
+((("$ symbol")))((("command-line interface")))((("shell commands")))((("terminal applications")))Во многих примерах в этой главе мы будем использовать интерфейс командной строки операционной системы (также известный как "оболочка"), доступ к которому осуществляется через "терминальное" приложение. Оболочка отобразит приглашение; вы вводите команду, и оболочка отвечает некоторым текстом и новым приглашением для вашей следующей команды. Приглашение может выглядеть по-разному в вашей системе, но в следующих примерах оно обозначается символом +$+. В примерах, когда вы видите текст после символа +$+, не вводите символ +$+, а введите команду сразу после него (выделена жирным шрифтом), затем нажмите Enter, чтобы выполнить команду. В примерах строки под каждой командой представляют собой ответы операционной системы на эту команду. Когда вы увидите следующий префикс +$+, вы будете знать, что это новая команда, и вам следует повторить процесс.
 =====
 
-Before we get started, you may need to install some software. If you've never done any software development on the computer you are currently using, you will probably need to install some basic tools. For the examples that follow, you will need to install +git+, the source-code management system; +golang+, the Go programming language and standard libraries; and Rust, a systems programming language.
+Прежде чем мы начнем, вам, возможно, потребуется установить некоторое программное обеспечение. Если вы никогда не занимались разработкой программного обеспечения на компьютере, который используете в данный момент, вам, вероятно, потребуется установить некоторые базовые инструменты. Для следующих примеров вам нужно будет установить +git+, систему управления исходным кодом; +golang+, язык программирования Go и стандартные библиотеки; и Rust, язык системного программирования.
 
-((("git")))Git can be installed by following the instructions at https://git-scm.com[].
+((("git")))Git можно установить, следуя инструкциям по адресу https://git-scm.com[].
 
-((("Go", seealso="Geth (Go-Ethereum)")))Go can be installed by following the instructions at https://golang.org[], or https://github.com/golang/go/wiki/Ubuntu[] if you are using Ubuntu.
+((("Go", seealso="Geth (Go-Ethereum)")))Go можно установить, следуя инструкциям по адресу https://golang.org[], или https://github.com/golang/go/wiki/Ubuntu[] если вы используете Ubuntu.
 
 [NOTE]
 =====
-((("Geth (Go-Ethereum)")))Geth requirements vary, but if you stick with Go version 1.13 or greater you should be able to compile most versions of Geth. Of course, you should always refer to the documentation for your chosen flavor of Geth.
+((("Geth (Go-Ethereum)")))Требования к Geth различаются, но если вы придерживаетесь версии Go 1.13 или выше, вы сможете скомпилировать большинство версий Geth. Конечно, вы всегда должны обращаться к документации для выбранного вами варианта Geth.
 
-The version of +golang+ that is installed on your operating system or is available from your system's package manager may be significantly older than 1.13. If so, remove it and install the latest version from https://golang.org/[].
+Версия +golang+, установленная в вашей операционной системе или доступная из системного менеджера пакетов, может быть значительно старше 1.13. Если это так, удалите его и установите последнюю версию с https://golang.org/[].
 =====
 
-((("Rust")))Rust can be installed by following the instructions at https://www.rustup.rs/[].
+((("Rust")))Rust можно установить, следуя инструкциям по адресу https://www.rustup.rs/[].
 
 [NOTE]
 =====
-Parity requires Rust version 1.27 or greater.
+Для Parity требуется Rust версии 1.27 или выше.
 =====
 
-((("Parity","libraries for")))Parity also requires some software libraries, such as OpenSSL and +libudev+. To install these on a Ubuntu or Debian GNU/Linux compatible system, use the following pass:[<span class="keep-together">command</span>]:
+((("Parity","libraries for")))Для Parity также требуются некоторые программные библиотеки, такие как OpenSSL и +libudev+. Чтобы установить их в системе, совместимой с Ubuntu или Debian GNU/Linux, используйте следующюю pass:[<span class="keep-together">команду</span>]:
 
 ++++
 <pre data-type="programlisting">
@@ -186,28 +186,28 @@ $ <strong>sudo apt-get install openssl libssl-dev libudev-dev cmake clang</stron
 </pre>
 ++++
 
-For other operating systems, use the package manager of your OS or follow the https://github.com/paritytech/parity/wiki/Setup[Wiki instructions] to install the required libraries.
+Для других операционных систем используйте диспетчер пакетов вашей операционной системы или следуйте инструкциям https://github.com/paritytech/parity/wiki/Setup[Вики-инструкции] для установки необходимых библиотек.
 
-Now that you have +git+, +golang+, Rust, and the necessary libraries installed, let's get to work!
+Теперь, когда у вас установлены +git+, +golang+, Rust и необходимые библиотеки, давайте приступим к работе!
 
 [[parity]]
 ==== Parity
 
-((("clients, Ethereum","Parity and")))((("Parity","basics")))Parity is an implementation of a full-node Ethereum client and DApp browser. It was written &#x201c;from the ground up&#x201d; in Rust, a systems programming language, with the aim of building a modular, secure, and scalable Ethereum client. Parity is developed by Parity Tech, a UK company, and is released under the GPLv3 free software license.
+((("clients, Ethereum","Parity and")))((("Parity","basics")))Parity - это реализация полноузлового клиента Ethereum и браузера DApp. Он был написан "с нуля" на Rust, языке системного программирования, с целью создания модульного, безопасного и масштабируемого клиента Ethereum. Parity разработан британской компанией Parity Tech и выпущен под лицензией свободного программного обеспечения GPLv3.
 
 [NOTE]
 =====
-Disclosure: One of the authors of this book, Dr. Gavin Wood, is the founder of Parity Tech and wrote much of the Parity client. Parity represents about 25% of the installed Ethereum client base.
+Один из авторов этой книги, доктор Гэвин Вуд, является основателем Parity Tech и написал большую часть Parity client. На долю Parity приходится около 25% установленной клиентской базы Ethereum.
 =====
 
-To install Parity, you can use the Rust package manager +cargo+ or download the source code from GitHub. The package manager also downloads the source code, so there's not much difference between the two options. In the next section, we will show you how to download and compile Parity yourself.
+Чтобы установить Parity, вы можете использовать менеджер пакетов Rust +cargo+ или загрузить исходный код с GitHub. Менеджер пакетов также загружает исходный код, так что между этими двумя вариантами нет большой разницы. В следующем разделе мы покажем вам, как самостоятельно загрузить и скомпилировать Parity.
 
 [[install_parity]]
-===== Installing Parity
+===== Установка Parity
 
-((("Parity","installing")))The https://wiki.parity.io/Setup[Parity Wiki] offers instructions for building Parity in different environments and containers. We'll show you how to build Parity from source. This assumes you have already installed Rust using +rustup+ (see <<sw_reqs>>).
+((("Parity","installing")))https://wiki.parity.io/Setup[Parity Wiki] предлагает инструкции по созданию Parity в различных средах и контейнерах. Мы покажем вам, как создать Parity из исходного кода. Это предполагает, что вы уже установили Rust с помощью +rust up+ (см. <<sw_reqs>>).
 
-First, get the source code from GitHub:
+Во-первых, получите исходный код с GitHub:
 
 ++++
 <pre data-type="programlisting">
@@ -215,7 +215,7 @@ $ <strong>git clone https://github.com/paritytech/parity</strong>
 </pre>
 ++++
 
-Then change to the _parity_ directory and use +cargo+ to build the executable:
+Затем перейдите в каталог _parity_ и используйте +cargo+ для сборки исполняемого файла:
 
 ++++
 <pre data-type="programlisting">
@@ -224,7 +224,7 @@ $ <strong>cargo install --path .</strong>
 </pre>
 ++++
 
-If all goes well, you should see something like:
+Если все пойдет хорошо, вы должны увидеть что-то вроде:
 
 ++++
 <pre data-type="programlisting">
@@ -244,8 +244,7 @@ $
 </pre>
 ++++
 
-Try and run +parity+ to see if it is installed, by invoking the +--version+ option:
-
+Попробуйте запустить +parity+, чтобы проверить, установлена ли она, вызвав опцию +--version+:
 
 ++++
 <pre data-type="programlisting">
@@ -264,15 +263,15 @@ $
 </pre>
 ++++
 
-Great! Now that Parity is installed, you can sync the blockchain and get started with some basic command-line options.
+Отлично! Теперь, когда Parity установлен, вы можете синхронизировать блокчейн и начать работу с некоторыми базовыми параметрами командной строки.
 
 [[go_ethereum_geth]]
 ==== Go-Ethereum (Geth)
 
-((("clients, Ethereum","Geth and", id="ix_03clients-asciidoc7", range="startofrange")))((("Geth (Go-Ethereum)","basics", id="ix_03clients-asciidoc8", range="startofrange")))Geth is the Go language implementation that is actively developed by the Ethereum Foundation, so is considered the "official" implementation of the Ethereum client. Typically, every Ethereum-based blockchain will have its own Geth implementation. If you're running Geth, then you'll want to make sure you grab the correct version for your blockchain using one of the following repository links:
+((("clients, Ethereum","Geth and", id="ix_03clients-asciidoc7", range="startofrange")))((("Geth (Go-Ethereum)","basics", id="ix_03clients-asciidoc8", range="startofrange")))Geth - это реализация на языке Go, которая активно разрабатывается Ethereum Foundation, поэтому считается "официальной" реализацией клиента Ethereum. Как правило, каждый блокчейн, основанный на Ethereum, будет иметь свою собственную реализацию Geth. Если вы используете Geth, то вам нужно убедиться, что вы выбрали правильную версию для своего блокчейна, используя одну из следующих ссылок на репозиторий:
 
 
-* https://github.com/ethereum/go-ethereum[Ethereum] (or https://geth.ethereum.org/)
+* https://github.com/ethereum/go-ethereum[Ethereum] (или https://geth.ethereum.org/)
 
 * https://github.com/etclabscore/go-ethereum[Ethereum Classic]
 
@@ -286,15 +285,15 @@ Great! Now that Parity is installed, you can sync the blockchain and get started
 
 [NOTE]
 =====
-You can also skip these instructions and install a precompiled binary for your platform of choice. The precompiled releases are much easier to install and can be found in the "releases" section of any of the repositories listed here. However, you may learn more by downloading and compiling the software yourself.
+Вы также можете пропустить эти инструкции и установить предварительно скомпилированный двоичный файл для выбранной вами платформы. Предварительно скомпилированные версии намного проще в установке, и их можно найти в разделе "релизы" любого из перечисленных здесь репозиториев. Однако вы можете узнать больше, самостоятельно загрузив и скомпилировав программное обеспечение.
 =====
 
 [[cloning_repo]]
-===== Cloning the repository
+===== Клонирование репозитория
 
-((("Geth (Go-Ethereum)","cloning Git repo for")))The first step is to clone the Git repository, to get a copy of the source code.
+((("Geth (Go-Ethereum)","cloning Git repo for")))Первый шаг - клонировать репозиторий Git, чтобы получить копию исходного кода.
 
-To make a local clone of your chosen repository, use the +git+ command as follows, in your home directory or under any directory you use for development:
+Чтобы создать локальный клон выбранного вами репозитория, используйте команду +git+ следующим образом в вашем домашнем каталоге или в любом каталоге, который вы используете для разработки:
 
 ++++
 <pre data-type="programlisting">
@@ -302,7 +301,7 @@ $ <strong>git clone &lt;Repository Link&gt;</strong>
 </pre>
 ++++
 
-You should see a progress report as the repository is copied to your local system:
+Вы должны увидеть отчет о ходе выполнения по мере копирования хранилища в вашу локальную систему:
 
 [[cloning_status]]
 ----
@@ -313,12 +312,12 @@ Receiving objects: 100% (86915/86915), 134.73 MiB | 29.30 MiB/s, done.
 Resolving deltas: 100% (57590/57590), done.
 ----
 
-Great! Now that you have a local copy of Geth, you can compile an executable for your platform.
+Отлично! Теперь, когда у вас есть локальная копия Geth, вы можете скомпилировать исполняемый файл для своей платформы.
 
 [[build_geth_src]]
-===== Building Geth from source code
+===== Создание Geth из исходного кода
 
-((("Geth (Go-Ethereum)","building from source code")))To build Geth, change to the directory where the source code was downloaded and use the +make+ command:
+((("Geth (Go-Ethereum)","building from source code")))Чтобы создать Geth, перейдите в каталог, в который был загружен исходный код, и используйте команду +make+:
 
 ++++
 <pre data-type="programlisting">
@@ -327,7 +326,7 @@ $ <strong>make geth</strong>
 </pre>
 ++++
 
-If all goes well, you will see the Go compiler building each component until it produces the +geth+ executable:
+Если все пойдет хорошо, вы увидите, как компилятор Go создает каждый компонент до тех пор, пока он не создаст исполняемый файл +geth+:
 
 [[making_geth_status]]
 ----
@@ -347,7 +346,7 @@ Run "build/bin/geth" to launch geth.
 $
 ----
 
-Let's make sure +geth+ works without actually starting it running:
+Давайте убедимся, что +geth + работает, фактически не запуская его.:
 
 ++++
 <pre data-type="programlisting">
@@ -365,52 +364,52 @@ Operating System: linux
 </pre>
 ++++
 
-Your +geth version+ command may show slightly different information, but you should see a version report much like the one seen here.
+Ваша команда +geth version+ может отображать несколько иную информацию, но вы должны увидеть отчет о версии, очень похожий на тот, который показан здесь.
 
-The next sections explains the challenge with the initial synchronization of Ethereum's blockchain(((range="endofrange", startref="ix_03clients-asciidoc6"))).(((range="endofrange", startref="ix_03clients-asciidoc5")))
+В следующих разделах объясняется проблема с первоначальной синхронизацией блокчейна Ethereum(((range="endofrange", startref="ix_03clients-asciidoc6"))).(((range="endofrange", startref="ix_03clients-asciidoc5")))
 
 
 [[first_sync]]
-=== The First Synchronization of Ethereum-Based Blockchains
+=== Первая синхронизация блокчейнов на базе Ethereum
 
-((("blockchain","first synchronization of", id="ix_03clients-asciidoc9", range="startofrange")))((("clients, Ethereum","first synchronization of Ethereum-based blockchains", id="ix_03clients-asciidoc10", range="startofrange")))((("first synchronization","of Ethereum-based blockchains", id="ix_03clients-asciidoc11", range="startofrange")))Traditionally, when syncing an Ethereum blockchain, your client would download and validate every block and every transaction since the very start&#x2014;i.e., from the genesis block.
+((("blockchain","first synchronization of", id="ix_03clients-asciidoc9", range="startofrange")))((("clients, Ethereum","first synchronization of Ethereum-based blockchains", id="ix_03clients-asciidoc10", range="startofrange")))((("first synchronization","of Ethereum-based blockchains", id="ix_03clients-asciidoc11", range="startofrange")))Традиционно при синхронизации блокчейна Ethereum ваш клиент загружал и проверял каждый блок и каждую транзакцию с самого начала &#x2014; т.е. с блока genesis.
 
-While it is possible to fully sync the blockchain this way, this type of sync will take a very long time and has high resource requirements (it will need much more RAM, and will take a very long time indeed if you don't have fast storage).
+Хотя таким образом можно полностью синхронизировать блокчейн, этот тип синхронизации займет очень много времени и требует больших ресурсов (для этого потребуется гораздо больше оперативной памяти и действительно займет очень много времени, если у вас нет быстрого хранилища).
 
-Many Ethereum-based blockchains were the victim of denial-of-service attacks at the end of 2016. Affected blockchains will tend to sync slowly when doing a full sync.
+Многие блокчейны на базе Ethereum стали жертвами атак типа "отказ в обслуживании" (DoS) в конце 2016 года. Затронутые блокчейны будут иметь тенденцию к медленной синхронизации при выполнении полной синхронизации.
 
-For example, on Ethereum, a new client will make rapid progress until it reaches block 2,283,397. This block was mined on September 18, 2016, and marks the beginning of the DoS attacks. From this block to block 2,700,031 (November 26, 2016), the validation of transactions becomes extremely slow, memory intensive, and I/O intensive. This results in validation times exceeding 1 minute per block. Ethereum implemented a series of upgrades, using hard forks, to address the underlying vulnerabilities that were exploited in the DoS attacks. These upgrades also cleaned up the blockchain by removing some 20 million empty accounts created by spam transactions.
+Например, в Ethereum новый клиент будет быстро прогрессировать, пока не достигнет блока 2,283,397. Этот блок был заминирован 18 сентября 2016 года и знаменует собой начало DoS-атак. Начиная с этого блока и заканчивая блоком 2 700 031 (26 ноября 2016 года) проверка транзакций становится чрезвычайно медленной, требует много памяти и ввода-вывода. Это приводит к тому, что время проверки превышает 1 минуту на блок. Ethereum внедрил серию обновлений с использованием хардфорков для устранения основных уязвимостей, которые были использованы в DoS-атаках. Эти обновления также очистили блокчейн, удалив около 20 миллионов пустых учетных записей, созданных в результате спам-транзакций.
 
-If you are syncing with full validation, your client will slow down and may take several days, or perhaps even longer, to validate the blocks affected by the DoS attacks.
+Если вы синхронизируетесь с полной проверкой, ваш клиент будет замедляться, и может потребоваться несколько дней, а возможно, и больше, для проверки блоков, затронутых DoS-атаками.
 
-((("fast synchronization")))Fortunately, most Ethereum clients by default now perform a "fast" synchronization that skips the full validation of transactions until it has synced to the tip of the blockchain, then resumes full validation.
+((("fast synchronization")))К счастью, большинство клиентов Ethereum по умолчанию теперь выполняют "быструю" синхронизацию, которая пропускает полную проверку транзакций до тех пор, пока она не будет синхронизирована с концом блокчейна, а затем возобновляет полную проверку.
 
-Geth performs fast synchronization by default for Ethereum. You may need to refer to the specific instructions for other chosen Ethereum chain.
+Geth выполняет быструю синхронизацию по умолчанию для Ethereum. Возможно, вам потребуется обратиться к конкретным инструкциям для другой выбранной цепочки Ethereum.
 
-Parity also does fast synchronization by default.
+Parity также выполняет быструю синхронизацию по умолчанию.
 
 [NOTE]
 =====
-Geth can only operate fast synchronization when starting with an empty block database. If you have already started syncing without fast mode, Geth cannot switch. It is faster to delete the blockchain data directory and start fast syncing from the beginning than to continue syncing with full validation. Be careful to not delete any wallets when deleting the blockchain data!
+Geth может выполнять быструю синхронизацию только при запуске с пустой базой данных блоков. Если вы уже начали синхронизацию без быстрого режима, Geth не сможет переключиться. Быстрее удалить каталог данных блокчейна и начать быструю синхронизацию с самого начала, чем продолжать синхронизацию с полной проверкой. Будьте осторожны, чтобы не удалить какие-либо кошельки при удалении данных блокчейна!
 =====
 
-==== Running Geth or Parity
+==== Запуск Geth или Parity
 
-((("first synchronization","Geth or Parity for")))((("Geth (Go-Ethereum)","for first synchronization")))((("Parity","for first synchronization")))Now that you understand the challenges of the "first sync," you're ready to start an Ethereum client and sync the blockchain. For both Geth and Parity, you can use the +--help+ option to see all the configuration parameters. The default settings are usually sensible and appropriate for most uses. Choose how to configure any optional parameters to suit your needs, then start Geth or Parity to sync the chain. Then wait...
+((("first synchronization","Geth or Parity for")))((("Geth (Go-Ethereum)","for first synchronization")))((("Parity","for first synchronization")))Теперь, когда вы понимаете проблемы "первой синхронизации", вы готовы запустить клиент Ethereum и синхронизировать блокчейн. Как для Geth, так и для Parity вы можете использовать опцию +--help+, чтобы просмотреть все параметры конфигурации. Настройки по умолчанию обычно разумны и подходят для большинства применений. Выберите способ настройки любых дополнительных параметров в соответствии с вашими потребностями, затем запустите Geth или Parity для синхронизации цепочки. Затем ждите...
 
 [TIP]
 ====
-Syncing the Ethereum blockchain will take anywhere from half a day on a very fast system with lots of RAM, to several days on a slower system.
+Синхронизация блокчейна Ethereum займет от половины дня в очень быстрой системе с большим объемом оперативной памяти до нескольких дней в более медленной системе.
 ====
 
 [[json_rpc]]
-==== The JSON-RPC Interface
+==== Интерфейс JSON-RPC
 
-((("clients, Ethereum","and JSON-RPC API", id="ix_03clients-asciidoc12", range="startofrange")))((("first synchronization","and JSON-RPC API", id="ix_03clients-asciidoc13", range="startofrange")))((("JSON-RPC API", id="ix_03clients-asciidoc14", range="startofrange")))Ethereum clients offer an application programming interface and a set of Remote Procedure Call (RPC) commands, which are encoded as JavaScript Object Notation (JSON). You will see this referred to as the _JSON-RPC API_. Essentially, the JSON-RPC API is an interface that allows us to write programs that use an Ethereum client as a _gateway_ to an Ethereum network and blockchain.
+((("clients, Ethereum","and JSON-RPC API", id="ix_03clients-asciidoc12", range="startofrange")))((("first synchronization","and JSON-RPC API", id="ix_03clients-asciidoc13", range="startofrange")))((("JSON-RPC API", id="ix_03clients-asciidoc14", range="startofrange")))Клиенты Ethereum предлагают интерфейс прикладного программирования (API) и набор команд удаленного вызова процедур (Remote Procedure Call) (RPC), которые кодируются в виде JSON. Вы увидите, что это называется _JSON-RPC API_. По сути, API JSON-RPC - это интерфейс, который позволяет нам писать программы, использующие клиент Ethereum для _доступа_ (_gateway_) к сети Ethereum и блокчейну.
 
-Usually, the RPC interface is offered as an HTTP service on port 8545. For security reasons it is restricted, by default, to only accept connections from localhost (the IP address of your own computer, which is 127.0.0.1).
+Обычно интерфейс RPC предлагается как HTTP-сервис на порту 8545. По соображениям безопасности по умолчанию разрешено принимать соединения только с localhost (IP-адрес вашего собственного компьютера, который равен 127.0.0.1).
 
-To access the JSON-RPC API, you can use a specialized library (written in the programming language of your choice) that provides "stub" function calls corresponding to each available RPC command, or you can manually construct HTTP requests and send/receive JSON-encoded requests. You can even use a generic command-line HTTP client, like +curl+, to call the RPC interface. Let's try that. First, ensure that you have Geth up and running, configured with --rpc to allow HTTP access to the RPC interface, then switch to a new terminal window (e.g., with Ctrl-Shift-N or Ctrl-Shift-T in an existing terminal window) as shown here:
+Чтобы получить доступ к API JSON-RPC, вы можете использовать специализированную библиотеку (написанную на выбранном вами языке программирования), которая предоставляет вызовы функций-заглушек "stub", соответствующие каждой доступной команде RPC, или вы можете вручную создавать HTTP-запросы и отправлять/получать запросы в кодировке JSON. Вы даже можете использовать общий HTTP-клиент командной строки, например +curl+, для вызова интерфейса RPC. Давайте попробуем это сделать. Сначала убедитесь, что у вас запущен Geth, настроенный с помощью --rpc для разрешения HTTP-доступа к интерфейсу RPC, затем переключитесь на новое окно терминала (например, с помощью Ctrl-Shift-N или Ctrl-Shift-T в существующем окне терминала), как показано здесь:
 
 ++++
 <pre data-type="programlisting">
@@ -423,39 +422,39 @@ $ <strong>curl -X POST -H "Content-Type: application/json" --data \
 </pre>
 ++++
 
-In this example, we use +curl+ to make an HTTP connection to the address _http://localhost:8545_. We are already running +geth+, which offers the JSON-RPC API as an HTTP service on port 8545. We instruct +curl+ to use the HTTP +POST+ command and to identify the content as type +application/json+. Finally, we pass a JSON-encoded request as the +data+ component of our HTTP request. Most of our command line is just setting up +curl+ to make the HTTP connection correctly. The interesting part is the actual JSON-RPC command we issue:
+В этом примере мы используем +curl+ для установления HTTP-соединения с адресом _http://localhost:8545_. Мы уже запустили +geth+, который предлагает API JSON-RPC в качестве HTTP-сервиса на порту 8545. Мы инструктируем +curl+ использовать команду HTTP +POST+ и идентифицировать содержимое как тип +application/json+. Наконец, мы передаем запрос в кодировке JSON в качестве компонента +data+ нашего HTTP-запроса. Большая часть нашей командной строки - это просто настройка +curl+ для правильного установления HTTP-соединения. Интересная часть - это фактическая команда JSON-RPC, которую мы выдаем:
 
 [[JSON_RPC_command]]
 ----
 {"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":1}
 ----
 
-The JSON-RPC request is formatted according to the https://www.jsonrpc.org/specification[JSON-RPC 2.0 specification]. Each request contains four elements:
+Запрос JSON-RPC форматируется в соответствии с https://www.jsonrpc.org/specification[Спецификация JSON-RPC 2.0]. Каждый запрос содержит четыре элемента:
 
-++jsonrpc++:: Version of the JSON-RPC protocol. This MUST be exactly ++"2.0"++.
+++jsonrpc++:: Версия протокола JSON-RPC. Она должна быть только ++"2.0"++.
 
-++method++:: The name of the method to be invoked.
+++method++:: Имя вызываемого метода.
 
-++params++:: A structured value that holds the parameter values to be used during the invocation of the method. This member MAY be omitted.
+++params++:: Структурированное значение, содержащее значения параметров, которые будут использоваться во время вызова метода. Этот элемент может быть пропущен.
 
-++id++:: An identifier established by the client that MUST contain a +String+, +Number+, or +NULL+ value if included. The server MUST reply with the same value in the response object if included. This member is used to correlate the context between the two objects.
+++id++:: Идентификатор, установленный клиентом, который должен содержать +String+, +Number+ или +NULL+ значение, если оно включено. Сервер должен ответить с тем же значением в объекте ответа, если он включен. Этот элемент используется для сопоставления контекста между двумя объектами.
 
 [TIP]
 ====
-((("batching")))The +id+ parameter is used primarily when you are making multiple requests in a single JSON-RPC call, a practice called _batching_. Batching is used to avoid the overhead of a new HTTP and TCP connection for every request. In the Ethereum context, for example, we would use batching if we wanted to retrieve thousands of transactions over one HTTP connection. When batching, you set a different +id+ for each request and then match it to the +id+ in each response from the JSON-RPC server. The easiest way to implement this is to maintain a counter and increment the value for each request.
+((("batching")))Параметр +id+ используется в основном, когда вы выполняете несколько запросов в одном вызове JSON-RPC, практика называется _batching_. Пакетирование используется, чтобы избежать накладных расходов на новое HTTP- и TCP-соединение для каждого запроса. Например, в контексте Ethereum мы бы использовали пакетную обработку, если бы хотели получить тысячи транзакций по одному HTTP-соединению. При пакетной обработке вы устанавливаете другой +id+ для каждого запроса, а затем сопоставляете его с +id+ в каждом ответе от сервера JSON-RPC. Самый простой способ реализовать это - использовать счетчик для значений +id+ и увеличивать его значение для каждого запроса.
 ====
 
 
-The response we receive is:
+Ответ, который мы получаем, таков:
 
 ----
 {"jsonrpc":"2.0","id":1,
 "result":"Geth/v1.9.11-unstable-0b284f6c-20200123/linux-amd64/go1.13.4"}
 ----
 
-This tells us that the JSON-RPC API is being served by Geth client version 1.9.11.
+Это говорит нам о том, что API JSON-RPC обслуживается клиентом Geth версии 1.9.11.
 
-Let's try something a bit more interesting. In the next example, we ask the JSON-RPC API for the current price of gas in wei:
+Давайте попробуем что-нибудь более интересное. В следующем примере мы запрашиваем у API JSON-RPC текущую цену на газ в wei:
 
 ++++
 <pre data-type="programlisting">
@@ -467,7 +466,7 @@ $ <strong>curl -X POST -H "Content-Type: application/json" --data \
 </pre>
 ++++
 
-The response, +0x430e23400+, tells us that the current gas price is 18 gwei (gigawei or billion wei). If, like us, you don't think in hexadecimal, you can convert it to decimal on the command line with a little bash-fu:
+Ответ, +0x430e23400+, сообщает нам, что текущая цена на газ составляет 18 гвей (гигавэй или миллиард вей). Если вы, как и мы, не мыслите в шестнадцатеричном формате, вы можете преобразовать его в десятичный в командной строке с помощью небольшого bash-fu:
 
 ++++
 <pre data-type="programlisting">
@@ -477,12 +476,12 @@ $ <strong>echo $((0x430e23400))</strong>
 </pre>
 ++++
 
-The full JSON-RPC API can be investigated on the https://github.com/ethereum/wiki/wiki/JSON-RPC[Ethereum wiki].
+Полный API JSON-RPC можно изучить на https://github.com/ethereum/wiki/wiki/JSON-RPC[Ethereum wiki].
 
 [[parity_compatibility_mode]]
-===== Parity's Geth compatibility mode
+===== Parity: режим совместимости с Geth
 
-Parity has a special "Geth compatibility mode,&#x201d; where it offers a JSON-RPC API that is identical to that offered by Geth. To run Parity in this mode, use the +--geth+ switch(((range="endofrange", startref="ix_03clients-asciidoc14")))(((range="endofrange", startref="ix_03clients-asciidoc13")))(((range="endofrange", startref="ix_03clients-asciidoc12"))):(((range="endofrange", startref="ix_03clients-asciidoc11")))(((range="endofrange", startref="ix_03clients-asciidoc10")))(((range="endofrange", startref="ix_03clients-asciidoc9")))
+У Parity есть специальный "режим совместимости с Geth", в котором он предлагает API JSON-RPC, идентичный тому, который предлагает Geth. Чтобы запустить Parity в этом режиме, используйте переключатель +--geth+(((range="endofrange", startref="ix_03clients-asciidoc14")))(((range="endofrange", startref="ix_03clients-asciidoc13")))(((range="endofrange", startref="ix_03clients-asciidoc12"))):(((range="endofrange", startref="ix_03clients-asciidoc11")))(((range="endofrange", startref="ix_03clients-asciidoc10")))(((range="endofrange", startref="ix_03clients-asciidoc9")))
 
 ++++
 <pre data-type="programlisting">
@@ -491,26 +490,26 @@ $ <strong>parity --geth</strong>
 ++++
 
 [[lw_eth_clients]]
-=== Remote Ethereum Clients
+=== Удаленные (Remote) клиенты Ethereum
 
-((("clients, Ethereum","remote", id="ix_03clients-asciidoc15", range="startofrange")))((("remote clients", id="ix_03clients-asciidoc16", range="startofrange")))Remote clients offer a subset of the functionality of a full client. They do not store the full Ethereum blockchain, so they are faster to set up and require far less data storage.
+((("clients, Ethereum","remote", id="ix_03clients-asciidoc15", range="startofrange")))((("remote clients", id="ix_03clients-asciidoc16", range="startofrange")))Удаленные клиенты предлагают подмножество функциональных возможностей полноценного клиента. Они не хранят полный блокчейн Ethereum, поэтому их быстрее настраивать и они требуют гораздо меньшего объема хранения данных.
 
 [role="pagebreak-before"]
-These clients typically provide the ability to do one or more of the following:
+Эти клиенты обычно предоставляют возможность выполнять одного или несколько следующих действий:
 
-* Manage private keys and Ethereum addresses in a wallet.
-* Create, sign, and broadcast transactions.
-* Interact with smart contracts, using the data payload.
-* Browse and interact with DApps.
-* Offer links to external services such as block explorers.
-* Convert ether units and retrieve exchange rates from external sources.
-* Inject a web3 instance into the web browser as a JavaScript object.
-* Use a web3 instance provided/injected into the browser by another client.
-* Access RPC services on a local or remote Ethereum node.
+* Управление закрытыми ключами и адресами Ethereum в кошельке.
+* Создание, подпись и транслирование транзакции.
+* Взаимодействие со смарт-контрактами, используя полезную нагрузку данных.
+* Просмотр dApps и взаимодействие с ними.
+* Ссылки на внешние сервисы, такие как block explorers.
+* Конвертацию единицы эфира и извлечение обменных курсов из внешних источников.
+* Внедрение экземпляра web3 в веб-браузер в качестве объекта JavaScript.
+* Использование экземпляра web3, предоставленного/внедрённого в браузер другим клиентом.
+* Доступ к службам RPC на локальном или удаленном узле Ethereum.
 
-Some remote clients, for example mobile (smartphone) wallets, offer only basic wallet functionality. Other remote clients are full-blown DApp browsers. Remote clients commonly offer some of the functions of a full-node Ethereum client without synchronizing a local copy of the Ethereum blockchain by connecting to a full node being run elsewhere, e.g., by you locally on your machine or on a web server, or by a third party on their servers.
+Некоторые удаленные клиенты, например мобильные (на смартфоне) кошельки, предлагают только базовую функциональность кошелька. Другие удаленные клиенты - это полноценные браузеры DApp. Удаленные клиенты обычно предлагают некоторые функции полноузлового клиента Ethereum без синхронизации локальной копии блокчейна Ethereum путем подключения к полному узлу, запущенному в другом месте, например, вами локально на вашем компьютере или на веб-сервере, или третьей стороной на своих серверах.
 
-Let's look at some of the most popular remote clients and the functions they offer.
+Давайте рассмотрим некоторые из самых популярных удаленных клиентов и функции, которые они предлагают.
 
 [[mobile_wallets]]
 ==== Mobile (Smartphone) Wallets
