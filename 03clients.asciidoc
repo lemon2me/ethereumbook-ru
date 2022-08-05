@@ -512,19 +512,19 @@ $ <strong>parity --geth</strong>
 Давайте рассмотрим некоторые из самых популярных удаленных клиентов и функции, которые они предлагают.
 
 [[mobile_wallets]]
-==== Mobile (Smartphone) Wallets
+==== Мобильные (Смартфонные) Кошельки
+Parity
+((("mobile (smartphone) wallets")))((("remote clients","mobile wallets")))((("wallets","mobile")))Все мобильные кошельки являются удаленными клиентами, поскольку смартфоны не имеют достаточных ресурсов для запуска полноценного клиента Ethereum. Легкие клиенты находятся в разработке и не используются для общего использования Ethereum. В случае Parity клиент light помечен как "экспериментальный" и может быть использован путем запуска +parity+ с опцией +--light+.
 
-((("mobile (smartphone) wallets")))((("remote clients","mobile wallets")))((("wallets","mobile")))All mobile wallets are remote clients, because smartphones do not have adequate resources to run a full Ethereum client. Light clients are in development and not in general use for Ethereum. In the case of Parity, the light client is marked "experimental" and can be used by running +parity+ with the +--light+ option.
+Популярные мобильные кошельки включают в себя следующее (мы приводим их только в качестве примеров; это не является одобрением или указанием на безопасность или функциональность этих кошельков):
 
-Popular mobile wallets include the following (we list these merely as examples; this is not an endorsement or an indication of the security or functionality of these wallets):
+https://jaxx.io[Jaxx]:: ((("Jaxx","mobile version")))((("wallets","Jaxx")))Мультивалютный мобильный кошелек, основанный на мнемонической фразе (mnemonic seeds) BIP39, с поддержкой Bitcoin, Litecoin, Ethereum, Ethereum Classic, ZCash, различных токенов ERC20 и многих других валют. Jaxx доступен на Android и iOS, в качестве подключаемого кошелька для браузера и в качестве настольного кошелька для различных операционных систем.
 
-https://jaxx.io[Jaxx]:: ((("Jaxx","mobile version")))((("wallets","Jaxx")))A multicurrency mobile wallet based on BIP-39 mnemonic seeds, with support for Bitcoin, Litecoin, Ethereum, Ethereum Classic, ZCash, a variety of ERC20 tokens, and many other currencies. Jaxx is available on Android and iOS, as a browser plug-in wallet, and as a desktop wallet for a variety of operating systems.
+https://status.im[Status]:: ((("Status (mobile wallet)")))Мобильный кошелек и браузер DApp с поддержкой различных токенов и популярных приложений. Доступно для iOS и Android.
 
-https://status.im[Status]:: ((("Status (mobile wallet)")))A mobile wallet and DApp browser, with support for a variety of tokens and popular DApps. Available for iOS and Android.
+https://trustwalletapp.com/[Trust Wallet]:: ((("Trust Wallet")))((("wallets","Trust")))Мобильный мультивалютный кошелек, который поддерживает Ethereum и Ethereum Classic, а также токены ERC20 и ERC223. Trust Wallet доступен для iOS и Android.
 
-https://trustwalletapp.com/[Trust Wallet]:: ((("Trust Wallet")))((("wallets","Trust")))A mobile multi-currency wallet that supports Ethereum and Ethereum Classic as well as ERC20 and ERC223 tokens. Trust Wallet is available for iOS and Android.
-
-https://www.cipherbrowser.com[Cipher Browser]::  ((("Cipher Browser")))A full-featured Ethereum-enabled mobile DApp browser and wallet that allows integration with Ethereum apps and tokens. Available for iOS and Android.
+https://www.cipherbrowser.com[Cipher Browser]::  ((("Cipher Browser")))Полнофункциональный браузер и кошелек для мобильных приложений с поддержкой Ethereum, который позволяет интегрировать приложения и токены Ethereum. Доступно для iOS и Android.
 
 [[browser_wallets]]
 ==== Browser Wallets
