@@ -400,70 +400,70 @@ PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DU
 Разве вы не рады, что используете язык высокого уровня, такой как Solidity, вместо программирования непосредственно в байт-коде виртуальной машины? Я рад!(((range="endofrange", startref="ix_02intro-asciidoc13")))(((range="endofrange", startref="ix_02intro-asciidoc12")))
 
 [[create_contract]]
-=== Creating the Contract on the Blockchain
+=== Создание контракта на блокчейне
 
-((("blockchain","creating contract on", id="ix_02intro-asciidoc14", range="startofrange")))((("Faucet.sol contract (test example)","on the blockchain", id="ix_02intro-asciidoc15", range="startofrange")))So, we have a contract. We've compiled it into bytecode. Now, we need to "register" the contract on the Ethereum blockchain. We will be using the Ropsten testnet to test our contract, so that's the blockchain we want to submit it to.
+((("blockchain","creating contract on", id="ix_02intro-asciidoc14", range="startofrange")))((("Faucet.sol contract (test example)","on the blockchain", id="ix_02intro-asciidoc15", range="startofrange")))Итак, у нас есть контракт. Мы скомпилировали его в байт-код. Теперь нам нужно "зарегистрировать" контракт на блокчейне Ethereum. Мы будем использовать тестовую сеть Ropsten для тестирования нашего контракта, так что это тот блокчейн, на который мы хотим его отправить.
 
-((("zero address","contract registration")))Registering a contract on the blockchain involves creating a special transaction whose destination is the address +0x0000000000000000000000000000000000000000+, also known as the _zero address_. The zero address is a special address that tells the Ethereum blockchain that you want to register a contract. Fortunately, the Remix IDE will handle all of that for you and send the transaction to MetaMask.
+((("zero address","contract registration")))Регистрация контракта в блокчейне предполагает создание специальной транзакции, адресатом которой является адрес +0x00000000000000000000000000000000000000000000+, также известный как _нулевой адрес_ (_zero address_). Нулевой адрес - это специальный адрес, который сообщает блокчейну Ethereum, что вы хотите зарегистрировать контракт. К счастью, среда разработки Remix IDE обработает все это за вас и отправит транзакцию в MetaMask.
 
-((("Remix IDE", id="ix_02intro-asciidoc16", range="startofrange")))First, switch to the Run tab and select Injected Web3 in the Environment drop-down selection box. This connects the Remix IDE to the MetaMask wallet, and through MetaMask to the Ropsten test network. Once you do that, you can see Ropsten under Environment. Also, in the Account selection box it shows the address of your wallet (see <<remix_run>>).
+((("Remix IDE", id="ix_02intro-asciidoc16", range="startofrange")))Сначала перейдите на вкладку Run и выберите Injected Web 3 в раскрывающемся списке Environment. Это позволяет подключить Remix IDE к кошельку MetaMask, а через MetaMask - к тестовой сети Ropsten. Как только вы это сделаете, вы сможете увидеть Ropsten в поле Environment. Кроме того, в поле выбора учетной записи отображается адрес вашего кошелька (см. <<remix_run>>).
 
 [[remix_run]]
-.Remix IDE Run tab, with Injected Web3 environment selected
+.Вкладка запуска Remix IDE с выбранной средой внедрения Web3
 image::images/remix_run.png["Remix IDE Run tab, with Injected Web3 environment selected"]
 
-Right below the Run settings you just confirmed is the +Faucet+ contract, ready to be created. Click on the Deploy button shown in <<remix_run>>.
+Прямо под настройками запуска, которые вы только что подтвердили, находится готовый к созданию контракт +Faucet+. Нажмите на кнопку Deploy, показанную в <<remix_run>>.
 
-Remix will construct the special "creation" transaction and MetaMask will ask you to approve it, as shown in <<remix_metamask_create>>. You'll notice the contract creation transaction has no ether in it, but it has 275 bytes of data (the compiled contract) and will consume 3 gwei in gas. Press Confirm to approve it.
+Remix создаст специальную транзакцию с "созданием контракта", и MetaMask попросит вас одобрить ее, как показано в <<remix_metamask_create>>. Вы заметите, что транзакция создания контракта не содержит эфира, но она содержит 275 байт данных (скомпилированный контракт) и будет потреблять 3 gwei газа. Нажмите кнопку Подтвердить, чтобы утвердить его.
 
 [[remix_metamask_create]]
-.MetaMask showing the contract creation transaction
+.MetaMask, показывающий транзакцию с созданием контракта
 image::images/remix_metamask_create.png["MetaMask showing the contract creation transaction"]
 
-Now you have to wait. It will take about 15 to 30 seconds for the contract to be mined on Ropsten. Remix won't appear to be doing much, but be patient.
+Теперь вам придется подождать. Для майнинга контракта на Ropsten потребуется от 15 до 30 секунд. Похоже, что вы ничего особенного не делаете, но наберитесь терпения.
 
-Once the contract is created, it appears at the bottom of the Run tab (see <<remix_contract_interact>>).
+Как только контракт будет создан, он появится в нижней части вкладки Выполнить (см. <<remix_contract_interact>>).
 
 [[remix_contract_interact]]
-.The Faucet contract is ALIVE!
+.Контракт на кран ЖИВ!
 image::images/remix_contract_interact.png["The Faucet contract is ALIVE!"]
 
-Notice that the +Faucet+ contract now has an address of its own: Remix shows it as &#x201c;Faucet at 0x72e...c7829&#x201d; (although your address, the random letters and numbers, will be different). The small clipboard symbol to the right allows you to copy the contract address to your clipboard. We will use that in the next section.(((range="endofrange", startref="ix_02intro-asciidoc16")))(((range="endofrange", startref="ix_02intro-asciidoc15")))
+Обратите внимание, что контракт +Faucet+ теперь имеет собственный адрес: Remix показывает его как &#x201c;Faucet в 0x72e...c7829 &#x201d; (хотя ваш адрес, случайные буквы и цифры, будут отличаться). Маленький символ буфера обмена справа позволяет скопировать адрес контракта в буфер обмена. Мы будем использовать это в следующем разделе.(((range="endofrange", startref="ix_02intro-asciidoc16")))(((range="endofrange", startref="ix_02intro-asciidoc15")))
 
 [[interact_contract]]
-=== Interacting with the Contract
+=== Взаимодействие с контрактом
 
-((("Faucet.sol contract (test example)","interacting with", id="ix_02intro-asciidoc17", range="startofrange")))Let's recap what we've learned so far: Ethereum contracts are programs that control money, which run inside a virtual machine called the EVM. They are created by a special transaction that submits their bytecode to be recorded on the blockchain. Once they are created on the blockchain, they have an Ethereum address, just like wallets. Anytime someone sends a transaction to a contract address it causes the contract to run in the EVM, with the transaction as its input. Transactions sent to pass:[<span class="keep-together">contract</span>] addresses may have ether or data or both. If they contain ether, it is "deposited" to the contract balance. If they contain data, the data can specify a named function in the contract and call it, passing arguments to the function.
+((("Faucet.sol contract (test example)","interacting with", id="ix_02intro-asciidoc17", range="startofrange")))Давайте резюмируем то, что мы узнали до сих пор: контракты Ethereum - это программы, управляющие деньгами, которые выполняются внутри виртуальной машины, называемой EVM. Они создаются с помощью специальной транзакции, которая отправляет их байт-код для записи в блокчейн. Как только они создаются на блокчейне, у них есть адрес Ethereum, как и у кошельков. Каждый раз, когда кто-то отправляет транзакцию на адрес контракта, это приводит к запуску контракта в EVM с транзакцией в качестве входных данных. Транзакции, отправленные на pass:[<span class="keep-together">контракт</span>]-адреса могут содержать эфир или данные, или и то, и другое. Если они содержат эфир, он "депонируется" на баланс контракта. Если они содержат данные, данные могут указывать именованную функцию в контракте и вызывать ее, передавая аргументы функции.
 
 [[view_contract_address]]
-==== Viewing the Contract Address in a Block Explorer
+==== Просмотр адреса контакта в обозревателе блоков
 
-((("Faucet.sol contract (test example)","viewing contract address in a block explorer")))We now have a contract recorded on the blockchain, and we can see it has an Ethereum address. Let's check it out in the _ropsten.etherscan.io_ block explorer and see what a contract looks like. In the Remix IDE, copy the address of the contract by clicking the clipboard icon next to its name (see <<remix_contract_address>>).
+((("Faucet.sol contract (test example)","viewing contract address in a block explorer")))Теперь у нас есть контракт, записанный в блокчейне, и мы видим, что у него есть адрес Ethereum. Давайте проверим это в проводнике блоков _ropsten.etherscan.io_ и посмотрим, как выглядит контракт. В среде разработки Remix скопируйте адрес контракта, щелкнув значок буфера обмена рядом с его именем (см. <<remix_contract_address>>).
 
 [[remix_contract_address]]
-.Copy the contract address from Remix
+.Скопируйте адрес контракта из Remix
 image::images/remix_contract_address.png["Copy the contract address from Remix"]
 
-Keep Remix open; we'll come back to it again later. Now, navigate your browser to _ropsten.etherscan.io_ and paste the address into the search box. You should see the contract's Ethereum address history, as shown in <<etherscan_contract_address>>.(((range="endofrange", startref="ix_02intro-asciidoc17")))
+Держите ремикс открытым; мы вернемся к нему позже. Теперь перейдите в своем браузере на страницу _ropsten.etherscan.io_ и вставьте адрес в поле поиска. Вы должны увидеть историю адресов Ethereum контракта, как показано на <<etherscan_contract_address>>.(((range="endofrange", startref="ix_02intro-asciidoc17")))
 
 [[etherscan_contract_address]]
-.View the Faucet contract address in the Etherscan block explorer
+.Просмотр адреса контракта Faucet в обозревателе блоков Etherscan
 image::images/etherscan_contract_address.png["View the Faucet contract address in the etherscan block explorer"]
 
 [[fund_contract]]
-==== Funding the Contract
+==== Финансирование контракта
 
-((("Faucet.sol contract (test example)","sending ether to", id="ix_02intro-asciidoc18", range="startofrange")))For now, the contract only has one transaction in its history: the contract creation transaction. As you can see, the contract also has no ether (zero balance). That's because we didn't send any ether to the contract in the creation transaction, even though we could have.
+((("Faucet.sol contract (test example)","sending ether to", id="ix_02intro-asciidoc18", range="startofrange")))На данный момент в истории контракта есть только одна транзакция: транзакция создания контракта. Как вы можете видеть, в контракте также нет эфира (нулевой баланс). Это потому, что мы не отправили никакого эфира в контракт в транзакции создания, хотя могли бы это сделать.
 
-Our faucet needs funds! Our first project will be to use MetaMask to send ether to the contract. You should still have the address of the contract in your clipboard (if not, copy it again from Remix). Open MetaMask, and send 1 ether to it, exactly as you would to any other Ethereum address (see <<metamask_send_to_contract>>).
+Наш кран нуждается в средствах! Наш первый проект будет заключаться в использовании MetaMask для отправки эфира в контракт. У вас все еще должен быть адрес контракта в вашем буфере обмена (если нет, скопируйте его снова из Remix). Откройте MetaMask и отправьте на него 1 эфир, точно так же, как вы бы отправили на любой другой адрес Ethereum (см. <<metamask_send_to_contract>>).
 
 [[metamask_send_to_contract]]
-.Send 1 ether to the contract address
+.Отправьте 1 эфир на адрес контракта
 image::images/metamask_send_to_contract.png[""]
 
-In a minute, if you reload the Etherscan block explorer, it will show another transaction to the contract address and an updated balance of 1 ether.
+Через минуту, если вы перезагрузите Etherscan block explorer, он покажет другую транзакцию на адрес контракта и обновленный баланс в размере 1 эфира.
 
-Remember the unnamed default external payable function in our _Faucet.sol_ code? It looked like this:
+Помните неназванную внешнюю платежную функцию по умолчанию в нашем коде _Faucet.sol_? Это выглядело примерно так:
 
 [[receive_function_review]]
 [source,solidity]
@@ -471,55 +471,55 @@ Remember the unnamed default external payable function in our _Faucet.sol_ code?
 receive () external payable {}
 ----
 
-When you sent a transaction to the contract address, with no data specifying which function to call, it called this default function. Because we declared it as +payable+, it accepted and deposited the 1 ether into the contract's account balance. Your transaction caused the contract to run in the EVM, updating its balance. You have funded your faucet!(((range="endofrange", startref="ix_02intro-asciidoc18")))
+Когда вы отправляли транзакцию на адрес контракта без каких-либо данных, указывающих, какую функцию вызывать, она вызывала эту функцию по умолчанию. Поскольку мы объявили его как +payable+, он принял и внес 1 эфир на баланс счета контракта. Ваша транзакция привела к запуску контракта в EVM, обновив его баланс. Вы профинансировали свой кран!(((range="endofrange", startref="ix_02intro-asciidoc18")))
 
 [[withdraw_from_contract]]
-==== Withdrawing from Our Contract
+==== Извлечем эфир из нашего контракта
 
-((("Faucet.sol contract (test example)","withdrawing funds from", id="ix_02intro-asciidoc19", range="startofrange")))((("withdrawal of funds from contract", id="ix_02intro-asciidoc20", range="startofrange")))Next, let's withdraw some funds from the faucet. To withdraw, we have to construct a transaction that calls the +withdraw+ function and passes a +withdraw_amount+ argument to it. To keep things simple for now, Remix will construct that transaction for us and MetaMask will present it for our approval.
+((("Faucet.sol contract (test example)","withdrawing funds from", id="ix_02intro-asciidoc19", range="startofrange")))((("withdrawal of funds from contract", id="ix_02intro-asciidoc20", range="startofrange")))Далее давайте снимем часть средств с крана. Чтобы вывести средства, мы должны создать транзакцию, которая вызывает функцию +withdraw+ и передает ей аргумент +withdraw_amount+. Чтобы пока все было просто, Remix сконструирует эту транзакцию для нас, а MetaMask представит ее на наше одобрение.
 
-Return to the Remix tab and look at the contract on the Run tab. You should see a orange box labeled +withdraw+ with a field entry labeled +uint256 withdraw_amount+ (see <<remix_contract_withdraw>>).
+Вернитесь на вкладку Remix и посмотрите на контракт на вкладке Run. Вы должны увидеть оранжевую кнопку +withdraw+ с полем для ввода с надписью +uint256 withdraw_amount+ (см. <<remix_contract_withdraw>>).
 
 [[remix_contract_withdraw]]
-.The withdraw function of Faucet.sol, in Remix
+.Функция вывода Faucet.sol, в Remix
 image::images/remix_contract_interact.png["The withdraw function of Faucet.sol, in Remix"]
 
-This is the Remix interface to the contract. It allows us to construct transactions that call the functions defined in the contract. We will enter a +withdraw_amount+ and click the withdraw button to generate the transaction.
+Это интерфейс ремикса к контракту. Это позволяет нам создавать транзакции, которые вызывают функции, определенные в контракте. Мы введем +withdraw_amount+ и нажмем кнопку вывода, чтобы сгенерировать транзакцию.
 
-First, let's figure out the +withdraw_amount+. We want to try and withdraw 0.1 ether, which is the maximum amount allowed by our contract. Remember that all currency values in Ethereum are denominated in wei internally, and our +withdraw+ function expects the +withdraw_amount+ to be denominated in wei too. The amount we want is 0.1 ether, which is 100,000,000,000,000,000 wei (a 1 followed by 17 zeros).
+Во-первых, давайте разберемся с +withdraw_amount+. Мы хотим попытаться вывести 0.1 эфира, что является максимальной суммой, разрешенной нашим контрактом. Помните, что все значения валюты в Ethereum внутренне выражены в wei, и наша функция +withdraw+ ожидает, что значение +withdraw_amount+ также будет выражено в wei. Сумма, которую мы хотим, составляет 0.1 эфира, что составляет 100 000 000 000 000 000 вей (1, за которым следуют 17 нулей).
 
 
 
 [TIP]
 ====
-Due to a limitation in JavaScript, a number as large as 10^17 cannot be processed by Remix. Instead, we enclose it in double quotes, to allow Remix to receive it as a string and manipulate it as a +BigNumber+. If we don't enclose it in quotes, the Remix IDE will fail to process it and display "Error encoding arguments: Error: Assertion failed."
+Из-за ограничения в JavaScript число размером до 10^17 не может быть обработано Remix. Вместо этого мы заключаем его в двойные кавычки, чтобы позволить Remix получать его как строку и манипулировать им как +BigNumber+. Если мы не заключим его в кавычки, среда разработки Remix не сможет обработать его и отобразит "Аргументы кодирования ошибок: Ошибка: Ошибка утверждения".
 ====
 
-Type "100000000000000000" (with the quotes) into the +withdraw_amount+ box and click on the withdraw button (see <<remix_withdraw>>).
+Введите "100000000000000000" (с кавычками) в поле +withdraw_amount+ и нажмите на кнопку вывода средств (см. <<remix_withdraw>>).
 
 [[remix_withdraw]]
-.Click "withdraw" in Remix to create a withdrawal transaction
+.Нажмите "withdraw" в Remix, чтобы создать транзакцию вывода средств
 image::images/remix_withdraw.png[""]
 
-MetaMask will pop up a transaction window for you to approve. Click Confirm to send your withdrawal call to the contract (see <<metamask_withdraw>>).
+MetaMask откроет окно транзакции, которое вы должны одобрить. Нажмите кнопку Подтвердить, чтобы отправить в контракт запрос на вывод средств (см. <<metamask_withdraw>>).
 
 [[metamask_withdraw]]
-.MetaMask transaction to call the withdraw function
+.Транзакция MetaMask для вызова функции вывода средств
 image::images/metamask_withdraw.png["MetaMask transaction to call the withdraw function"]
 
-Wait a minute and then reload the Etherscan block explorer to see the transaction reflected in the +Faucet+ contract address history (see <<etherscan_withdrawal_tx>>).
+Подождите минуту, а затем перезагрузите обозреватель блоков Etherscan, чтобы увидеть транзакцию, отраженную в истории адресов +Faucet+ contract. (см. <<etherscan_withdrawal_tx>>).
 
 [[etherscan_withdrawal_tx]]
-.Etherscan shows the transaction calling the withdraw function
+.Etherscan показывает транзакцию, вызывающую функцию вывода средств
 image::images/etherscan_withdrawal_tx.png["Etherscan shows the transaction calling the withdraw function"]
 
 
-We now see a new transaction with the contract address as the destination and a value of 0 ether. The contract balance has changed and is now 0.9 ether because it sent us 0.1 ether as requested. But we don't see an "OUT" transaction in the _contract address history_.
+Теперь мы видим новую транзакцию с адресом контракта в качестве пункта назначения и значением 0 ether. Баланс контракта изменился и теперь составляет 0.9 эфира, потому что он отправил нам 0.1 эфира по запросу. Но мы не видим транзакции "OUT" в _истории адресов контракта_ (_contract address history_).
 
-Where's the outgoing withdrawal? A new tab has appeared on the contract's address history page, named Internal Transactions. ((("internal transaction (message)")))Because the 0.1 ether transfer originated from the contract code, it is an internal transaction (also called a _message_). Click on that tab to see it (see <<etherscan_withdrawal_internal>>).
+Где исходящий вывод средств? На странице истории адресов контракта появилась новая вкладка с названием "Внутренние транзакции". ((("internal transaction (message)")))Поскольку передача 0.1 ether произошла из кода контракта, это внутренняя транзакция (также называемая _message_). Нажмите на эту вкладку, чтобы увидеть ее (см. <<etherscan_withdrawal_internal>>).
 
 
-This "internal transaction" was sent by the contract in this line of code (from the pass:[<code><span class="keep-together">withdraw</span></code>] function in _Faucet.sol_):
+Эта "внутренняя транзакция" была отправлена контрактом в этой строке кода (из pass:[<code><span class="keep-together">withdraw</span></code>] функции в _Faucet.sol_):
 
 [[withdraw_command_review]]
 [source,solidity]
@@ -527,19 +527,19 @@ This "internal transaction" was sent by the contract in this line of code (from 
 msg.sender.transfer(withdraw_amount);
 ----
 
-To recap: you sent a transaction from your MetaMask wallet that contained data instructions to call the +withdraw+ function with a +withdraw_amount+ argument of 0.1 ether. That transaction caused the contract to run inside the EVM. As the EVM ran the +Faucet+ contract's +withdraw+ function, first it called the +require+ function and validated that the requested amount was less than or equal to the maximum allowed withdrawal of 0.1 ether. Then it called the +transfer+ function to send you the ether. Running the +transfer+ function generated an internal transaction that deposited 0.1 ether into your wallet address, from the contract's balance. That's the one shown on the Internal Transactions tab in Etherscan(((range="endofrange", startref="ix_02intro-asciidoc20")))(((range="endofrange", startref="ix_02intro-asciidoc19"))).(((range="endofrange", startref="ix_02intro-asciidoc14")))
+Напомним: вы отправили транзакцию из своего кошелька MetaMask, которая содержала инструкции по передаче данных для вызова функции +withdraw+ с аргументом +withdraw_amount+ равным 0.1 эфира. Эта транзакция привела к запуску контракта внутри EVM. Поскольку EVM запустил функцию +withdraw+ контракта +Faucet+, сначала он вызвал функцию +require+ и подтвердил, что запрошенная сумма была меньше или равна максимально допустимому выводу 0.1 эфира. Затем он вызвал функцию +transfer+, чтобы отправить вам эфир. Запуск функции +transfer+ сгенерировал внутреннюю транзакцию, которая внесла 0.1 эфира на адрес вашего кошелька с баланса контракта. Это тот, который показан на вкладке Внутренние транзакции в Etherscan(((range="endofrange", startref="ix_02intro-asciidoc20")))(((range="endofrange", startref="ix_02intro-asciidoc19"))).(((range="endofrange", startref="ix_02intro-asciidoc14")))
 
 [[etherscan_withdrawal_internal]]
-.Etherscan shows the internal transaction transferring ether out from the contract
+.Etherscan показывает внутреннюю транзакцию, выводящую эфир из контракта
 image::images/etherscan_withdrawal_internal.png["Etherscan shows the internal transaction transferring ether out from the contract"]
 
 [[intro_conclusion]]
-=== Conclusions
+=== Заключение
 
-In this chapter, you set up a wallet using MetaMask and funded it using a faucet on the Ropsten test network. You received ether into your wallet's Ethereum address, then you sent ether to the faucet's Ethereum address.
+В этой главе вы настраивали кошелек с помощью MetaMask и пополняли его с помощью крана в тестовой сети Ropsten. Вы получили эфир на Ethereum-адрес своего кошелька, затем отправили эфир на Ethereum-адрес крана.
 
-Next, you wrote a faucet contract in Solidity. You used the Remix IDE to compile the contract into EVM bytecode, then used Remix to form a transaction and created the +Faucet+ contract on the Ropsten blockchain. Once created, the +Faucet+ contract had an Ethereum address, and you sent it some ether. Finally, you constructed a transaction to call the +withdraw+ function and successfully asked for 0.1 ether. The contract checked the request and sent you 0.1 ether with an internal transaction.
+Затем вы написали контракт на кран в Solidity. Вы использовали IDE Remix для компиляции контракта в байт-код EVM, затем использовали Remix для формирования транзакции и создали контракт +Faucet+ на блокчейне Ropsten. После создания контракт +Faucet+ имел адрес Ethereum, и вы отправили ему немного эфира. Наконец, вы создали транзакцию для вызова функции +withdraw+ и успешно запросили 0.1 эфира. Контракт проверил запрос и отправил вам 0.1 эфира с внутренней транзакцией.
 
-It may not seem like much, but you've just successfully interacted with software that controls money on a decentralized world computer.
+Может показаться, что это не так уж много, но вы только что успешно взаимодействовали с программным обеспечением, которое управляет деньгами на децентрализованном мировом компьютере.
 
-We will do a lot more smart contract programming in <<smart_contracts_chapter>> and learn about best practices and security considerations in <<smart_contract_security>>.(((range="endofrange", startref="ix_02intro-asciidoc0")))
+Мы будем гораздо больше программировать смарт-контракты в <<smart_contracts_chapter>> и узнаем о лучших практиках и соображениях безопасности в <<smart_contract_security>>.(((range="endofrange", startref="ix_02intro-asciidoc0")))
