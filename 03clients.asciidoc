@@ -527,51 +527,51 @@ https://trustwalletapp.com/[Trust Wallet]:: ((("Trust Wallet")))((("wallets","Tr
 https://www.cipherbrowser.com[Cipher Browser]::  ((("Cipher Browser")))Полнофункциональный браузер и кошелек для мобильных приложений с поддержкой Ethereum, который позволяет интегрировать приложения и токены Ethereum. Доступно для iOS и Android.
 
 [[browser_wallets]]
-==== Browser Wallets
+==== Браузерные кошельки
 
-((("browser wallets")))((("remote clients","browser wallets")))((("wallets","browser wallets")))A variety of wallets and DApp browsers are available as plug-ins or extensions of web browsers such as Chrome and Firefox. These are remote clients that run inside your browser.
+((("browser wallets")))((("remote clients","browser wallets")))((("wallets","browser wallets")))Различные кошельки и браузеры DApp доступны в качестве плагинов или расширений веб-браузеров, таких как Chrome и Firefox. Это удаленные клиенты, которые запускаются внутри вашего браузера.
 
-Some of the more popular ones are MetaMask, Jaxx, MyEtherWallet, and MyCrypto.
+Некоторые из наиболее популярных из них - MetaMask, Jaxx, MyEtherWallet и MyCrypto.
 
 [[MetaMask]]
 ===== MetaMask
 
-https://metamask.io/[MetaMask], ((("MetaMask","as browser wallet")))introduced in <<intro_chapter>>, is a versatile browser-based wallet, RPC client, and basic contract explorer. It is available on Chrome, Firefox, Opera, and Brave Browser.
+https://metamask.io/[MetaMask], ((("MetaMask","as browser wallet")))представленный в <<intro_chapter>>, представляет собой универсальный браузерный кошелек, RPC-клиент и базовый просмотрщик контрактов. Он доступен в браузерах Chrome, Firefox, Opera и Brave.
 
-Unlike other browser wallets, MetaMask injects a web3 instance into the browser JavaScript context, acting as an RPC client that connects to a variety of Ethereum blockchains (mainnet, Ropsten testnet, Kovan testnet, local RPC node, etc.). The ability to inject a web3 instance and act as a gateway to external RPC services makes MetaMask a very powerful tool for developers and users alike. It can be combined, for example, with MyEtherWallet or MyCrypto, acting as a web3 provider and RPC gateway for those tools.
+В отличие от других браузерных кошельков, MetaMask встраивает экземпляр web3 в контекст JavaScript браузера, действуя как RPC-клиент, который подключается к различным блокчейнам Ethereum (mainnet, Ropsten testnet, Kovan testnet, локальный узел RPC и т.д.). Возможность внедрения экземпляра web3 и использования в качестве шлюза для внешних служб RPC делает MetaMask очень мощным инструментом как для разработчиков, так и для пользователей. Его можно комбинировать, например, с MyEtherWallet или MyCrypto, выступая в качестве поставщика web3 и RPC-шлюза для этих инструментов.
 
 [[Jaxx]]
 ===== Jaxx
 
-https://jaxx.io[Jaxx], ((("Jaxx","desktop version")))((("wallets","Jaxx")))which was introduced as a mobile wallet in the previous section, is also available as a Chrome and Firefox extension and as a desktop wallet.
+https://jaxx.io[Jaxx], ((("Jaxx","desktop version")))((("wallets","Jaxx")))который был представлен как мобильный кошелек в предыдущем разделе, также доступен как расширение для Chrome и Firefox, а также как desktop кошелек.
 
 [[MEW]]
 ===== MyEtherWallet (MEW)
 
-https://www.myetherwallet.com/[MyEtherWallet] ((("MyEtherWallet (MEW)")))((("wallets","MyEtherWallet")))is a browser-based JavaScript remote client that offers:
+https://www.myetherwallet.com/[MyEtherWallet] ((("MyEtherWallet (MEW)")))((("wallets","MyEtherWallet")))это удаленный клиент JavaScript на основе браузера, который предлагает:
 
-* A bridge to popular hardware wallets such as the Trezor and Ledger
-* A web3 interface that can connect to a web3 instance injected by another client (e.g., MetaMask)
-* An RPC client that can connect to an Ethereum full client
-* A basic interface that can interact with smart contracts, given a contract's address and application binary interface (ABI)
-* A mobile app, MEWConnect, that enables one to use a compatible Android or iOS device to store funds, similarly to a hardware wallet.
-* A software wallet running in JavaScript
+* Мост к популярным аппаратным кошелькам, таким как Trezor и Ledger
+* Интерфейс web3, который может подключаться к экземпляру web3, встроенному другим клиентом (например, MetaMask)
+* RPC-клиент, который может подключаться к полному клиенту Ethereum
+* Базовый интерфейс, который может взаимодействовать со смарт-контрактами, учитывая адрес контракта и двоичный интерфейс приложения (ABI)
+* Мобильное приложение MEWConnect, которое позволяет использовать совместимое устройство Android или iOS для хранения средств аналогично аппаратному кошельку.
+* Программный кошелек, работающий на JavaScript
 
 [WARNING]
 ====
-You must be very careful when accessing MyEtherWallet and other browser-based JavaScript wallets, as they are frequent targets for phishing. Always use a bookmark and not a search engine or link to access the correct web URL.
+Вы должны быть очень осторожны при доступе к MyEtherWallet и другим кошелькам JavaScript на основе браузера, поскольку они часто становятся объектами фишинга. Всегда используйте закладку, а не поисковую систему или ссылку, чтобы получить доступ к правильному веб-адресу.
 ====
 
 [[MyCrypto]]
 ===== MyCrypto
 
-((("MyCrypto (wallet)")))((("wallets","MyCrypto")))In early 2018, the ((("MyEtherWallet (MEW)")))((("wallets","MyEtherWallet")))MyEtherWallet project split into two competing implementations, guided by two independent development teams: a "fork," as it is called in open source development. The two projects are called MyEtherWallet (the original branding) and https://mycrypto.com/[MyCrypto]. MyCrypto offers almost identical functionality to MyEtherWallet, but instead of using MEWConnect, it offers a connection to the Parity Signer mobile app. Like MEWConnect, Parity Signer stores keys on the phone and interfaces with MyCrypto in a similar manner as a hardware wallet.
+((("MyCrypto (wallet)")))((("wallets","MyCrypto")))In early 2018, the ((("MyEtherWallet (MEW)")))((("wallets","MyEtherWallet")))Проект MyEtherWallet разделился на две конкурирующие реализации, управляемые двумя независимыми командами разработчиков: "форк", как его называют в разработке с открытым исходным кодом. Два проекта называются MyEtherWallet (оригинальный брендинг) и https://mycrypto.com /[MyCrypto]. MyCrypto предлагает почти идентичную функциональность MyEtherWallet, но вместо использования MEWconnect он предлагает подключение к мобильному приложению Parity Signer. Как и MEWconnect, Parity Signer хранит ключи на телефоне и взаимодействует с MyCrypto аналогично аппаратному кошельку.
 
 [[Mist]]
-===== Mist (Deprecated)
+===== Mist (устаревший)
 
-https://github.com/ethereum/mist[Mist] ((("Mist (browser-based wallet)")))((("wallets","Mist")))was the first Ethereum-enabled browser, built by the Ethereum Foundation. It contained a browser-based wallet that was the first implementation of the ERC20 token standard (Fabian Vogelsteller, author of ERC20, was also the main developer of Mist). Mist was also the first wallet to introduce the camelCase checksum (EIP-55). As of March, 2019, Mist was deprecated and should no longer be used.
+https://github.com/ethereum/mist[Mist] ((("Mist (browser-based wallet)")))((("wallets","Mist")))wкак первый браузер с поддержкой Ethereum, созданный Фондом Ethereum Foundation. Он содержал браузерный кошелек, который был первой реализацией стандарта токенов ERC 20 (Фабиан Фогельстеллер, автор ERC20, также был основным разработчиком Mist). Mist также был первым кошельком, в котором была введена контрольная сумма camelCase (EIP-55). По состоянию на март 2019 года Mist устарел и больше не должен использоваться.
 
-=== Conclusions
+=== Заключение
 
-In this chapter we explored Ethereum clients. You downloaded, installed, and synchronized a client, becoming a participant in the Ethereum network, and contributing to the health and stability of the system by replicating the blockchain on your own computer.(((range="endofrange", startref="ix_03clients-asciidoc0")))
+В этой главе мы рассмотрели Ethereum клиенты. Вы загрузили, установили и синхронизировали клиент, став участником сети Ethereum и внося свой вклад в работоспособность и стабильность системы, реплицируя блокчейн на своем собственном компьютере.(((range="endofrange", startref="ix_03clients-asciidoc0")))
