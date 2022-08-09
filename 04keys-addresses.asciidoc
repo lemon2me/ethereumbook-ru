@@ -130,20 +130,20 @@ f8f8a2f43c8376ccb0871305060d7b27b0554d2cc72bccf41b2705608452f315
 [[elliptic_curve]]
 ==== Объяснение криптографии с эллиптической кривой
 
-((("elliptic curve cryptography","basics", id="ix_04keys-addresses-asciidoc7", range="startofrange")))Elliptic ((("elliptic curve cryptography", id="ix_04keys-addresses-asciidoc8", range="startofrange")))((("public keys","elliptic curve cryptography and", id="ix_04keys-addresses-asciidoc9", range="startofrange")))curve cryptography is a type of asymmetric or public key cryptography based on the discrete logarithm problem as expressed by addition and multiplication on the points of an elliptic curve.
+((("elliptic curve cryptography","basics", id="ix_04keys-addresses-asciidoc7", range="startofrange")))((("elliptic curve cryptography", id="ix_04keys-addresses-asciidoc8", range="startofrange")))((("public keys","elliptic curve cryptography and", id="ix_04keys-addresses-asciidoc9", range="startofrange")))Криптография с эллиптической кривой - это тип асимметричной криптографии или криптографии с открытым ключом, основанной на задаче дискретного логарифмирования, выражаемой сложением и умножением в точках эллиптической кривой.
 
-<<ecc-curve>> is an example of an elliptic curve, similar to that used by Ethereum.
+<<ecc-curve>> это пример эллиптической кривой, аналогичной той, что используется Ethereum.
 
 [NOTE]
 ====
-((("secp256k1 elliptic curve", id="ix_04keys-addresses-asciidoc10", range="startofrange")))Ethereum uses the exact same elliptic curve, called +secp256k1+, as Bitcoin. That makes it possible to reuse many of the elliptic curve libraries and tools from Bitcoin.
+((("secp256k1 elliptic curve", id="ix_04keys-addresses-asciidoc10", range="startofrange")))Ethereum использует точно такую же эллиптическую кривую, называемую +secp256k1+, как и биткойн. Это позволяет повторно использовать многие библиотеки и инструменты эллиптических кривых из Биткойна.
 ====
 
 [[ecc-curve]]
-.A visualization of an elliptic curve
+.Визуализация эллиптической кривой
 image::images/simple_elliptic_curve.png["ecc-curve"]
 
-Ethereum uses a specific elliptic curve and set of mathematical constants, as defined in a standard called +secp256k1+, established by the US National Institute of Standards and Technology (NIST). The +secp256k1+ curve is defined by the following function, which produces an elliptic curve:
+Ethereum использует определенную эллиптическую кривую и набор математических констант, как определено в стандарте под названием +secp256k1+, установленном Национальным институтом стандартов и технологий США (NIST). Кривая +secp256k1+ определяется следующей функцией, которая создает эллиптическую кривую:
 
 ++++
 <div data-type="equation">
@@ -201,16 +201,16 @@ or:
 </div>
 ++++
 
-The _mod p_ (modulo prime number _p_) indicates that this curve is over a finite field of prime order _p_, also written as latexmath:[\( \mathbb{F}_p \)], where _p_ = 2^256^ – 2^32^ – 2^9^ – 2^8^ – 2^7^ – 2^6^ – 2^4^ – 1, which is a very large prime number.
+_mod p_ (по модулю простого числа _p_) указывает, что эта кривая находится над конечным полем простого порядка _p_, также записываемым как latexmath:[\( \mathbb{F}_p \)], где _p_ = 2^256^ – 2^32^ – 2^9^ – 2^8^ – 2^7^ – 2^6^ – 2^4^ – 1, что является очень большим простым числом.
 
-Because this curve is defined over a finite field of prime order instead of over the real numbers, it looks like a pattern of dots scattered in two dimensions, which makes it difficult to visualize. However, the math is identical to that of an elliptic curve over real numbers. As an example, <<ecc-over-F17-math>> shows the same elliptic curve over a much smaller finite field of prime order 17, showing a pattern of dots on a grid. The +secp256k1+ Ethereum elliptic curve can be thought of as a much more complex pattern of dots on an unfathomably large grid.
+Поскольку эта кривая определена над конечным полем простого порядка, а не над действительными числами, она выглядит как узор из точек, разбросанных в двух измерениях, что затрудняет ее визуализацию. Однако математика идентична математике эллиптической кривой над действительными числами. В качестве примера, <<ecc-over-F17-math>> показывает ту же эллиптическую кривую над гораздо меньшим конечным полем простого порядка 17, показывая узор точек на сетке. Эллиптическую кривую +secp256k1+ Ethereum можно рассматривать как гораздо более сложный узор точек на непостижимо большой сетке.
 
 [[ecc-over-F17-math]]
 [role="smallersixty"]
-.Elliptic curve cryptography: visualizing an elliptic curve over F(p), with p=17
+.Криптография с эллиптической кривой: визуализация эллиптической кривой над F (p) с p=17
 image::images/ec_over_small_prime_field.png["ecc-over-F17-math"]
 
-So, for example, the following is a point _Q_ with coordinates (_x_,_y_) that is a point on the +secp256k1+ curve:
+Так, например, ниже приведена точка _Q_ с координатами (_x_,_y_), которая является точкой на кривой +secp256k1+:
 
 [[coordinates_example]]
 ----
@@ -219,11 +219,11 @@ Q =
 59574132161899900045862086493921015780032175291755807399284007721050341297360)
 ----
 
-<<example_1>> shows how you can check this yourself using Python. The variables +x+ and +y+ are the coordinates of the point _Q_, as in the preceding example. The variable +p+ is the prime order of the elliptic curve (the prime that is used for all the modulo operations). The last line of Python is the elliptic curve equation (the +%+ operator in Python is the modulo operator). If +x+ and +y+ are indeed the coordinates of a point on the elliptic curve, then they satisfy the equation and the result is zero (+0L+ is a long integer with value zero). Try it yourself, by typing ++**python**++ on a command line and copying each line (after the prompt +>>>+) from the listing(((range="endofrange", startref="ix_04keys-addresses-asciidoc10"))).(((range="endofrange", startref="ix_04keys-addresses-asciidoc9")))
+<<example_1>> показывает, как вы можете проверить это самостоятельно, используя Python. Переменные +x+ и +y+ являются координатами точки _Q_, как и в предыдущем примере. Переменная +p+ - это простой порядок эллиптической кривой (простое число, которое используется для всех операций по модулю). Последняя строка Python - это уравнение эллиптической кривой (оператор +%+ в Python - это оператор по модулю). Если +x+ и +y+ действительно являются координатами точки на эллиптической кривой, то они удовлетворяют уравнению, и результат равен нулю (+0L+ - длинное целое число с нулевым значением). Попробуйте сами, набрав ++**python**++ в командной строке и скопировав каждую строку (после подсказки +>>>+) из списка(((range="endofrange", startref="ix_04keys-addresses-asciidoc10"))).(((range="endofrange", startref="ix_04keys-addresses-asciidoc9")))
 
 ++++
 <div data-type="example" id="example_1">
-<h5>Using Python to confirm that this point is on the elliptic curve</h5>
+<h5>Использование Python для подтверждения того, что эта точка находится на эллиптической кривой</h5>
 <pre data-type="programlisting">
 Python 3.4.0 (default, Mar 30 2014, 19:23:13)
 [GCC 4.2.1 Compatible Apple LLVM 5.1 (clang-503.0.38)] on darwin
@@ -239,30 +239,30 @@ Type "help", "copyright", "credits" or "license" for more information.
 ++++
 
 [[EC_math]]
-==== Elliptic Curve Arithmetic Operations
+==== Арифметические операции с эллиптической кривой
 
-((("elliptic curve cryptography","arithmetic operations")))A lot of elliptic curve math looks and works very much like the integer arithmetic we learned at school. Specifically, we can define an addition operator, which instead of jumping along the number line is jumping to other points on the curve. Once we have the addition operator, we can also define multiplication of a point and a whole number, which is equivalent to repeated addition.
+((("elliptic curve cryptography","arithmetic operations")))Большая часть математики с эллиптическими кривыми выглядит и работает очень похоже на целочисленную арифметику, которую мы изучали в школе. В частности, мы можем определить оператор сложения, который вместо перехода вдоль числовой линии переходит к другим точкам кривой. Как только у нас есть оператор сложения, мы также можем определить умножение точки и целого числа, что эквивалентно повторному сложению.
 
-Elliptic curve addition is defined such that given two points _P_~1~ and _P_~2~ on the elliptic curve, there is a third point _P_~3~ = _P_~1~ + _P_~2~, also on the elliptic curve.
+Сложение эллиптической кривой определяется таким образом, что при наличии двух точек _P_~1~ и _P_~2~ на эллиптической кривой существует третья точка _P_~3 ~ = _P_~1 ~ + _P_~2~, также на эллиптической кривой.
 
-Geometrically, this third point _P_~3~ is calculated by drawing a line between _P_~1~ and _P_~2~. This line will intersect the elliptic curve in exactly one additional place (amazingly). Call this point _P_~3~' = (_x_, _y_). Then reflect in the x-axis to get _P_~3~ = (_x_, _–y_).
+Геометрически эта третья точка _P_~3~ вычисляется путем проведения линии между _P_~1~ и _P_~2~. Эта линия пересечет эллиптическую кривую ровно в одном дополнительном месте (удивительно). Назовем эту точку _P_~3~' = (_x_, _y_). Затем отразите по оси x, чтобы получить _P_~3~ = (_x_, _–y_).
 
-If _P_~1~ and _P_~2~ are the same point, the line "between" _P_~1~ and _P_~2~ should extend to be the tangent to the curve at this point _P_~1~. This tangent will intersect the curve at exactly one new point. You can use techniques from calculus to determine the slope of the tangent line. Curiously, these techniques work, even though we are restricting our interest to points on the curve with two integer coordinates!
+Если _P_~1~ и _P_~2~ являются одной и той же точкой, линия "между" _P_~1~ и _P_~2~ должна быть касательной к кривой в этой точке _P_~1~. Эта касательная пересечет кривую ровно в одной новой точке. Вы можете использовать методы из исчисления, чтобы определить наклон касательной линии. Любопытно, что эти методы работают, даже несмотря на то, что мы ограничиваем наш интерес точками на кривой с двумя целочисленными координатами!
 
-In elliptic curve math, there is also a point called the "point at infinity," which roughly corresponds to the role of the number zero in addition. On computers, it's sometimes represented by _x_ = _y_ = 0 (which doesn't satisfy the elliptic curve equation, but it's an easy separate case that can be checked). There are a couple of special cases that explain the need for the point at infinity.
+В математике эллиптических кривых также существует точка, называемая "точкой в бесконечности", которая примерно соответствует роли числа ноль в сложении. На компьютерах это иногда представляется как _x_ = _y_ = 0 (что не удовлетворяет уравнению эллиптической кривой, но это простой отдельный случай, который можно проверить). Есть несколько особых случаев, которые объясняют необходимость точки на бесконечности.
 
-In some cases (e.g., if _P_~1~ and _P_~2~ have the same _x_ values but different _y_ values), the line will be exactly vertical, in which case _P_~3~ = the point at infinity.
+В некоторых случаях (например, если _P_~1~ и _P_~2~ имеют одинаковые значения _x_, но разные значения _y_) линия будет точно вертикальной, и в этом случае _P_~3~ = точка на бесконечности.
 
-If _P_~1~ is the point at infinity, then _P_~1~ + _P_~2~ = _P_~2~. Similarly, if _P_~2~ is the point at infinity, then _P_~1~ + _P_~2~ = _P_~1~. This shows how the point at infinity plays the role that zero plays in "normal" arithmetic.
+Если _P_~1~ - точка на бесконечности, то _P_~1~ + _P_~2~ = _P_~2~. Аналогично, если _P_~2~ - точка на бесконечности, то _P_~1~ + _P_~2~ = _P_~1~. Это показывает, как точка на бесконечности играет ту роль, которую ноль играет в "обычной" арифметике.
 
-It turns out that pass:[+] is associative, which means that (_A_ pass:[+] _B_) pass:[+] _C_ = _A_ pass:[+] (_B_ pass:[+] _C_). That means we can write _A_ pass:[+] _B_ pass:[+] _C_ (without parentheses) without ambiguity.
+Оказывается, что pass:[+] является ассоциативным, что означает, что (_A_ pass:[+] _B_) pass:[+] _C_ = _A_ pass:[+] (_B_ pass:[+] _C_). Это означает, что мы можем написать _A_ pass:[+] _B_ pass:[+] _C_ (без круглых скобок) без двусмысленности.
 
-Now that we have defined addition, we can define multiplication in the standard way that extends addition. For a point _P_ on the elliptic curve, if _k_ is a whole number, then _k_ pass:[*] _P_ = _P_ pass:[+] _P_ pass:[+] _P_ pass:[+] ... pass:[+] _P_ (_k_ times). Note that _k_ is sometimes (perhaps confusingly) called an "exponent" in this case.(((range="endofrange", startref="ix_04keys-addresses-asciidoc8")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc7")))
+Теперь, когда мы определили сложение, мы можем определить умножение стандартным способом, который расширяет сложение. Для точки _P_ на эллиптической кривой, если _k_ является целым числом, то _k_ pass:[*] _P_ = _P_ pass:[+] _P_ pass:[+] _P_ pass:[+] _P_ pass:[+] ... pass:[+] _P_ (_k_ раз). Обратите внимание, что _k_ в этом случае иногда (возможно, ошибочно) называют "показателем степени".(((range="endofrange", startref="ix_04keys-addresses-asciidoc8")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc7")))
 
 [[public_key_derivation]]
-==== Generating a Public Key
+==== Генерация открытого ключа
 
-((("elliptic curve cryptography","public key generation with")))((("generator point")))((("public keys","generating")))Starting with a private key in the form of a randomly generated number _k_, we multiply it by a predetermined point on the curve called the _generator point_ _G_ to produce another point somewhere else on the curve, which is the corresponding public key _K_: 
+((("elliptic curve cryptography","public key generation with")))((("generator point")))((("public keys","generating")))Начиная с закрытого ключа в виде случайно сгенерированного числа _k_, мы умножаем его на заранее определенную точку на кривой, называемую _generator point_ _G_, чтобы получить другую точку где-то еще на кривой, которая является соответствующим открытым ключом _K_: 
 
 ++++
 <div data-type="equation">
@@ -278,58 +278,58 @@ Now that we have defined addition, we can define multiplication in the standard 
 </div>
 ++++
 
-((("secp256k1 elliptic curve")))The generator point is specified as part of the +secp256k1+ standard; it is the same for all implementations of +secp256k1+, and all keys derived from that curve use the same point _G_. Because the generator point is always the same for all Ethereum users, a private key _k_ multiplied with _G_ will always result in the same public key _K_. The relationship between _k_ and _K_ is fixed, but can only be calculated in one direction, from _k_ to _K_. That's why an Ethereum address (derived from _K_) can be shared with anyone and does not reveal the user's private key (_k_).
+((("secp256k1 elliptic curve")))Точка генератора указана как часть стандарта +secp256k1+; она одинакова для всех реализаций +secp256k1+, и все ключи, полученные из этой кривой, используют одну и ту же точку _G_. Поскольку точка генератора всегда одинакова для всех пользователей Ethereum, закрытый ключ _k_, умноженный на _G_, всегда приведет к одному и тому же открытому ключу _K_. Связь между _k_ и _K_ фиксирована, но может быть вычислена только в одном направлении, от _k_ до _K_. Вот почему адрес Ethereum (производный от _K_) может быть передан кому угодно и не раскрывает закрытый ключ пользователя (_k_).
 
-As we described in the previous section, the multiplication of _k_ * _G_ is equivalent to repeated addition, so _G_ pass:[+] _G_ pass:[+] _G_ pass:[+] ... pass:[+] _G_, repeated _k_ times. In summary, to produce a public key _K_ from a private key _k_, we add the generator point _G_ to itself, _k_ times.
+Как мы описали в предыдущем разделе, умножение _k_ * _G_ эквивалентно повторному сложению, поэтому _G_ pass:[+] _G_ pass:[+] _G_ pass:[+] ... pass:[+] _G_, повторяется _k_ раз. Таким образом, чтобы создать открытый ключ _K_ из закрытого ключа _k_, мы добавляем точку генератора _G_ к самой себе _k_ раз.
 
 [TIP]
 ====
-A private key can be converted into a public key, but a public key cannot be converted back into a private key, because the math only works one way.
+Закрытый ключ может быть преобразован в открытый ключ, но открытый ключ не может быть преобразован обратно в закрытый ключ, потому что математика работает только в одну сторону.
 ====
 
-Let's apply this calculation to find the public key for the specific private key we showed you in <<private_keys>>:
+Давайте применим это вычисление, чтобы найти открытый ключ для конкретного закрытого ключа, который мы показали вам в <<private_keys>>:
 
 
 [[example_privkey]]
-.Example private key to public key calculation
+.Пример вычисления открытого ключа по закрытому ключу
 ----
 K = f8f8a2f43c8376ccb0871305060d7b27b0554d2cc72bccf41b2705608452f315 * G
 ----
 
-A cryptographic library can help us calculate _K_, using elliptic curve multiplication. The resulting public key _K_ is defined as the point:
+Криптографическая библиотека может помочь нам вычислить _K_, используя умножение на эллиптическую кривую. Результирующий открытый ключ _K_ определяется как точка:
 
 ----
 K = (x, y)
 ----
 
-where:
+где:
 
 ----
 x = 6e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b
 y = 83b5c38e5e2b0c8529d7fa3f64d46daa1ece2d9ac14cab9477d042c84c32ccd0
 ----
 
-((("SECG (Standards for Efficient Cryptography Group)")))((("Standards for Efficient Cryptography Group (SECG)")))In Ethereum you may see public keys represented as a serialization of 130 hexadecimal characters (65 bytes). This is adopted from a standard serialization format proposed by the industry consortium Standards for Efficient Cryptography Group (SECG), documented in http://www.secg.org/sec1-v2.pdf[Standards for Efficient Cryptography (SEC1)]. The standard defines four possible prefixes that can be used to identify points on an elliptic curve, listed in <<EC_prefix_table>>.
+((("SECG (Standards for Efficient Cryptography Group)")))((("Standards for Efficient Cryptography Group (SECG)")))В Ethereum вы можете увидеть открытые ключи, представленные в виде сериализации из 130 шестнадцатеричных символов (65 байт). Это взято из стандартного формата сериализации, предложенного отраслевым консорциумом Standards for Efficient Cryptography Group (SECG), задокументированного в http://www.secg.org/sec1-v2.pdf[Standards for Efficient Cryptography (SEC1)]. Стандарт определяет четыре возможных префикса, которые могут использоваться для идентификации точек на эллиптической кривой, перечисленных в <<EC_prefix_table>>.
 
 [[EC_prefix_table]]
-.Serialized EC public key prefixes
+.Сериализованные префиксы открытого ключа EC
 [options="header"]
 |===
-| Prefix | Meaning | Length (bytes counting prefix)
-| +0x00+ | Point at infinity | 1
-| +0x04+ | Uncompressed point | 65
-| +0x02+ | Compressed point with even +y+ | 33
-| +0x03+ | Compressed point with odd +y+ | 33
+| Префикс | Значение | Длина (префикс подсчета байтов)
+| +0x00+ | Точка на бесконечности | 1
+| +0x04+ | Несжатая точка | 65
+| +0x02+ | Сжатая точка с чётным +y+ | 33
+| +0x03+ | Сжатая точка с нечётным +y+ | 33
 |===
 
-Ethereum only uses uncompressed public keys; therefore the only prefix that is relevant is (hex) +04+. The serialization concatenates the _x_ and _y_ coordinates of the public key:
+Ethereum использует только несжатые открытые ключи; поэтому единственным подходящим префиксом является (шестнадцатеричный) +04+. Сериализация объединяет координаты _x_ и _y_ открытого ключа:
 
 [[concat_coordinates]]
 ----
-04 + x-coordinate (32 bytes/64 hex) + y-coordinate (32 bytes/64 hex)
+04 + x-координата (32 bytes/64 hex) + y-координата (32 bytes/64 hex)
 ----
 
-Therefore, the public key we calculated earlier is serialized as:
+Таким образом, открытый ключ, который мы рассчитали ранее, сериализуется как:
 
 [[serialized_pubkey]]
 ----
@@ -338,69 +338,69 @@ c8529d7fa3f64d46daa1ece2d9ac14cab9477d042c84c32ccd0
 ----
 
 [[EC_lib]]
-==== Elliptic Curve Libraries
+==== Библиотеки эллиптических кривых
 
-((("elliptic curve cryptography","libraries")))((("secp256k1 elliptic curve")))There are a couple of implementations of the +secp256k1+ elliptic curve that are used in cryptocurrency-related projects:
+((("elliptic curve cryptography","libraries")))((("secp256k1 elliptic curve")))Существует несколько реализаций эллиптической кривой +secp256k1+, которые используются в проектах, связанных с криптовалютой:
 
-((("OpenSSL cryptographic library")))https://www.openssl.org/[OpenSSL]:: The OpenSSL library offers a comprehensive set of cryptographic primitives, including a full implementation of +secp256k1+. For example, to derive the public key, the function +EC_POINT_mul+ can be used.
+((("OpenSSL cryptographic library")))https://www.openssl.org/[OpenSSL]:: Библиотека OpenSSL предлагает полный набор криптографических примитивов, включая полную реализацию +secp256k1+. Например, для получения открытого ключа можно использовать функцию +EC_POINT_mul+.
 
-((("libsecp256k1 cryptographic library")))https://github.com/bitcoin-core/secp256k1[libsecp256k1]:: Bitcoin Core's +libsecp256k1+ is a C-language implementation of the +secp256k1+ elliptic curve and other cryptographic primitives. It was written from scratch to replace OpenSSL in Bitcoin Core software, and is considered superior in both performance and security.(((range="endofrange", startref="ix_04keys-addresses-asciidoc6")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc5")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc4")))
+((("libsecp256k1 cryptographic library")))https://github.com/bitcoin-core/secp256k1[libsecp256k1]:: +libsecp256k1+ от Bitcoin Core - это реализация эллиптической кривой +secp256k1+ на языке Си и других криптографических примитивов. Он был написан с нуля, чтобы заменить OpenSSL в программном обеспечении Bitcoin Core, и считается превосходным как по производительности, так и по безопасности.(((range="endofrange", startref="ix_04keys-addresses-asciidoc6")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc5")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc4")))
 
 [[hash_functions]]
-=== Cryptographic Hash Functions
+=== Криптографические хэш-функции
 
-((("cryptographic hash functions", id="ix_04keys-addresses-asciidoc11", range="startofrange")))((("cryptography","hash functions", id="ix_04keys-addresses-asciidoc12", range="startofrange")))((("hash functions", id="ix_04keys-addresses-asciidoc13", range="startofrange")))Cryptographic hash functions are used throughout Ethereum. In fact, hash functions are used extensively in almost all cryptographic systems&#x2014;a fact captured by ((("Schneier, Bruce")))pass:[<span class="keep-together">cryptographer</span>] http://bit.ly/2Q79qZp[Bruce Schneier], who said, "Much more than encryption algorithms, one-way hash functions are the workhorses of modern cryptography."
+((("cryptographic hash functions", id="ix_04keys-addresses-asciidoc11", range="startofrange")))((("cryptography","hash functions", id="ix_04keys-addresses-asciidoc12", range="startofrange")))((("hash functions", id="ix_04keys-addresses-asciidoc13", range="startofrange")))Криптографические хэш-функции используются во всем Ethereum. На самом деле, хэш-функции широко используются почти во всех криптографических системах &#x2014; факт, зафиксированный ((("Schneier, Bruce")))pass:[<span class="keep-together">криптографом</span>] http://bit.ly/2Q79qZp[Bruce Schneier], который сказал: "Гораздо больше, чем алгоритмы шифрования, односторонние хэш-функции являются рабочими лошадками современной криптографии".
 
-In this section we will discuss hash functions, explore their basic properties, and see how those properties make them so useful in so many areas of modern cryptography. We address hash functions here because they are part of the transformation of Ethereum public keys into addresses. ((("digital fingerprint")))They can also be used to create _digital fingerprints_, which aid in the verification of data.
+В этом разделе мы обсудим хэш-функции, изучим их основные свойства и посмотрим, как эти свойства делают их такими полезными во многих областях современной криптографии. Мы рассматриваем здесь хэш-функции, потому что они являются частью преобразования открытых ключей Ethereum в адреса. ((("цифровой отпечаток пальца")))Они также могут быть использованы для создания цифровых отпечатков пальцев, которые помогают в проверке данных.
 
-((("one-way functions")))In simple terms, a http://bit.ly/2CR26gD[_hash function_] is &#x201c;any function that can be used to map data of arbitrary size to data of fixed size.&#x201d; ((("pre-image")))The input to a hash function is called a _pre-image_, the _message_, or simply the _input data_. The output is called the _hash_. http://bit.ly/2Jrn3jM[_Cryptographic hash functions_] are a special subcategory that have specific properties that are useful to secure platforms, such as Ethereum.
+((("one-way functions")))Проще говоря, _хэш-функция_ (http://bit.ly/2CR26gD[_hash function_]) - это &#x201c;любая функция, которая может использоваться для сопоставления данных произвольного размера с данными фиксированного размера.&#x201d; ((("pre-image")))Входные данные для хэш-функции называются _pre-image_, _message_ или просто _input data_. Результат называется _hash_. http://bit.ly/2Jrn3jM[Криптографические хэш-функции] - это особая подкатегория, которая обладает специфическими свойствами, полезными для защищенных платформ, таких как Ethereum.
 
-A cryptographic hash function is a _one-way_ hash function that maps data of arbitrary size to a fixed-size string of bits. The "one-way" nature means that it is computationally infeasible to recreate the input data if one only knows the output hash. The only way to determine a possible input is to conduct a brute-force search, checking each candidate for a matching output; given that the search space is virtually infinite, it is easy to understand the practical impossibility of the task. Even if you find some input data that creates a matching hash, it may not be the original input data: hash functions are "many-to-one" functions. ((("hash collision")))Finding two sets of input data that hash to the same output is called finding a _hash collision_. Roughly speaking, the better the hash function, the rarer hash collisions are. For Ethereum, they are effectively impossible.
+Криптографическая хеш-функция - это односторонняя хеш-функция, которая отображает данные произвольного размера в строку битов фиксированного размера. "Односторонний" характер означает, что с вычислительной точки зрения невозможно воссоздать входные данные, если известен только выходной хэш. Единственный способ определить возможные входные данные - это провести полный перебор, проверяя каждого кандидата на соответствие выходным данным; учитывая, что пространство поиска практически бесконечно, легко понять практическую невозможность этой задачи. Даже если вы найдете какие-то входные данные, которые создают соответствующий хэш, это могут быть не исходные входные данные: хэш-функции - это функции "многие к одному". ((("hash collision")))Нахождение двух наборов входных данных, которые хэшируются с одним и тем же выводом, называется нахождением _хэш-коллизии_ (_hash collision_). Грубо говоря, чем лучше хэш-функция, тем реже возникают хэш-коллизии. Для Ethereum они фактически невозможны.
 
-((("hash functions","main properties")))Let's take a closer look at the main properties of cryptographic hash functions. These include:
+((("hash functions","main properties")))Давайте подробнее рассмотрим основные свойства криптографических хэш-функций. К ним относятся:
 
-Determinism:: A given input message always produces the same hash output.
+Детерминизм:: Одинаковые входные данные всегда выдают один и тот же хэш-результат.
 
-Verifiability:: Computing the hash of a message is efficient (linear complexity).
+Проверяемость:: Вычисление хэша сообщения является эффективным (линейная сложность).
 
-Noncorrelation:: A small change to the message (e.g., a 1-bit change) should change the hash output so extensively that it cannot be correlated to the hash of the original message.
+Некорреляция:: Небольшое изменение входных данных (например, изменение на 1 бит) должно изменить вывод хэша настолько сильно, что его нельзя будет соотнести с хэшем исходного сообщения.
 
-Irreversibility:: Computing the message from its hash is infeasible, equivalent to a brute-force search through all possible messages.
+Необратимость:: Вычисление входных данных по его хэшу невозможно, что эквивалентно перебору всех возможных входных данных методом полного перебора.
 
-Collision protection:: It should be infeasible to calculate two different messages that produce the same hash output.
+Защита от столкновений:: Должно быть невозможно вычислить два разных входных набора, которые выдают один и тот же хэш-результат.
 
-Resistance to hash collisions is particularly important for avoiding digital signature forgery in Ethereum.
+Устойчивость к коллизиям хэшей особенно важна для предотвращения подделки цифровой подписи в Ethereum.
 
-The combination of these properties make cryptographic hash functions useful for a broad range of security applications, including:
+Сочетание этих свойств делает криптографические хэш-функции полезными для широкого спектра приложений безопасности, включая:
 
-* Data fingerprinting
-* Message integrity (error detection)
-* Proof of work
-* Authentication (password hashing and key stretching)
-* Pseudorandom number generators
-* Message commitment (commit–reveal mechanisms)
-* Unique identifiers
+* Снятие отпечатков пальцев с данных
+* Целостность сообщения (обнаружение ошибок)
+* Подтверждение работы
+* Аутентификация (хэширование паролей и растяжение ключей)
+* Генераторы псевдослучайных чисел
+* Приверженность сообщению (механизмы фиксации–раскрытия)
+* Уникальные идентификаторы
 
-We will find many of these in Ethereum as we progress through the various layers of the system.
+Мы найдем многие из них в Ethereum по мере прохождения различных уровней системы.
 
 [[keccak256]]
-==== Ethereum's Cryptographic Hash Function: Keccak-256
+==== Криптографическая хэш-функция Ethereum: Keccak-256
 
-((("hash functions","Keccak-256")))((("Keccak-256 hash function")))((("SHA-3 Hash Function")))Ethereum uses the _Keccak-256_ cryptographic hash function in many places. Keccak-256 was designed as a candidate for the SHA-3 Cryptographic Hash Function Competition held in 2007 by the ((("National Institute of Standards and Technology (NIST)")))((("NIST (National Institute of Standards and Technology)")))National Institute of Standards and Technology. Keccak was the winning algorithm, which became standardized as ((("Federal Information Processing Standard (FIPS)")))((("FIPS (Federal Information Processing Standard)")))((("FIPS-202")))Federal Information Processing Standard (FIPS) 202 in 2015.
+((("hash functions","Keccak-256")))((("Keccak-256 hash function")))((("SHA-3 Hash Function")))Ethereum использует криптографическую хэш-функцию _Keccak-256_ во многих местах. Keccak-256 был разработан в качестве кандидата на конкурс криптографических хэш-функций SHA-3, проводимый в 2007 году ((("National Institute of Standards and Technology (NIST)")))((("NIST (National Institute of Standards and Technology)")))Национальный институт стандартов и технологий. Победителем стал алгоритм Keccak, который стал стандартизирован как ((("Federal Information Processing Standard (FIPS)")))((("FIPS (Federal Information Processing Standard)")))((("FIPS-202")))Федеральный стандарт обработки информации (FIPS) 202 в 2015 году.
 
-However, during the period when Ethereum was developed, the NIST standardization was not yet finalized. NIST adjusted some of the parameters of Keccak after the completion of the standards process, allegedly to improve its efficiency. This was occurring at the same time as heroic whistleblower ((("Snowden, Edward")))Edward Snowden revealed documents that imply that NIST may have been improperly influenced by the National Security Agency to intentionally weaken the ((("Dual_EC_DRBG")))Dual_EC_DRBG random-number generator standard, effectively placing a backdoor in the standard random number generator. The result of this controversy was a backlash against the proposed changes and a significant delay in the standardization of SHA-3. At the time, the Ethereum Foundation decided to implement the original Keccak algorithm, as proposed by its inventors, rather than the SHA-3 standard as modified by NIST.
+Однако в период, когда разрабатывался Ethereum, стандартизация NIST еще не была завершена. NIST скорректировал некоторые параметры Keccak после завершения процесса стандартизации, предположительно, для повышения его эффективности. Это происходило в то же время, когда героический разоблачитель ((("Snowden, Edward"))) Эдвард Сноуден раскрыл документы, которые подразумевают, что NIST, возможно, подвергся ненадлежащему влиянию Агентства национальной безопасности, чтобы намеренно ослабить ((("Dual_EC_DRBG"))) стандарт генератора случайных чисел Dual_EC_DRBG, эффективно размещение бэкдора в стандартном генераторе случайных чисел. Результатом этого противоречия стала негативная реакция на предлагаемые изменения и значительная задержка в стандартизации SHA-3. В то время Фонд Ethereum решил внедрить оригинальный алгоритм Keccak, предложенный его изобретателями, а не стандарт SHA-3, модифицированный NIST.
 
 [WARNING]
 ====
-While you may see "SHA-3" mentioned throughout Ethereum documents and code, many if not all of those instances actually refer to Keccak-256, not the finalized FIPS-202 SHA-3 standard. The implementation differences are slight, having to do with padding parameters, but they are significant in that Keccak-256 produces different hash outputs from FIPS-202 SHA-3 for the same input.
+Хотя вы можете видеть "SHA-3", упоминаемый во всех документах и коде Ethereum, многие, если не все, эти экземпляры на самом деле относятся к Keccak-256, а не к окончательному стандарту FIPS-202 SHA-3. Различия в реализации незначительны, связанные с параметрами заполнения, но они существенны в том смысле, что Keccak-256 выдает другие выходные данные хэша в отличие от FIPS-202 SHA-3 для одних и тех же входных данных.
 ====
 
 [[which_hash]]
-==== Which Hash Function Am I Using?
+==== Какую хэш-функцию я использую?
 
-((("hash functions","test vector for determining")))((("test vector, determining hash functions with")))How can you tell if the software library you are using implements FIPS-202 SHA-3 or Keccak-256, if both might be called "SHA-3"?
+((("hash functions","test vector for determining")))((("test vector, determining hash functions with")))Как вы можете определить, реализует ли используемая вами программная библиотека FIPS-202 SHA-3 или Keccak-256, если оба могут называться "SHA-3"?
 
-An easy way to tell is to use a _test vector_, an expected output for a given input. ((("empty input test")))The test most commonly used for a hash function is the _empty input_. If you run the hash function with an empty string as input you should see the following results:
+Простой способ определить это - использовать _test vector_, ожидаемый результат для данного ввода. ((("тест пустого ввода"))) Тест, наиболее часто используемый для хэш-функции, - это _empty input_. Если вы запустите хэш-функцию с пустой строкой в качестве входных данных, вы должны увидеть следующие результаты:
 
 ----
 Keccak256("") =
@@ -411,32 +411,32 @@ SHA3("") =
 ----
 
 
-Regardless of what the function is called, you can test it to see whether it is the original Keccak-256 or the final NIST standard FIPS-202 SHA-3 by running this simple test. Remember, Ethereum uses Keccak-256, even though it is often called SHA-3 in the code.
+Независимо от того, как вызывается функция, вы можете протестировать ее, чтобы узнать, является ли она оригинальной Keccak-256 или окончательной версией стандарта NIST FIPS-202 SHA-3, выполнив этот простой тест. Помните, что Ethereum использует Keccak-256, хотя в коде его часто называют SHA-3.
 
 [NOTE]
 ====
-Due to the confusion created by the difference between the hash function used in Ethereum (Keccak-256) and the finalized standard (FIP-202 SHA-3), there is an effort underway to rename all instances of +sha3+ in all code, opcodes, and libraries to +keccak256+. See https://github.com/ethereum/EIPs/issues/59[EIP-59] for details.
+Из-за путаницы, вызванной различием между хэш-функцией, используемой в Ethereum (Keccak-256), и окончательным стандартом (FIP-202 SHA-3), предпринимаются усилия по переименованию всех экземпляров +sha3+ во всем коде, кодах операций и библиотеках в +keccak256+. Смотрите https://github.com/ethereum/EIPs/issues/59[EIP-59] для получения подробной информации.
 ====
 
 
-Next, let's examine the first application of Keccak-256 in Ethereum, which is to produce Ethereum addresses from public keys.(((range="endofrange", startref="ix_04keys-addresses-asciidoc13")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc12")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc11")))
+Далее давайте рассмотрим первое применение Keccak-256 в Ethereum, которое заключается в создании адресов Ethereum из открытых ключей.(((range="endofrange", startref="ix_04keys-addresses-asciidoc13")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc12")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc11")))
 
 [[eth_address]]
-=== Ethereum Addresses
+=== Адреса Ethereum
 
-((("addresses", id="ix_04keys-addresses-asciidoc14", range="startofrange")))((("cryptography","Ethereum addresses and", id="ix_04keys-addresses-asciidoc15", range="startofrange")))Ethereum addresses are _unique identifiers_ that are derived from public keys or contracts using the Keccak-256 one-way hash function.
+((("addresses", id="ix_04keys-addresses-asciidoc14", range="startofrange")))((("cryptography","Ethereum addresses and", id="ix_04keys-addresses-asciidoc15", range="startofrange")))Адреса Ethereum - это уникальные идентификаторы, которые получены из открытых ключей или контрактов с использованием односторонней хэш-функции Keccak-256.
 
-In our previous examples, we started with a private key and used elliptic curve multiplication to derive a public key:
+В наших предыдущих примерах мы начали с закрытого ключа и использовали умножение эллиптической кривой для получения открытого ключа:
 
 [role="pagebreak-before"]
-Private key _k_:
+Закрытый ключ _k_:
 
 ----
 k = f8f8a2f43c8376ccb0871305060d7b27b0554d2cc72bccf41b2705608452f315
 ----
 
 [[concat_pubkey]]
-Public key _K_ (_x_ and _y_ coordinates concatenated and shown as hex):
+Открытый ключ _K_ (координаты _x_ и _y_ объединены и отображаются в виде шестнадцатеричных чисел):
 
 ----
 K = 6e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b83b5c38e5e...
@@ -444,24 +444,24 @@ K = 6e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b83b5c38e5e..
 
 [NOTE]
 ====
-It is worth noting that the public key is not formatted with the prefix (hex) +04+ when the address is calculated.
+Стоит отметить, что открытый ключ не форматируется с префиксом (шестнадцатеричным) +04+ при вычислении адреса.
 ====
 
-We use Keccak-256 to calculate the _hash_ of this public key:
+Мы используем Keccak-256 для вычисления _hash_ этого открытого ключа:
 
 [[calculate_hash]]
 ----
 Keccak256(K) = 2a5bc342ed616b5ba5732269001d3f1ef827552ae1114027bd3ecf1f086ba0f9
 ----
 
-Then we keep only the last 20 bytes (least significant bytes), which is our Ethereum address:
+Затем мы сохраняем только последние 20 байт (наименее значимые байты), которые являются нашим адресом Ethereum:
 
 [[keep_last_20]]
 ----
 001d3f1ef827552ae1114027bd3ecf1f086ba0f9
 ----
 
-Most often you will see Ethereum addresses with the prefix +0x+ that indicates they are hexadecimal-encoded, like this:
+Чаще всего вы увидите адреса Ethereum с префиксом +0x+, который указывает, что они имеют шестнадцатеричную кодировку, например:
 
 [[hex_prefix]]
 ----
@@ -469,34 +469,34 @@ Most often you will see Ethereum addresses with the prefix +0x+ that indicates t
 ----
 
 [[eth_address_format]]
-==== Ethereum Address Formats
+==== Форматы адресов Ethereum
 
-((("addresses","formats")))Ethereum addresses are hexadecimal numbers, identifiers derived from the last 20 bytes of the Keccak-256 hash of the public key.
+((("addresses","formats")))Адреса Ethereum представляют собой шестнадцатеричные числа, идентификаторы, полученные из последних 20 байт хэша открытого ключа Keccak-256.
 
-((("checksum","in Ethereum address formats")))Unlike Bitcoin addresses, which are encoded in the user interface of all clients to include a built-in checksum to protect against mistyped addresses, Ethereum addresses are presented as raw hexadecimal without any checksum.
+((("checksum","in Ethereum address formats")))В отличие от биткойн-адресов, которые кодируются в пользовательском интерфейсе всех клиентов, чтобы включать встроенную контрольную сумму для защиты от ошибочных адресов, адреса Ethereum представлены в виде необработанных шестнадцатеричных чисел без какой-либо контрольной суммы.
 
-The rationale behind that decision was that Ethereum addresses would eventually be hidden behind abstractions (such as name services) at higher layers of the system and that checksums should be added at higher layers if necessary.
+Обоснование этого решения заключалось в том, что адреса Ethereum в конечном итоге будут скрыты за абстракциями (такими как службы имен) на более высоких уровнях системы и что контрольные суммы должны быть добавлены на более высоких уровнях, если это необходимо.
 
-In reality, these higher layers were developed too slowly and this design choice led to a number of problems in the early days of the ecosystem, including the loss of funds due to mistyped addresses and input validation errors. Furthermore, because Ethereum name services were developed slower than initially expected, alternative encodings were adopted very slowly by wallet developers. We'll look at a few of the encoding options next.
+На самом деле эти более высокие уровни разрабатывались слишком медленно, и такой выбор дизайна привел к ряду проблем на ранних этапах существования экосистемы, включая потерю средств из-за неправильно введенных адресов и ошибок проверки входных данных. Кроме того, поскольку сервисы имен Ethereum разрабатывались медленнее, чем первоначально ожидалось, разработчики кошельков очень медленно внедряли альтернативные кодировки. Далее мы рассмотрим несколько вариантов кодирования.
 
 [[ICAP]]
-==== Inter Exchange Client Address Protocol
+==== Протокол обмена клиентских адресов (Inter Exchange Client Address Protocol)
 
-((("addresses","ICAP encoding", id="ix_04keys-addresses-asciidoc16", range="startofrange")))((("ICAP (Inter-exchange Client Address Protocol)", id="ix_04keys-addresses-asciidoc17", range="startofrange")))((("Inter-exchange Client Address Protocol (ICAP)", id="ix_04keys-addresses-asciidoc18", range="startofrange")))The _Inter exchange Client Address Protocol_ (ICAP) is an Ethereum address encoding that is partly compatible with the ((("IBAN (International Bank Account Number)")))((("International Bank Account Number (IBAN)")))International Bank Account Number (IBAN) encoding, offering a versatile, checksummed, and interoperable encoding for Ethereum addresses. ICAP addresses can encode Ethereum addresses or common names registered with an Ethereum name registry. You can read more about ICAP on the https://eth.wiki/en/ideas/inter-exchange-client-address-protocol-icap[Ethereum Wiki].
+((("addresses","ICAP encoding", id="ix_04keys-addresses-asciidoc16", range="startofrange")))((("ICAP (Inter-exchange Client Address Protocol)", id="ix_04keys-addresses-asciidoc17", range="startofrange")))((("Inter-exchange Client Address Protocol (ICAP)", id="ix_04keys-addresses-asciidoc18", range="startofrange")))Протокол _Inter exchange Client Address Protocol_ (ICAP) представляет собой кодировку адреса Ethereum, которая частично совместима с ((("IBAN (International Bank Account Number)")))((("International Bank Account Number (IBAN)")))одировкой международного номера банковского счета (IBAN), предлагающая универсальную, проверяемую и совместимую кодировку для адресов Ethereum. Адреса ICAP могут кодировать адреса Ethereum или общие имена, зарегистрированные в реестре имен Ethereum. Вы можете прочитать больше об ICAP на сайте https://eth.wiki/en/ideas/inter-exchange-client-address-protocol-icap[Ethereum Wiki].
 
-IBAN is an international standard for identifying bank account numbers, mostly used for wire transfers. It is broadly adopted in the European Single Euro Payments Area (SEPA) and beyond. IBAN is a centralized and heavily regulated service. ICAP is a decentralized but compatible implementation for Ethereum addresses.
+IBAN - это международный стандарт идентификации номеров банковских счетов, в основном используемый для банковских переводов. Он широко применяется в Европейской платежной зоне единого евро (SEPA) и за ее пределами. IBAN - это централизованная и строго регулируемая услуга. ICAP - это децентрализованная, но совместимая реализация для адресов Ethereum.
 
-An IBAN consists of a string of up to 34 alphanumeric characters (case-insensitive) comprising a country code, checksum, and bank account identifier (which is country-specific).
+IBAN состоит из строки длиной до 34 буквенно-цифровых символов (без учета регистра), содержащей код страны, контрольную сумму и идентификатор банковского счета (который зависит от конкретной страны).
 
-ICAP uses the same structure by introducing a nonstandard country code, &#x201c;XE,&#x201d; that stands for "Ethereum,&#x201d; followed by a two-character checksum and three possible variations of an account identifier:
+ICAP использует ту же структуру, вводя нестандартный код страны &#x201c;XE&#x201d;, который расшифровывается как "Ethereum", за которым следует двухсимвольная контрольная сумма и три возможных варианта идентификатора учетной записи:
 
-Direct:: A big-endian base-36 integer comprised of up to 30 alphanumeric characters, representing the 155 least significant bits of an Ethereum address. Because this encoding fits less than the full 160 bits of a general Ethereum address, it only works for Ethereum addresses that start with one or more zero bytes. The advantage is that it is compatible with IBAN, in terms of the field length and checksum. Example: +XE60HAMICDXSV5QXVJA7TJW47Q9CHWKJD+ (33 characters long).
+Прямой (Direct):: Целое число с начальным числом 36, состоящее из 30 буквенно-цифровых символов, представляющих 155 младших значащих битов адреса Ethereum. Поскольку эта кодировка соответствует менее чем полным 160 битам общего адреса Ethereum, она работает только для адресов Ethereum, которые начинаются с одного или нескольких нулевых байтов. Преимущество заключается в том, что он совместим с IBAN с точки зрения длины поля и контрольной суммы. Пример: +XE60HAMICDXSV5QXVJA7TJW47Q9CHWKJD+ (длина 33 символа).
 
-Basic:: Same as the Direct encoding, except that it is 31 characters long. This allows it to encode any Ethereum address, but makes it incompatible with IBAN field validation. Example: +XE18CHDJBPLTBCJ03FE9O2NS0BPOJVQCU2P+ (35 characters long).
+Базовый (Basic):: То же, что и прямая кодировка, за исключением того, что она имеет длину 31 символ. Это позволяет ему кодировать любой адрес Ethereum, но делает его несовместимым с проверкой поля IBAN. Пример: +XE18CHDJBPLTBCJ03FE9O2NS0BPOJVQCU2P+ (длина 35 символов).
 
-Indirect:: Encodes an identifier that resolves to an Ethereum address through a name registry provider. It uses 16 alphanumeric characters, comprising an _asset identifier_ (e.g., ETH), a name service (e.g., XREG), and a 9-character human-readable name (e.g., KITTYCATS). Example: +XEpass:[##]ETHXREGKITTYCATS+ (20 characters long), where the +##+ should be replaced by the two computed checksum characters.
+Косвенный (Indirect):: Кодирует идентификатор, который преобразуется в адрес Ethereum через поставщика реестра имен. Он использует 16 буквенно-цифровых символов, включая идентификатор _asset_ (например, ETH), службу имен (например, XREG) и 9-символьное удобочитаемое имя (например, KITTYCATS). Пример: +XEpass:[##]ETHXREGKITTYCATS+ (длиной 20 символов), где +##+ следует заменить двумя символами вычисленной контрольной суммы.
 
-((("EthereumJS helpeth")))((("helpeth command-line tool")))We can use the +helpeth+ command-line tool to create ICAP addresses. You can get helpeth by installing it with:
+((("EthereumJS helpeth")))((("helpeth command-line tool")))Мы можем использовать инструмент командной строки +helpeth+ для создания адресов ICAP. Вы можете получить helpeth, установив его с помощью:
 
 ++++
 <pre data-type="programlisting">
@@ -504,9 +504,9 @@ $ <strong>npm install -g helpeth</strong>
 </pre>
 ++++
 
-If you don't have npm, you may have to install nodeJS first, which you can do by following the instructions at https://nodeJS.org. 
+Если у вас нет npm, возможно, вам придется сначала установить NodeJS, что вы можете сделать, следуя инструкциям по адресу https://nodeJS.org . 
 
-Now that we have helpeth, let's try creating an ICAP address with our example private key (prefixed with +0x+ and passed as a parameter to +helpeth+). 
+Теперь, когда у нас есть helpeth, давайте попробуем создать адрес ICAP с помощью нашего примера закрытого ключа (с префиксом +0x+ и переданного в качестве параметра +helpeth+). 
 
 ++++
 <pre data-type="programlisting">
@@ -519,49 +519,49 @@ Public key: 0x6e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b..
 </pre>
 ++++
 
-The +helpeth+ command constructs a hexadecimal Ethereum address as well as an ICAP address for us. The ICAP address for our example key is:
+Команда +helpeth+ создает для нас шестнадцатеричный адрес Ethereum, а также адрес ICAP. Адрес ICAP для нашего ключа:
 
 [[ICAP_example]]
 ----
 XE60HAMICDXSV5QXVJA7TJW47Q9CHWKJD
 ----
 
-Because our example Ethereum address happens to start with a zero byte, it can be encoded using the Direct ICAP encoding method that is valid in IBAN format. You can tell because it is 33 characters long.
+Поскольку наш пример адреса Ethereum начинается с нулевого байта, он может быть закодирован с использованием прямого метода кодирования ICAP, который действителен в формате IBAN. Вы можете сказать это, потому что он состоит из 33 символов.
 
-If our address did not start with a zero, it would be encoded with the Basic encoding, which would be 35 characters long and invalid as an IBAN.
+Если бы ваш адрес не начинался с нуля, он был бы закодирован с использованием базовой кодировки, которая будет иметь длину 35 символов и недопустима в качестве IBAN.
 
 [TIP]
 ====
-The chances of any Ethereum address starting with a zero byte are 1 in 256. To generate one like that, it will take on average 256 attempts with 256 different random private keys before we find one that works as an IBAN-compatible "Direct" encoded ICAP address.
+Вероятность того, что любой адрес Ethereum начнется с нулевого байта, равна 1 к 256. Чтобы сгенерировать такой адрес, потребуется в среднем 256 попыток с 256 различными случайными закрытыми ключами, прежде чем мы найдем тот, который работает как совместимый с IBAN "Прямой (Direct)" кодированный ICAP-адрес.
 ====
 
-At this time, ICAP is unfortunately only supported by a few wallets.(((range="endofrange", startref="ix_04keys-addresses-asciidoc18")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc17")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc16")))
+В настоящее время ICAP, к сожалению, поддерживается только несколькими кошельками.(((range="endofrange", startref="ix_04keys-addresses-asciidoc18")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc17")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc16")))
 
 [[EIP55]]
-==== Hex Encoding with Checksum in Capitalization (EIP-55)
+==== Шестнадцатеричная кодировка с контрольной суммой в прописных буквах (EIP-55)
 
-((("addresses","hex encoding with checksum in capitalization (EIP-55)", id="ix_04keys-addresses-asciidoc19", range="startofrange")))((("checksum","EIP-55 and", id="ix_04keys-addresses-asciidoc20", range="startofrange")))((("EIP-55 (Ethereum Improvement Proposal 55)","checksum for addresses", id="ix_04keys-addresses-asciidoc21", range="startofrange")))Due to the slow deployment of ICAP and name services, a standard was proposed by https://github.com/Ethereum/EIPs/blob/master/EIPS/eip-55.md[Ethereum Improvement Proposal 55 (EIP-55)]. EIP-55 offers a backward-compatible checksum for Ethereum addresses by modifying the capitalization of the hexadecimal address. The idea is that Ethereum addresses are case-insensitive and all wallets are supposed to accept Ethereum addresses expressed in capital or lowercase characters, without any difference in interpretation.
+((("addresses","hex encoding with checksum in capitalization (EIP-55)", id="ix_04keys-addresses-asciidoc19", range="startofrange")))((("checksum","EIP-55 and", id="ix_04keys-addresses-asciidoc20", range="startofrange")))((("EIP-55 (Ethereum Improvement Proposal 55)","checksum for addresses", id="ix_04keys-addresses-asciidoc21", range="startofrange")))Из-за медленного развертывания служб ICAP стандарт было создано https://github.com/Ethereum/EIPs/blob/master/EIPS/eip-55.md[Предложение по улучшению Ethereum 55 (EIP-55)]. EIP-55 предлагает обратно совместимую контрольную сумму для адресов Ethereum, изменяя заглавные буквы шестнадцатеричного адреса. Идея заключается в том, что адреса Ethereum не чувствительны к регистру, и все кошельки должны принимать адреса Ethereum, выраженные заглавными или строчными буквами, без какой-либо разницы в интерпретации.
 
-By modifying the capitalization of the alphabetic characters in the address, we can convey a checksum that can be used to protect the integrity of the address against typing or reading mistakes. Wallets that do not support EIP-55 checksums simply ignore the fact that the address contains mixed capitalization, but those that do support it can validate it and detect errors with a 99.986% accuracy.
+Изменяя заглавные буквы буквенных символов в адресе, мы можем передать контрольную сумму, которую можно использовать для защиты целостности адреса от ошибок ввода или чтения. Кошельки, которые не поддерживают контрольные суммы EIP-55, просто игнорируют тот факт, что адрес содержит смешанные заглавные буквы, но те, которые его поддерживают, могут проверять его и обнаруживать ошибки с точностью 99,986%.
 
-The mixed-capitals encoding is subtle and you may not notice it at first. Our example address is:
+Кодировка со смешанными заглавными буквами неуловима, и поначалу вы можете ее не заметить. Наш примерный адрес::
 
 ----
 0x001d3f1ef827552ae1114027bd3ecf1f086ba0f9
 ----
 
-With an EIP-55 mixed-capitalization checksum it becomes:
+С контрольной суммой со смешанной капитализацией EP-55 она становится:
 
 [[mixed_capitalization]]
 ----
 0x001d3F1ef827552Ae1114027BD3ECF1f086bA0F9
 ----
 
-Can you tell the difference? Some of the alphabetic (A&#x2013;F) characters from the hexadecimal encoding alphabet are now capital, while others are lowercase.
+Можете ли вы заметить разницу? Некоторые из буквенных символов (A&#x2013;F) из алфавита шестнадцатеричной кодировки теперь являются заглавными, в то время как другие - строчными.
 
-EIP-55 is quite simple to implement. We take the Keccak-256 hash of the lowercase hexadecimal address. This hash acts as a digital fingerprint of the address, giving us a convenient checksum. Any small change in the input (the address) should cause a big change in the resulting hash (the checksum), allowing us to detect errors effectively. The hash of our address is then encoded in the capitalization of the address itself. Let's break it down, step by step:
+EIP-55 довольно прост в реализации. Мы берем хэш Keccak-256 шестнадцатеричного адреса в нижнем регистре. Этот хэш действует как цифровой отпечаток адреса, давая нам удобную контрольную сумму. Любое небольшое изменение входных данных (адреса) должно привести к значительному изменению результирующего хэша (контрольной суммы), что позволит нам эффективно обнаруживать ошибки. Затем хэш нашего адреса кодируется в заглавных буквах самого адреса. Давайте разберем это, шаг за шагом:
 
-1. Hash the lowercase address, without the +0x+ prefix:
+1. Хэшируйте адрес в нижнем регистре без префикса +0x+:
 
 [[hash_lower_case_address]]
 ----
@@ -570,42 +570,42 @@ Keccak256("001d3f1ef827552ae1114027bd3ecf1f086ba0f9") =
 ----
 
 [start=2]
-1. Capitalize each alphabetic address character if the corresponding hex digit of the hash is greater than or equal to +0x8+. This is easier to show if we line up the address and the hash:
+1. Используйте заглавные буквы для каждого символа буквенного адреса, если соответствующая шестнадцатеричная цифра хэша больше или равна +0x8+. Это легче показать, если мы сопоставим адрес и хэш:
 
 [[capitalize_input]]
 ----
-Address: 001d3f1ef827552ae1114027bd3ecf1f086ba0f9
-Hash   : 23a69c1653e4ebbb619b0b2cb8a9bad49892a8b9...
+Адрес: 001d3f1ef827552ae1114027bd3ecf1f086ba0f9
+Хэш  : 23a69c1653e4ebbb619b0b2cb8a9bad49892a8b9...
 ----
 
-Our address contains an alphabetic character +d+ in the fourth position. The fourth character of the hash is +6+, which is less than +8+. So, we leave the +d+ lowercase. The next alphabetic character in our address is +f+, in the sixth position. The sixth character of the hexadecimal hash is +c+, which is greater than +8+. Therefore, we capitalize the +F+ in the address, and so on. As you can see, we only use the first 20 bytes (40 hex characters) of the hash as a checksum, since we only have 20 bytes (40 hex characters) in the address to capitalize appropriately.
+Наш адрес содержит буквенный символ +d+ в четвертой позиции. Четвертый символ хэша - +6+, что меньше, чем +8+. Итак, мы оставляем +d+ в нижнем регистре. Следующий буквенный символ в нашем адресе - +f+, в шестой позиции. Шестым символом шестнадцатеричного хэша является +c+, что больше, чем +8+. Поэтому мы пишем заглавными буквами +F+ в адресе и так далее. Как вы можете видеть, мы используем только первые 20 байт (40 шестнадцатеричных символов) хэша в качестве контрольной суммы, поскольку у нас есть только 20 байт (40 шестнадцатеричных символов) в адресе для соответствующего заглавного ввода.
 
-Check the resulting mixed-capitals address yourself and see if you can tell which characters were capitalized and which characters they correspond to in the address hash:
+Проверьте полученный адрес со смешанными заглавными буквами самостоятельно и посмотрите, сможете ли вы определить, какие символы были написаны с заглавной буквы и каким символам они соответствуют в хэше адреса.:
 
 [[capitalize_output]]
 ----
-Address: 001d3F1ef827552Ae1114027BD3ECF1f086bA0F9
-Hash   : 23a69c1653e4ebbb619b0b2cb8a9bad49892a8b9...
+Адрес: 001d3F1ef827552Ae1114027BD3ECF1f086bA0F9
+Хэш  : 23a69c1653e4ebbb619b0b2cb8a9bad49892a8b9...
 ----
 
 [[EIP55_error]]
-===== Detecting an error in an EIP-55 encoded address
+===== Обнаружение ошибки в адресе с кодировкой EIP-55
 
-((("EIP-55 (Ethereum Improvement Proposal 55)","detecting an error in an encoded address")))Now, let's look at how EIP-55 addresses will help us find an error. Let's assume we have printed out an Ethereum address, which is EIP-55 encoded:
+((("EIP-55 (Ethereum Improvement Proposal 55)","detecting an error in an encoded address")))Теперь давайте посмотрим, как адреса EIP-55 помогут нам найти ошибку. Давайте предположим, что мы распечатали адрес Ethereum, который закодирован в EIP-55:
 
 [[correct_address]]
 ----
 0x001d3F1ef827552Ae1114027BD3ECF1f086bA0F9
 ----
 
-Now let's make a basic mistake in reading that address. The character before the last one is a capital +F+. For this example let's assume we misread that as a capital +E+, and we type the following (incorrect) address into our wallet:
+Теперь давайте допустим простую ошибку при чтении этого адреса. Предпоследний символ - это заглавная буква +F+. Для этого примера давайте предположим, что мы неправильно истолковали ее как заглавную букву +E+, и мы вводим следующий (неправильный) адрес в наш кошелек:
 
 [[incorrect_address]]
 ----
 0x001d3F1ef827552Ae1114027BD3ECF1f086bA0E9
 ----
 
-Fortunately, our wallet is EIP-55 compliant! It notices the mixed capitalization and attempts to validate the address. It converts it to lowercase, and calculates the checksum hash:
+К счастью, наш кошелек совместим с EIP-55! Он замечает смешанные заглавные и строчные буквы и пытается подтвердить адрес. Он преобразует его в нижний регистр и вычисляет хэш контрольной суммы:
 
 [[hash_demo]]
 ----
@@ -613,9 +613,9 @@ Keccak256("001d3f1ef827552ae1114027bd3ecf1f086ba0e9") =
 5429b5d9460122fb4b11af9cb88b7bb76d8928862e0a57d46dd18dd8e08a6927
 ----
 
-As you can see, even though the address has only changed by one character (in fact, only one bit, as +e+ and +f+ are one bit apart), the hash of the address has changed radically. That's the property of hash functions that makes them so useful for checksums!
+Как вы можете видеть, несмотря на то, что адрес изменился только на один символ (фактически, только на один бит, поскольку +e + и +f+ разделены одним битом), хэш адреса радикально изменился. Это свойство хэш-функций, которое делает их такими полезными для контрольных сумм!
 
-Now, let's line up the two and check the capitalization:
+Теперь давайте выстроим их в ряд и проверим заглавные буквы:
 
 [[incorrect_capitalization]]
 ----
@@ -623,12 +623,12 @@ Now, let's line up the two and check the capitalization:
 5429b5d9460122fb4b11af9cb88b7bb76d892886...
 ----
 
-It's all wrong! Several of the alphabetic characters are incorrectly capitalized. Remember that the capitalization is the encoding of the _correct_ checksum.
+Это все неправильно! Некоторые буквенные символы неправильно написаны заглавными буквами. Помните, что заглавные буквы - это кодировка правильной контрольной суммы.
 
-The capitalization of the address we input doesn't match the checksum just calculated, meaning something has changed in the address, and an error has been pass:[<span class="keep-together">introduced</span>](((range="endofrange", startref="ix_04keys-addresses-asciidoc21")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc20")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc19"))).(((range="endofrange", startref="ix_04keys-addresses-asciidoc15")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc14")))
+Заглавные буквы адреса, который мы вводим, не соответствуют только что вычисленной контрольной сумме, что означает, что в адресе что-то изменилось, и была допущена pass:[<span class="keep-together">ошибка</span>](((range="endofrange", startref="ix_04keys-addresses-asciidoc21")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc20")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc19"))).(((range="endofrange", startref="ix_04keys-addresses-asciidoc15")))(((range="endofrange", startref="ix_04keys-addresses-asciidoc14")))
 
 
 [[keys-addresses-conclusions]]
-=== Conclusions
+=== Заключение
 
-In this chapter we provided a brief survey of public key cryptography and focused on the use of public and private keys in Ethereum and the use of cryptographic tools, such as hash functions, in the creation and verification of Ethereum addresses. We also looked at digital signatures and how they can demonstrate ownership of a private key without revealing that private key. In <<wallets_chapter>>, we will put these ideas together and look at how wallets can be used to manage collections of keys.(((range="endofrange", startref="ix_04keys-addresses-asciidoc0")))
+В этой главе мы представили краткий обзор криптографии с открытым ключом и сосредоточились на использовании открытых и закрытых ключей в Ethereum и использовании криптографических инструментов, таких как хэш-функции, при создании и проверке адресов Ethereum. Мы также рассмотрели цифровые подписи и то, как они могут продемонстрировать владение закрытым ключом, не раскрывая этот закрытый ключ. В <<wallets_chapter>> мы объединим эти идеи и рассмотрим, как кошельки можно использовать для управления коллекциями ключей.(((range="endofrange", startref="ix_04keys-addresses-asciidoc0")))
