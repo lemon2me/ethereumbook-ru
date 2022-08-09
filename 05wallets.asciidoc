@@ -99,89 +99,89 @@ HD-кошельки обладают несколькими ключевыми �
 Второе преимущество HD-кошельков заключается в том, что пользователи могут создавать последовательность открытых ключей, не имея доступа к соответствующим закрытым ключам. Это позволяет использовать HD-кошельки на небезопасном сервере или в режиме только для просмотра или приема, когда у кошелька нет закрытых ключей, на которые можно потратить средства.
 
 [[mnemonic_codes]]
-==== Seeds and Mnemonic Codes (BIP-39)
+==== Seeds и мнемонические коды (BIP-39)
 
-((("BIP-39 standard")))((("Bitcoin improvement proposals (BIPs)","Mnemonic Code Words (BIP-39)")))((("mnemonic code words","BIP-39")))((("seeds","mnemonic code words for", seealso="mnemonic code words")))((("wallets","mnemonic codes (BIP-39)")))There are many ways to encode a private key for secure backup and retrieval. The currently preferred method is using a sequence of words that, when taken together in the correct order, can uniquely recreate the private key. This is sometimes known as a _mnemonic_, and the approach has been standardized by http://bit.ly/2OEMjUz[BIP-39]. Today, many Ethereum wallets (as well as wallets for other cryptocurrencies) use this standard, and can import and export seeds for backup and recovery using interoperable mnemonics.
+((("BIP-39 standard")))((("Bitcoin improvement proposals (BIPs)","Mnemonic Code Words (BIP-39)")))((("mnemonic code words","BIP-39")))((("seeds","mnemonic code words for", seealso="mnemonic code words")))((("wallets","mnemonic codes (BIP-39)")))Существует множество способов кодирования закрытого ключа для безопасного резервного копирования и извлечения. В настоящее время предпочтительным методом является использование последовательности слов, которые, будучи взяты вместе в правильном порядке, могут однозначно воссоздать закрытый ключ. Это иногда называют _mnemonic_, и этот подход был стандартизирован http://bit.ly/2OEMjUz[BIP-39]. Сегодня многие кошельки Ethereum (а также кошельки для других криптовалют) используют этот стандарт и могут импортировать и экспортировать исходные данные для резервного копирования и восстановления с помощью совместимых мнемоник.
 
-To see why this approach has become popular, let's have a look at an example:
+Чтобы понять, почему этот подход стал популярным, давайте рассмотрим пример:
 
 [[hex_seed_example]]
-.A seed for a deterministic wallet, in hex
+.Начальное значение (seed) для детерминированного кошелька в шестнадцатеричном формате
 ----
 FCCF1AB3329FD5DA3DA9577511F8F137
 ----
 
 [[mnemonic_seed_example]]
-.A seed for a deterministic wallet, from a 12-word mnemonic
+.Начальное значение (seed) для детерминированного кошелька из мнемоники из 12 слов
 ----
 wolf juice proud gown wool unfair
 wall cliff insect more detail hub
 ----
 
-In practical terms, the chance of an error when writing down the hex sequence is unacceptably high. In contrast, the list of known words is quite easy to deal with, mainly because there is a high level of redundancy in the writing of words (especially English words). If "inzect" had been recorded by accident, it could quickly be determined, upon the need for wallet recovery, that "inzect" is not a valid English word and that "insect" should be used instead. We are talking about writing down a representation of the seed because that is good practice when managing HD wallets: the seed is needed to recover a wallet in the case of data loss (whether through accident or theft), so keeping a backup is very prudent. However, the seed must be kept extremely private, so digital backups should be carefully avoided; hence the earlier advice to back up with pen and paper.
+С практической точки зрения вероятность ошибки при записи шестнадцатеричной последовательности недопустимо высока. Напротив, со списком известных слов довольно легко иметь дело, главным образом потому, что существует высокий уровень избыточности в написании слов (особенно английских слов). Если бы "inzect" был записан случайно, при необходимости восстановления кошелька можно было бы быстро определить, что "inzect" не является допустимым английским словом и что вместо него следует использовать "insect". Мы говорим о записи представления начального значения, потому что это хорошая практика при управлении HD-кошельками: начальное значение необходимо для восстановления кошелька в случае потери данных (будь то в результате несчастного случая или кражи), поэтому сохранение резервной копии очень разумно. Однако исходные данные должны храниться в строгом секрете, поэтому следует тщательно избегать создания цифровых резервных копий; отсюда и предыдущий совет создавать резервные копии с помощью ручки и бумаги.
 
-In summary, the use of a recovery word list to encode the seed for an HD wallet makes for the easiest way to safely export, transcribe, record on paper, read without error, and import a private key set into another wallet.(((range="endofrange", startref="ix_05wallets-asciidoc1")))
+Таким образом, использование списка слов восстановления для кодирования seed для HD-кошелька обеспечивает самый простой способ безопасного экспорта, расшифровки, записи на бумаге, чтения без ошибок и импорта набора закрытых ключей в другой кошелек.(((range="endofrange", startref="ix_05wallets-asciidoc1")))
 
 
 [[wallet_best_practices]]
-=== Wallet Best Practices
+=== Лучшие практики кошелька
 
-((("wallets","best practices for", id="ix_05wallets-asciidoc5", range="startofrange")))As cryptocurrency wallet technology has matured, certain common industry standards have emerged that make wallets broadly interoperable, easy to use, secure, and flexible. These standards also allow wallets to derive keys for multiple different cryptocurrencies, all from a single mnemonic. These common standards are:
+((("wallets","best practices for", id="ix_05wallets-asciidoc5", range="startofrange")))По мере развития технологии криптовалютных кошельков появились определенные общие отраслевые стандарты, которые делают кошельки широко совместимыми, простыми в использовании, безопасными и гибкими. Эти стандарты также позволяют кошелькам получать ключи для нескольких различных криптовалют, все из одной мнемоники. Этими общими стандартами являются:
 
-* Mnemonic code words, based on BIP-39
-* HD wallets, based on BIP-32
-* Multipurpose HD wallet structure, based on BIP-43
-* Multicurrency and multiaccount wallets, based on BIP-44
+* Мнемонические кодовые слова, основанные на BIP-39
+* HD кошельки, основанные на BIP-32
+* Многофункциональная структура HD-кошелька, основанная на BIP-43
+* Мультивалютные и мультиаккаунтные кошельки, основанные на BIP-44
 
-These standards may change or be obsoleted by future developments, but for now they form a set of interlocking technologies that have become the _de facto_ wallet standard for most blockchain platforms and their cryptocurrencies.
+Эти стандарты могут измениться или устареть в результате будущих разработок, но на данный момент они образуют набор взаимосвязанных технологий, которые стали стандартом кошелька de facto для большинства блокчейн-платформ и их криптовалют.
 
-The standards have been adopted by a broad range of software and hardware wallets, making all these wallets interoperable. A user can export a mnemonic generated in one of these wallets and import it to another wallet, recovering all keys and addresses.
+Стандарты были приняты широким спектром программных и аппаратных кошельков, что делает все эти кошельки совместимыми. Пользователь может экспортировать мнемонику, сгенерированную в одном из этих кошельков, и импортировать ее в другой кошелек, восстановив все ключи и адреса.
 
-Some examples of software wallets supporting these standards include (listed alphabetically) Jaxx, MetaMask, MyCrypto, and MyEtherWallet (MEW). ((("hardware wallets")))Examples of hardware wallets supporting these standards include Keepkey, Ledger, and Trezor.
+Некоторые примеры программных кошельков, поддерживающих эти стандарты, включают (перечислены в алфавитном порядке) Jaxx, MetaMask, MyCrypto и MyEtherWallet (MEW). ((("hardware wallets")))Примерами аппаратных кошельков, поддерживающих эти стандарты, являются Keepkey, Ledger и Trezor.
 
-The following sections examine each of these technologies in detail.
+В следующих разделах подробно рассматривается каждая из этих технологий.
 
 [TIP]
 ====
-If you are implementing an Ethereum wallet, it should be built as an HD wallet, with a seed encoded as a mnemonic code for backup, following the BIP-32, BIP-39, BIP-43, and BIP-44 standards, as described in the following sections.
+Если вы внедряете кошелек Ethereum, он должен быть построен как HD-кошелек с начальным значением (seed), закодированным в виде мнемонического кода для резервного копирования, в соответствии со стандартами BIP-32, BIP-39, BIP-43 и BIP-44, как описано в следующих разделах.
 ====
 
 [[bip39]]
 [[mnemonic_code_words]]
-==== Mnemonic Code Words (BIP-39)
+=== Мнемонические кодовые слова (BIP-39)
 
-((("BIP-39 standard", id="ix_05wallets-asciidoc6", range="startofrange")))((("Bitcoin improvement proposals (BIPs)","Mnemonic Code Words (BIP-39)", id="ix_05wallets-asciidoc7", range="startofrange")))((("mnemonic code words","BIP-39", id="ix_05wallets-asciidoc8", range="startofrange")))((("wallets","mnemonic codes (BIP-39)", id="ix_05wallets-asciidoc9", range="startofrange")))Mnemonic code words are word sequences that encode a random number used as a seed to derive a deterministic wallet. The sequence of words is sufficient to recreate the seed, and from there recreate the wallet and all the derived keys. A wallet application that implements deterministic wallets with mnemonic words will show the user a sequence of 12 to 24 words when first creating a wallet. That sequence of words is the wallet backup, and can be used to recover and recreate all the keys in the same or any compatible wallet application. As we explained earlier, mnemonic word lists make it easier for users to back up wallets, because they are easy to read and correctly pass:[<span class="keep-together">transcribe</span>].
+((("BIP-39 standard", id="ix_05wallets-asciidoc6", range="startofrange")))((("Bitcoin improvement proposals (BIPs)","Mnemonic Code Words (BIP-39)", id="ix_05wallets-asciidoc7", range="startofrange")))((("mnemonic code words","BIP-39", id="ix_05wallets-asciidoc8", range="startofrange")))((("wallets","mnemonic codes (BIP-39)", id="ix_05wallets-asciidoc9", range="startofrange")))Мнемонические кодовые слова - это последовательности слов, которые кодируют случайное число, используемое в качестве seed для получения детерминированного кошелька. Последовательности слов достаточно, чтобы воссоздать seed, а оттуда воссоздать кошелек и все производные ключи. Приложение кошелька, которое реализует детерминированные кошельки с мнемоническими словами, покажет пользователю последовательность из 12-24 слов при первом создании кошелька. Эта последовательность слов является резервной копией кошелька и может быть использована для восстановления и повторного создания всех ключей в том же или любом совместимом приложении кошелька. Как мы объясняли ранее, мнемонические списки слов облегчают пользователям резервное копирование кошельков, поскольку их легко читать и правильно pass:[<span class="keep-together">расшифровывать</span>].
 
 [NOTE]
 ====
-((("brainwallets, mnemonic words vs.")))Mnemonic words are often confused with "brainwallets." They are not the same. The primary difference is that a brainwallet consists of words chosen by the user, whereas mnemonic words are created randomly by the wallet and presented to the user. This important difference makes mnemonic words much more secure, because humans are very poor sources of randomness. Perhaps more importantly, using the term "brainwallet" suggests that the words have to be memorized, which is a terrible idea, and a recipe for not having your backup when you need it.
+((("brainwallets, mnemonic words vs.")))Мнемонические слова часто путают с "мозговыми кошельками" (brainwallet). Это не одно и то же. Основное отличие заключается в том, что brainwallet состоит из слов, выбранных пользователем, в то время как мнемонические слова создаются кошельком случайным образом и представляются пользователю. Это важное различие делает мнемонические слова гораздо более безопасными, потому что люди - очень плохие источники случайности. Возможно, что еще более важно, использование термина "мозговой кошелек" предполагает, что слова нужно запоминать, что является ужасной идеей и рецептом отсутствия резервной копии, когда она вам нужна.
 ====
 
-Mnemonic codes are defined in BIP-39. Note that BIP-39 is one implementation of a mnemonic code standard. There is a different standard, _with a different set of words_, used by the Electrum Bitcoin wallet and predating BIP-39. BIP-39 was proposed by the company behind the Trezor hardware wallet and is incompatible with Electrum's implementation. However, BIP-39 has now achieved broad industry support across dozens of interoperable implementations and should be considered the _de facto_ industry standard. Furthermore, BIP-39 can be used to produce multicurrency wallets supporting Ethereum, whereas Electrum seeds cannot.
+Мнемонические коды определены в BIP-39. Обратите внимание, что BIP-39 является одной из реализаций стандарта мнемонического кода. Существует другой стандарт, _с другим набором слов_, используемый биткойн-кошельком Electrum и предшествующий BIP-39. BIP-39 был предложен компанией, разработавшей аппаратный кошелек Trezor, и несовместим с реализацией Electrum. Тем не менее, BIP-39 в настоящее время получил широкую отраслевую поддержку в десятках совместимых реализаций и должен рассматриваться как фактический отраслевой стандарт. Кроме того, BIP-39 можно использовать для создания мультивалютных кошельков, поддерживающих Ethereum, в то время как seeds Electrum не могут.
 
-BIP-39 defines the creation of a mnemonic code and seed, which we describe here in nine steps. For clarity, the process is split into two parts: steps 1 through 6 are shown in <<generating_mnemonic_words>> and steps 7 through 9 are shown in <<mnemonic_to_seed>>.
+BIP-39 определяет создание мнемонического кода и seed, которые мы описываем здесь в девять шагов. Для наглядности процесс разделен на две части: шаги с 1 по 6 показаны в <<generating_mnemonic_words>>, а шаги с 7 по 9 показаны в <<mnemonic_to_seed>>.
 
 [[generating_mnemonic_words]]
-===== Generating mnemonic words
+===== Генерация мнемонических слов
 
-((("BIP-39 standard","generating code words with")))((("checksum","in mnemonic code word generation")))((("mnemonic code words","generating")))Mnemonic words are generated automatically by the wallet using the standardized process defined in BIP-39. The wallet starts from a source of entropy, adds a checksum, and then maps the entropy to a word list:
+((("BIP-39 standard","generating code words with")))((("checksum","in mnemonic code word generation")))((("mnemonic code words","generating")))Мнемонические слова генерируются кошельком автоматически с использованием стандартизированного процесса, определенного в BIP-39. Кошелек начинается с источника энтропии, добавляет контрольную сумму, а затем сопоставляет энтропию со списком слов:
 
-1. Create a cryptographically random sequence +S+ of 128 to 256 bits.
-2. Create a checksum of +S+ by taking the first length-of-++S++ ÷ 32 bits of the SHA-256 hash of +S+.
-3. Add the checksum to the end of the random sequence +S+.
-4. Divide the sequence-and-checksum concatenation into sections of 11 bits.
-5. Map each 11-bit value to a word from the predefined dictionary of 2,048 words.
-6. Create the mnemonic code from the sequence of words, maintaining the order.
+1. Создайте криптографически случайную последовательность +S+ от 128 до 256 бит.
+2. Создайте контрольную сумму для +S+, взяв первую часть (32 бита) хэша SHA-256 от ++S++.
+3. Добавьте контрольную сумму в конец случайной последовательности +S+.
+4. Разделите конкатенацию последовательности и контрольной суммы на секции по 11 бит.
+5. Сопоставьте каждое 11-битное значение со словом из предопределенного словаря из 2048 слов.
+6. Создайте мнемонический код из последовательности слов, соблюдая порядок.
 
-<<generating_entropy_and_encoding>> shows how entropy is used to generate mnemonic words.
+<<generating_entropy_and_encoding>> показывает, как энтропия используется для генерации мнемонических слов.
 
-<<table_bip39_entropy>> shows the relationship between the size of the entropy data and the length of mnemonic codes in words.
+<<table_bip39_entropy>> показывает взаимосвязь между размером энтропийных данных и длиной мнемонических кодов в словах.
 
 [[table_bip39_entropy]]
-.Mnemonic codes: entropy and word length
+.Мнемонические коды: энтропия и длина слова
 [options="header"]
 |=======
-|Entropy (bits) | Checksum (bits) | Entropy *+* checksum (bits) | Mnemonic length (words)
+|Энтропия (биты) | Контрольная сумма (биты) | Энтропия *+* контрольная сумма (биты) | Мнемоническая длина (слова)
 | 128 | 4 | 132 | 12
 | 160 | 5 | 165 | 15
 | 192 | 6 | 198 | 18
@@ -191,138 +191,137 @@ BIP-39 defines the creation of a mnemonic code and seed, which we describe here 
 
 [[generating_entropy_and_encoding]]
 [role="smallerseventy"]
-.Generating entropy and encoding as mnemonic words
+.Генерация энтропии и кодирование в виде мнемонических слов
 image::images/bip39-part1.png["Generating entropy and encoding as mnemonic words"]
 
 [[mnemonic_to_seed]]
-===== From mnemonic to seed
+===== От мнемоники к seed
 
-((("BIP-39 standard","deriving seed from mnemonic words")))((("seeds","deriving from mnemonic code words")))The mnemonic words represent entropy with a length of 128 to 256 bits. The entropy is then used to derive a longer (512-bit) seed through the use of the key-stretching function ((("PBKDF2 function")))PBKDF2. The seed produced is used to build a deterministic wallet and derive its keys.
+((("BIP-39 standard","deriving seed from mnemonic words")))((("seeds","deriving from mnemonic code words")))Мнемонические слова представляют энтропию длиной от 128 до 256 бит. Затем энтропия используется для получения более длинного (512-битного) начального значения с помощью функции растяжения ключа ((("PBKDF2 function")))PBKDF2. Полученное начальное значение используется для создания детерминированного кошелька и получения его ключей.
 
-((("key-stretching function")))((("salts")))The key-stretching function takes two parameters: the mnemonic and a _salt_. The purpose of a salt in a key-stretching function is to make it difficult to build a lookup table enabling a brute-force attack. In the BIP-39 standard, the salt has another purpose: it allows the introduction of a passphrase that serves as an additional security factor protecting the seed, as we will describe in more detail in <<mnemonic_passphrase>>.
+((("key-stretching function")))((("salts")))Функция растяжения ключа принимает два параметра: мнемоническое значение и _соль_ (_salt_). Цель соли в функции растяжения ключа состоит в том, чтобы затруднить создание таблицы поиска, позволяющей атаковать методом перебора. В стандарте BIP-39 соль имеет другое назначение: она позволяет вводить кодовую фразу, которая служит дополнительным фактором безопасности, защищающим seed, как мы более подробно опишем в <<mnemonic_passphrase>>.
 
-The process described in steps 7 through 9 continues from the process described in the previous section:
+Процесс, описанный на этапах с 7 по 9, продолжается с процесса, описанного в предыдущем разделе:
 
 [start=7]
-7. The first parameter to the PBKDF2 key-stretching function is the _mnemonic_ produced in step 6.
-8. The second parameter to the PBKDF2 key-stretching function is a _salt_. The salt is composed of the string constant +"mnemonic"+ concatenated with an optional user-supplied passphrase.
-9. PBKDF2 stretches the mnemonic and salt parameters using 2,048 rounds of hashing with the HMAC-SHA512 algorithm, producing a 512-bit value as its final output. That 512-bit value is the seed.
+7. Первым параметром функции растяжения ключа PBKDF2 является _мнемонический код_ (_mnemonic_), созданный на шаге 6.
+8. Вторым параметром функции растяжения ключа PBKDF2 является _соль_ (_salt_). Соль состоит из строковой константы +"мнемоники"+ объединенной с необязательной парольной фразой, предоставленной пользователем.
+9. PBKDF2 растягивает мнемонические и солевые параметры, используя 2048 раундов хеширования с помощью алгоритма HMAC-SHA512, получая в качестве конечного результата 512-битное значение. Это 512-битное значение является seed.
 
-<<mnemonic_to_seed_figure>> shows how a mnemonic is used to generate a seed.
+<<mnemonic_to_seed_figure>> показывает, как мнемоника используется для создания начального значения (seed).
 
 [[mnemonic_to_seed_figure]]
-.From mnemonic to seed
+.От мнемоники к seed
 image::images/bip39-part2.png["From mnemonic to seed"]
 
 [NOTE]
 ====
-The key-stretching function, with its 2,048 rounds of hashing, is a somewhat effective protection against brute-force attacks against the mnemonic or the passphrase. It makes it costly (in computation) to try more than a few thousand passphrase and mnemonic combinations, while the number of possible derived seeds is vast (2^512^, or about 10^154^)&#x2014;far bigger than the number of atoms in the visible universe (about 10^80^).
+Функция растяжения ключа с ее 2048 раундами хэширования является довольно эффективной защитой от атак методом перебора мнемоники или парольной фразы. Это делает дорогостоящим (в вычислениях) перепробование более нескольких тысяч парольных фраз и мнемонических комбинаций, в то время как число возможных производных seeds огромно (2^512^ или около 10^154^) &#x2014; намного больше, чем количество атомов в видимой вселенной (около 10^80^).
 ====
 
-Tables pass:[<a data-type="xref" data-xrefstyle="select:labelnumber" href="#mnemonic_128_no_pass">#mnemonic_128_no_pass</a>, <a data-type="xref" data-xrefstyle="select:labelnumber" href="#mnemonic_128_w_pass">#mnemonic_128_w_pass</a>, and <a data-type="xref" data-xrefstyle="select:labelnumber" href="#mnemonic_256_no_pass">#mnemonic_256_no_pass</a>] show some examples of mnemonic codes and the seeds they produce.
+Таблицы pass:[<a data-type="xref" data-xrefstyle="select:labelnumber" href="#mnemonic_128_no_pass">#mnemonic_128_no_pass</a>, <a data-type="xref" data-xrefstyle="select:labelnumber" href="#mnemonic_128_w_pass">#mnemonic_128_w_pass</a>, и <a data-type="xref" data-xrefstyle="select:labelnumber" href="#mnemonic_256_no_pass">#mnemonic_256_no_pass</a>] показывают несколько примеров мнемонических кодов и seeds, которые они производят.
 
 [[mnemonic_128_no_pass]]
-.128-bit entropy mnemonic code, no passphrase, resulting seed
+.128-битный энтропийный мнемонический код, без кодовой фразы, получившийся seed
 [cols="h,"]
 |=======
-| *Entropy input (128 bits)*| +0c1e24e5917779d297e14d45f14e1a1a+
-| *Mnemonic (12 words)* | +army van defense carry jealous true garbage claim echo media make crunch+
-| *Passphrase*| (none)
-| *Seed  (512 bits)* | +5b56c417303faa3fcba7e57400e120a0ca83ec5a4fc9ffba757fbe63fbd77a89a1a3be4c67196f57c39+
+| *Энтропия на вход (128 бит)*| +0c1e24e5917779d297e14d45f14e1a1a+
+| *Мнемоника (12 слов)* | +army van defense carry jealous true garbage claim echo media make crunch+
+| *Кодовая фраза*| (отсутствует)
+| *Seed  (512 бит)* | +5b56c417303faa3fcba7e57400e120a0ca83ec5a4fc9ffba757fbe63fbd77a89a1a3be4c67196f57c39+
 +a88b76373733891bfaba16ed27a813ceed498804c0570+
 |=======
 
 [[mnemonic_128_w_pass]]
-.128-bit entropy mnemonic code, with passphrase, resulting seed
+.128-битный энтропийный мнемонический код, с кодовой фразой, получившийся seed
 [cols="h,"]
 |=======
-| *Entropy input (128 bits)*| +0c1e24e5917779d297e14d45f14e1a1a+
-| *Mnemonic (12 words)* | +army van defense carry jealous true garbage claim echo media make crunch+
-| *Passphrase*| SuperDuperSecret
-| *Seed  (512 bits)* | +3b5df16df2157104cfdd22830162a5e170c0161653e3afe6c88defeefb0818c793dbb28ab3ab091897d0+
+| *Энтропия на вход (128 бит)*| +0c1e24e5917779d297e14d45f14e1a1a+
+| *Мнемоника (12 слов)* | +army van defense carry jealous true garbage claim echo media make crunch+
+| *Кодовая фраза*| SuperDuperSecret
+| *Seed  (512 бит)* | +3b5df16df2157104cfdd22830162a5e170c0161653e3afe6c88defeefb0818c793dbb28ab3ab091897d0+
 +715861dc8a18358f80b79d49acf64142ae57037d1d54+
 |=======
 
 [role="pagebreak-before"]
 [[mnemonic_256_no_pass]]
-.256-bit entropy mnemonic code, no passphrase, resulting seed
+.256-битный энтропийный мнемонический код, без кодовой фразы, получившийся seed
 [cols="h,"]
 |=======
-| *Entropy input (256 bits)* | +2041546864449caff939d32d574753fe684d3c947c3346713dd8423e74abcf8c+
-| *Mnemonic (24 words)* | +cake apple borrow silk endorse fitness top denial coil riot stay wolf
+| *Энтропия на вход (256 бит)* | +2041546864449caff939d32d574753fe684d3c947c3346713dd8423e74abcf8c+
+| *Мнемоника (24 слов)* | +cake apple borrow silk endorse fitness top denial coil riot stay wolf
 luggage oxygen faint major edit measure invite love trap field dilemma oblige+
-| *Passphrase*| (none)
-| *Seed (512 bits)* | +3269bce2674acbd188d4f120072b13b088a0ecf87c6e4cae41657a0bb78f5315b33b3a04356e53d062e5+
+| *Кодовая фраза*| (отсутствует)
+| *Seed (512 бит)* | +3269bce2674acbd188d4f120072b13b088a0ecf87c6e4cae41657a0bb78f5315b33b3a04356e53d062e5+
 +5f1e0deaa082df8d487381379df848a6ad7e98798404+
 |=======
 
 [[mnemonic_passphrase]]
-===== Optional passphrase in BIP-39
+===== Опциональная кодовая фраза в BIP-39
 
-((("BIP-39 standard","optional passphrase with")))((("mnemonic code words","optional passphrase in BIP-39")))((("passphrases")))((("seeds","optional passphrase with")))The BIP-39 standard allows the use of an optional passphrase in the derivation of the seed. If no passphrase is used, the mnemonic is stretched with a salt consisting of the constant string +"mnemonic"+, producing a specific 512-bit seed from any given mnemonic. If a passphrase is used, the stretching function produces a _different_ seed from that same mnemonic. In fact, given a single mnemonic, every possible passphrase leads to a different seed. Essentially, there is no "wrong" passphrase. All passphrases are valid and they all lead to different seeds, forming a vast set of possible uninitialized wallets. The set of possible wallets is so large (2^512^) that there is no practical possibility of brute-forcing or accidentally guessing one that is in use, as long as the passphrase has sufficient complexity and length.
+((("BIP-39 standard","optional passphrase with")))((("mnemonic code words","optional passphrase in BIP-39")))((("passphrases")))((("seeds","optional passphrase with")))Стандарт BIP-39 позволяет использовать необязательную кодовую фразу при выводе начального значения. Если кодовая фраза не используется, мнемоника растягивается с помощью соли, состоящей из постоянной строки +"мнемоники"+, создавая определенное 512-битное начальное значение из любой заданной мнемоники. Если используется кодовая фраза, функция растяжения создает другой seed из той же мнемоники. На самом деле, учитывая одну мнемонику, каждая возможная кодовая фраза приводит к другому seed. По сути, не существует "неправильной" парольной фразы. Все парольные фразы действительны, и все они ведут к разным seeds, образуя обширный набор возможных неинициализированных кошельков. Набор возможных кошельков настолько велик (2^512^), что нет практической возможности перебора или случайного угадывания используемого кошелька, если кодовая фраза имеет достаточную сложность и длину.
 
 [TIP]
 ====
-There are no "wrong" passphrases in BIP-39. Every passphrase leads to some wallet, which unless previously used will be empty.
+В BIP-39 нет "неправильных" парольных фраз. Каждая кодовая фраза ведет к какому-то кошельку, который, если он не использовался ранее, будет пустым.
 ====
 
-The optional passphrase creates two important features:
+Необязательная кодовая фраза создает две важные функции:
 
-* A second factor (something memorized) that makes a mnemonic useless on its own, protecting mnemonic backups from compromise by a thief.
+* Второй фактор (что-то запомненное), который делает мнемонику бесполезной сама по себе, защищая мнемонические резервные копии от компрометации вором.
 
-* ((("duress wallet")))((("wallets","duress wallet")))A form of plausible deniability or "duress wallet," where a chosen passphrase leads to a wallet with a small amount of funds, used to distract an attacker from the "real" wallet that contains the majority of funds.
+* ((("duress wallet")))((("wallets","duress wallet")))Форма правдоподобного отрицания или "принудительного кошелька" (duress wallet), когда выбранная кодовая фраза ведет к кошельку с небольшим количеством средств, используемая для отвлечения злоумышленника от "реального" кошелька, который содержит большую часть средств.
 
 [role="pagebreak-before"]
-However, it is important to note that the use of a passphrase also introduces the risk of loss:
+Однако важно отметить, что использование парольной фразы также сопряжено с риском потери:
 
-* If the wallet owner is incapacitated or dead and no one else knows the passphrase, the seed is useless and all the funds stored in the wallet are lost forever.
+* Если владелец кошелька недееспособен или мертв, и никто другой не знает кодовую фразу, seed фраза бесполезна, и все средства, хранящиеся в кошельке, теряются навсегда.
 
-* Conversely, if the owner backs up the passphrase in the same place as the seed, it defeats the purpose of a second factor.
+* И наоборот, если владелец создает резервную копию ключевой фразы в том же месте, что и seed фразу, это сводит на нет цель второго фактора.
 
-While passphrases are very useful, they should only be used in combination with a carefully planned process for backup and recovery, considering the possibility of heirs surviving the owner being able to recover the cryptocurrency.
-
+Хотя кодовые фразы очень полезны, их следует использовать только в сочетании с тщательно спланированным процессом резервного копирования и восстановления, учитывая возможность того, что наследники, пережившие владельца, смогут восстановить криптовалюту.
 [[working_mnemonic_codes]]
-===== Working with mnemonic codes
+===== Работа с мнемоническими кодами
 
-((("BIP-39 standard","libraries")))((("BIP-39 standard","working with mnemonic codes")))BIP-39 is implemented as a library in many different programming languages. For example:
+((("BIP-39 standard","libraries")))((("BIP-39 standard","working with mnemonic codes")))BIP-39 реализован как библиотека на многих различных языках программирования. Например:
 
-https://github.com/trezor/python-mnemonic[python-mnemonic]:: The reference implementation of the standard by the SatoshiLabs team that proposed BIP-39, in Python
+https://github.com/trezor/python-mnemonic[python-mnemonic]:: Эталонная реализация стандарта командой SatoshiLabs, предложившей BIP-39, на языке Python
 
-https://github.com/ConsenSys/eth-lightwallet[ConsenSys/eth-lightwallet]:: Lightweight JS Ethereum wallet for nodes and browser (with BIP-39)
+https://github.com/ConsenSys/eth-lightwallet[ConsenSys/eth-lightwallet]:: Легкий кошелек JS Ethereum для узлов и браузера (с BIP-39)
 
-https://www.npmjs.com/package/bip39[npm/bip39]:: JavaScript implementation of Bitcoin BIP-39: Mnemonic code for generating deterministic keys
+https://www.npmjs.com/package/bip39[npm/bip39]:: Реализация биткойна BIP-39 на JavaScript: мнемонический код для генерации детерминированных ключей
 
-There is also a BIP-39 generator implemented in a standalone web page (<<a_bip39_generator_as_a_standalone_web_page>>), which is extremely useful for testing and experimentation. The https://iancoleman.io/bip39/[Mnemonic Code Converter] generates mnemonics, seeds, and extended private keys. It can be used offline in a browser, or accessed online.(((range="endofrange", startref="ix_05wallets-asciidoc9")))(((range="endofrange", startref="ix_05wallets-asciidoc8")))(((range="endofrange", startref="ix_05wallets-asciidoc7")))(((range="endofrange", startref="ix_05wallets-asciidoc6")))
+Существует также генератор BIP-39, реализованный на отдельной веб-странице (<<a_bip39_generator_as_a_standalone_web_page>>), который чрезвычайно полезен для тестирования и экспериментов. https://iancoleman.io/bip39/[Конвертер мнемонического кода] генерирует мнемоники, seeds и расширенные закрытые ключи. Его можно использовать в автономном режиме в браузере или получить доступ к нему онлайн.(((range="endofrange", startref="ix_05wallets-asciidoc9")))(((range="endofrange", startref="ix_05wallets-asciidoc8")))(((range="endofrange", startref="ix_05wallets-asciidoc7")))(((range="endofrange", startref="ix_05wallets-asciidoc6")))
 
 [[a_bip39_generator_as_a_standalone_web_page]]
-.A BIP-39 generator as a standalone web page
+.Генератор BIP-39 в качестве отдельной веб-страницы
 image::images/bip39_web.png["BIP-39 generator web-page"]
 
 [[create_hd_wallet]]
-==== Creating an HD Wallet from the Seed
+==== Создание HD-кошелька из seed
 
-((("hierarchical deterministic wallets (BIP-32/BIP-44)","creating from root seed")))((("root seeds, creating HD wallets from")))((("wallets","creating HD wallets from root seed")))HD wallets are created from a single _root seed_, which is a 128-, 256-, or 512-bit random number. Most commonly, this seed is generated from a mnemonic as detailed in the previous section.
+((("hierarchical deterministic wallets (BIP-32/BIP-44)","creating from root seed")))((("root seeds, creating HD wallets from")))((("wallets","creating HD wallets from root seed")))HD-кошельки создаются из одного _root seed_, который представляет собой 128-, 256- или 512-битное случайное число. Чаще всего это начальное значение генерируется из мнемоники, как описано в предыдущем разделе.
 
-Every key in the HD wallet is deterministically derived from this root seed, which makes it possible to recreate the entire HD wallet from that seed in any compatible HD wallet. This makes it easy to export, back up, restore, and import HD wallets containing thousands or even millions of keys by transferring just the mnemonic from which the root seed is derived.
+Каждый ключ в HD-кошельке детерминированно выводится из этого root seed, что позволяет воссоздать весь HD-кошелек из этого seed в любом совместимом HD-кошельке. Это позволяет легко экспортировать, создавать резервные копии, восстанавливать и импортировать HD-кошельки, содержащие тысячи или даже миллионы ключей, передавая только мнемонику, из которой получено root seed.
 
 [[bip32_bip43_44]]
-==== HD Wallets (BIP-32) and Paths (BIP-43/44)
+==== HD Кошельки (BIP-32) и Paths (BIP-43/44)
 
-((("Bitcoin improvement proposals (BIPs)","Multipurpose HD Wallet Structure (BIP-43)", id="ix_05wallets-asciidoc10", range="startofrange")))((("hierarchical deterministic wallets (BIP-32/BIP-44)","HD wallets (BIP-32) and paths (BIP-43/44)", id="ix_05wallets-asciidoc11", range="startofrange")))Most HD wallets follow the ((("BIP-32 standard","HD wallets and", id="ix_05wallets-asciidoc12", range="startofrange")))BIP-32 standard, which has become a _de facto_ industry standard for deterministic key generation.
+((("Bitcoin improvement proposals (BIPs)","Multipurpose HD Wallet Structure (BIP-43)", id="ix_05wallets-asciidoc10", range="startofrange")))((("hierarchical deterministic wallets (BIP-32/BIP-44)","HD wallets (BIP-32) and paths (BIP-43/44)", id="ix_05wallets-asciidoc11", range="startofrange")))Большинство HD-кошельков следуют ((("BIP-32 standard","HD wallets and", id="ix_05wallets-asciidoc12", range="startofrange")))стандарту BIP-32, который фактически стал отраслевым стандартом для детерминированной генерации ключей.
 
-We won't be discussing all the details of BIP-32 here, only the components necessary to understand how it is used in wallets. The main important aspect is the tree-like hierarchical relationships that it is possible for the derived keys to have, as you can see in <<hd_wallets_figure>>. It's also important to understand the ideas of _extended keys_ and _hardened keys_, which are explained in the following sections.
+Мы не будем обсуждать здесь все детали BIP-32, только компоненты, необходимые для понимания того, как он используется в кошельках. Основным важным аспектом являются древовидные иерархические связи, которые могут быть у производных ключей, как вы можете видеть в <<hd_wallets_figure>>. Также важно понимать идеи _расширенных ключей_ (_extended keys_) и _захардкоженных ключей_ (_hardened keys_), которые объясняются в следующих разделах.
 
-There are dozens of interoperable implementations of BIP-32 offered in many software libraries. These are mostly designed for Bitcoin wallets, which implement addresses in a different way, but share the same key-derivation implementation as Ethereum's BIP-32-compatible wallets. Use one https://github.com/ConsenSys/eth-lightwallet[designed for Ethereum], or adapt one from Bitcoin by adding an Ethereum address encoding library.
+Существуют десятки совместимых реализаций BIP-32, предлагаемых во многих программных библиотеках. Они в основном предназначены для биткойн-кошельков, которые реализуют адреса по-другому, но используют ту же реализацию получения ключей, что и кошельки Ethereum, совместимые с BIP-32. Используйте одну из реализаций https://github.com/ConsenSys/eth-lightwallet[разработаных для Ethereum] или адаптируйте какую-либо из Биткойна, добавив библиотеку кодирования адресов Ethereum.
 
-There is also a BIP-32 generator implemented as a http://bip32.org/[standalone web page] that is very useful for testing and experimentation with BIP-32.
+Существует также генератор BIP-32, реализованный в виде http://bip32.org/[отдельной веб-страницы], которая очень полезна для тестирования и экспериментов с BIP-32.
 
 [WARNING]
 ====
-The standalone BIP-32 generator is not an HTTPS site. That's to remind you that the use of this tool is not secure. It is only for testing. You should not use the keys produced by this site with real funds.
+Генератор BIP-32 не является сайтом HTTPS. Это должно напомнить вам, что использование этого инструмента небезопасно. Это только для тестирования. Вы не должны использовать ключи, созданные этим сайтом, с реальными средствами.
 ====
 
 [[extended_keys]]
-===== Extended public and private keys
+===== Расширенные открытые и закрытые ключи
 
 ((("BIP-32 standard","extended public and private keys")))((("extended keys")))((("hierarchical deterministic wallets (BIP-32/BIP-44)","extended public and private keys")))((("keys","extended")))In BIP-32 terminology, keys can be "extended.&#x201d; With the right mathematical operations, these extended "parent" keys can be used to derive "child" keys, thus producing the hierarchy of keys and addresses described earlier. A parent key doesn't have to be at the top of the tree. It can be picked out from anywhere in the tree hierarchy. ((("chain code")))Extending a key involves taking the key itself and appending a special _chain code_ to it. A chain code is a 256-bit binary string that is mixed with each key to produce child keys.
 
