@@ -1,63 +1,63 @@
 [[tx_chapter]]
-== Transactions
+== Транзакции
 
-((("transactions", id="ix_06transactions-asciidoc0", range="startofrange")))Transactions are signed messages originated by an externally owned account (EOA), transmitted by the Ethereum network, and recorded on the Ethereum blockchain. This basic definition conceals a lot of surprising and fascinating details. Another way to look at transactions is that they are the only things that can trigger a change of state, or cause a contract to execute in the EVM. Ethereum is a global singleton state machine, and transactions are what make that state machine "tick," changing its state. Contracts don't run on their own. Ethereum doesn't run  autonomously. Everything starts with a transaction.
+((("transactions", id="ix_06transactions-asciidoc0", range="startofrange")))Транзакции - это подписанные сообщения, исходящие от внешней учетной записи (externally owned account) (EOA), передаваемые сетью Ethereum и записываемые в блокчейне Ethereum. Это базовое определение скрывает множество удивительных и увлекательных деталей. Другой способ взглянуть на транзакции заключается в том, что они являются единственными вещами, которые могут вызвать изменение состояния или вызвать выполнение контракта в EVM. Ethereum - это глобальный конечный автомат (единственный – singleton), и транзакции - это то, что заставляет этот конечный автомат "тикать", изменяя его состояние. Контракты не выполняются сами по себе. Ethereum не работает автономно. Все начинается с транзакции.
 
-In this chapter, we will dissect transactions, show how they work, and examine the details. Note that much of this chapter is addressed to those who are interested in managing their own transactions at a low level, perhaps because they are writing a wallet app; you don't have to worry about this if you are happy using existing wallet applications, although you may find the details interesting!
+В этой главе мы проанализируем транзакции, покажем, как они работают, и рассмотрим детали. Обратите внимание, что большая часть этой главы адресована тем, кто заинтересован в управлении своими собственными транзакциями на низком уровне, возможно, потому, что они пишут приложение для кошелька; вам не нужно беспокоиться об этом, если вы довольны использованием существующих приложений для кошельков, хотя детали могут показаться вам интересными!
 
 [[tx_struct]]
-=== The Structure of a Transaction
+=== Структура транзакции
 
-((("transactions","basic structure")))First let's take a look at the basic structure of a transaction, as it is serialized and transmitted on the Ethereum network. Each client and application that receives a serialized transaction will store it in-memory using its own internal data structure, perhaps embellished with metadata that doesn't exist in the network serialized transaction itself. The network-serialization is the only standard form of a transaction.
+((("transactions","basic structure")))Сначала давайте взглянем на базовую структуру транзакции, поскольку она сериализуется и передается в сети Ethereum. Каждый клиент и приложение, получающие сериализованную транзакцию, будут хранить ее в памяти, используя свою собственную внутреннюю структуру данных, возможно, украшенную метаданными, которых нет в самой сетевой сериализованной транзакции. Сетевая сериализация - это единственная стандартная форма транзакции.
 
-A transaction is a serialized binary message that contains the following data:
+Транзакция - это сериализованное двоичное сообщение, содержащее следующие данные:
 
-Nonce:: A sequence number, issued by the originating EOA, used to prevent message replay
+Одноразовый номер:: Порядковый номер, выданный отправителем EOA, используемый для предотвращения воспроизведения сообщения
 
-Gas price:: The amount of ether (in wei) that the originator is willing to pay for each unit of gas
+Цена на газ:: Количество эфира (в wei), которое отправитель готов заплатить за каждую единицу газа
 
-Gas limit:: The maximum amount of gas the originator is willing to buy for this transaction
+Лимит газа:: Максимальное количество газа, которое отправитель готов купить для данной транзакции
 
-Recipient:: The destination Ethereum address
+Получатель:: Адрес назначения Ethereum
 
-Value:: The amount of ether (in wei) to send to the destination
+Значение:: Количество эфира (в wei) для отправки в пункт назначения
 
-Data:: The variable-length binary data payload
+Данные:: Полезная нагрузка двоичных данных переменной длины
 
-v,r,s:: The three components of an ECDSA digital signature of the originating EOA
+v,r,s:: Три компонента цифровой подписи ECDSA исходного EOA
 
-((("Recursive Length Prefix (RLP)")))((("RLP (Recursive Length Prefix)")))The transaction message's structure is serialized using the Recursive Length Prefix (RLP) encoding scheme, which was created specifically for simple, byte-perfect data serialization in Ethereum. All numbers in Ethereum are encoded as big-endian integers, of lengths that are multiples of 8 bits.
+((("Recursive Length Prefix (RLP)")))((("RLP (Recursive Length Prefix)")))Структура сообщения транзакции сериализуется с использованием схемы кодирования рекурсивного префикса длины (RLP), которая была создана специально для простой, идеальной по байтам сериализации данных в Ethereum. Все числа в Ethereum кодируются как целые числа в порядке от старшего к младшему (big-endian), длина которых кратна 8 битам.
 
-Note that the field labels (+to+, +gas limit+, etc.) are shown here for clarity, but are not part of the transaction serialized data, which contains the field values RLP-encoded. In general, RLP does not contain any field delimiters or labels. RLP's length prefix is used to identify the length of each field. Anything beyond the defined length belongs to the next field in the structure.
+Обратите внимание, что метки полей (+to+, +gas limit+ и т.д.) показаны здесь для наглядности, но не являются частью сериализованных данных транзакции, которые содержат значения полей в RLP-кодировке. Как правило, RLP не содержит никаких разделителей полей или меток. Префикс длины RLP используется для определения длины каждого поля. Все, что выходит за пределы заданной длины, относится к следующему полю в структуре.
 
-While this is the actual transaction structure transmitted, most internal representations and user interface visualizations embellish this with additional information, derived from the transaction or from the blockchain.
+Хотя это фактическая передаваемая структура транзакции, большинство внутренних представлений и визуализаций пользовательского интерфейса приукрашивают это дополнительной информацией, полученной из транзакции или из блокчейна.
 
-For example, you may notice there is no &#x201c;from&#x201d; data in the address identifying the originator EOA. That is because the EOA's public key can be derived from the +v,r,s+ components of the ECDSA signature. The address can, in turn, be derived from the public key. When you see a transaction showing a "from" field, that was added by the software used to visualize the transaction. Other metadata frequently added to the transaction by client software includes the block number (once it is mined and included in the blockchain) and a transaction ID (calculated hash). Again, this data is derived from the transaction, and does not form part of the transaction message itself.
+Например, вы можете заметить, что в адресе, идентифицирующем отправителя EOA, отсутствуют данные &#x201c;from&#x201d;. Это связано с тем, что открытый ключ EOA может быть получен из компонентов +v,r,s+ подписи ECDSA. Адрес, в свою очередь, может быть получен из открытого ключа. Когда вы видите транзакцию с полем "от", это значит, что поле было добавлено программным обеспечением, используемым для визуализации транзакции. Другие метаданные, часто добавляемые к транзакции клиентским программным обеспечением, включают номер блока (после его майнинга и включения в блокчейн) и идентификатор транзакции (вычисляемый хэш). Опять же, эти данные получены из транзакции и не являются частью самого сообщения транзакции.
 
 [[tx_nonce]]
-=== The Transaction Nonce
+=== Одноразовый номер (nonce – number once) транзакции
 
-((("nonces", id="ix_06transactions-asciidoc1", range="startofrange")))((("transactions","nonces", id="ix_06transactions-asciidoc2", range="startofrange")))The nonce is one of the most important and least understood components of a transaction. The definition in the Yellow Paper (see <<references>>) reads:
+((("nonces", id="ix_06transactions-asciidoc1", range="startofrange")))((("transactions","nonces", id="ix_06transactions-asciidoc2", range="startofrange")))Одноразовый номер (nonce – number that can only be used once) является одним из наиболее важных и наименее понятных компонентов транзакции. Определение в Yellow Paper (см. <<references>>):
 
 ____
-+nonce+: A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account.
++nonce+: Скалярное значение, равное количеству транзакций, отправленных с этого адреса, или, в случае учетных записей с соответствующим кодом, количеству контрактов, созданных этой учетной записью.
 ____
 
-Strictly speaking, the nonce is an attribute of the originating address; that is, it only has meaning in the context of the sending address. However, the nonce is not stored explicitly as part of an account's state on the blockchain. Instead, it is calculated dynamically, by counting the number of confirmed transactions that have originated from an address.
+Строго говоря, одноразовый номер является атрибутом исходного адреса; то есть он имеет значение только в контексте отправляющего адреса. Однако одноразовый номер явно не сохраняется как часть состояния учетной записи в блокчейне. Вместо этого он рассчитывается динамически, путем подсчета количества подтвержденных транзакций, которые были отправлены с адреса.
 
-There are two scenarios where the existence of a transaction-counting nonce is important: the usability feature of transactions being included in the order of creation, and the vital feature of transaction duplication protection. Let's look at an example scenario for each of these:
+Существует два сценария, в которых важно наличие одноразового номера для подсчета транзакций: функция удобства использования транзакций, включаемых в порядок создания, и жизненно важная функция защиты от дублирования транзакций. Давайте рассмотрим пример сценария для каждого из этих:
 
-1. Imagine you wish to make two transactions. You have an important payment to make of 6 ether, and also another payment of 8 ether. You sign and broadcast the 6-ether transaction first, because it is the more important one, and then you sign and broadcast the second, 8-ether transaction. Sadly, you have overlooked the fact that your account contains only 10 ether, so the network can't accept both transactions: one of them will fail. Because you sent the more important 6-ether one first, you understandably expect that one to go through and the 8-ether one to be rejected. However, in a decentralized system like Ethereum, nodes may receive the transactions in either order; there is no guarantee that a particular node will have one transaction propagated to it before the other. As such, it will almost certainly be the case that some nodes receive the 6-ether transaction first and others receive the 8-ether transaction first. Without the nonce, it would be random as to which one gets accepted and which rejected. However, with the nonce included, the first transaction you sent will have a nonce of, let's say, 3, while the 8-ether transaction has the next nonce value (i.e., 4). So, that transaction will be ignored until the transactions with nonces from 0 to 3 have been processed, even if it is received first. Phew!
+1. Представьте, что вы хотите совершить две транзакции. Вам нужно произвести важный платеж в размере 6 эфиров, а также еще один платеж в размере 8 эфиров. Сначала вы подписываете и отправляете транзакцию в 6 эфиров, потому что она более важная, а затем вы подписываете и отправляете вторую транзакцию в 8 эфиров. К сожалению, вы упустили из виду тот факт, что на вашем аккаунте всего 10 эфиров, поэтому сеть не может принять обе транзакции: одна из них завершится неудачей. Поскольку вы сначала отправили более важное сообщение с 6 эфирами, вы, по понятным причинам, ожидаете, что оно пройдет, а сообщение с 8 эфирами будет отклонено. Однако в децентрализованной системе, такой как Ethereum, узлы могут получать транзакции в любом порядке; нет никакой гарантии, что конкретному узлу будет передана одна транзакция перед другой. Таким образом, почти наверняка произойдет так, что некоторые узлы сначала получат транзакцию с 6 эфирами, а другие сначала получат транзакцию с 8 эфирами. Без одноразового номера было бы определено случайным образом какая из них будет принята, а какая отклонена. Однако, если включить одноразовый номер, первая отправленная вами транзакция будет иметь одноразовый номер, скажем, 3, в то время как транзакция с 8 эфирами будет иметь следующее одноразовое значение (т.е. 4). Таким образом, эта транзакция будет игнорироваться до тех пор, пока не будут обработаны транзакции с одноразовыми номерами от 0 до 3, даже если она будет получена первой. Уф!
 
 
-2. Now imagine you have an account with 100 ether. Fantastic! You find someone online who will accept payment in ether for a mcguffin-widget that you really want to buy. You send them 2 ether and they send you the mcguffin-widget. Lovely. To make that 2-ether payment, you signed a transaction sending 2 ether from your account to their account, and then broadcast it to the Ethereum network to be verified and included on the blockchain. Now, without a nonce value in the transaction, a second transaction sending 2 ether to the same address a second time will look exactly the same as the first transaction. This means that anyone who sees your transaction on the Ethereum network (which means everyone, including the recipient or your enemies) can "replay" the transaction again and again and again until all your ether is gone simply by copying and pasting your original transaction and resending it to the network. However, with the nonce value included in the transaction data, _every single transaction is unique_, even when sending the same amount of ether to the same recipient address multiple times. Thus, by having the incrementing nonce as part of the transaction, it is simply not possible for anyone to "duplicate" a payment you have made.
+2. Теперь представьте, что у вас есть аккаунт со 100 эфирами. Фантастика! Вы находите кого-то в Интернете, кто примет оплату в эфире за виджет Макгаффина (mcguffin), который вы действительно хотите купить. Вы отправляете им 2 эфира, и они отправляют вам виджет Макгаффина. Прекрасно. Чтобы произвести этот платеж в 2 эфира, вы подписали транзакцию, отправив 2 эфира со своей учетной записи на их учетную запись, а затем передали ее в сеть Ethereum для проверки и включения в блокчейн. Теперь, без одноразового значения в транзакции, вторая транзакция, отправляющая 2 эфира на тот же адрес во второй раз, будет выглядеть точно так же, как и первая транзакция. Это означает, что любой, кто видит вашу транзакцию в сети Ethereum (что означает, что все, включая получателя или ваших врагов), могут "воспроизводить" транзакцию снова, снова и снова, пока весь ваш эфир не исчезнет, просто скопировав и вставив вашу исходную транзакцию и повторно отправив ее в сеть. Однако, поскольку значение nonce включено в данные транзакции, каждая отдельная транзакция уникальна, даже при многократной отправке одного и того же количества эфира на один и тот же адрес получателя. Таким образом, имея увеличивающийся одноразовый номер как часть транзакции, никто просто не сможет "дублировать" произведенный вами платеж.
 
-In summary, it is important to note that the use of the nonce is actually vital for an _account-based_ protocol, in contrast to the &#x201c;Unspent Transaction Output&#x201d; (UTXO) mechanism of the Bitcoin protocol.
+Подводя итог, важно отметить, что использование одноразового номера на самом деле жизненно важно для протокола, основанного на _account-based_, в отличие от механизма вывода неизрасходованных транзакций (UTXO) протокола Биткойн.
 
 [[tracking_nonce]]
-==== Keeping Track of Nonces
+==== Отслеживание одноразовых номеров (nonces)
 
-((("nonces","keeping track of")))In practical terms, the nonce is an up-to-date count of the number of _confirmed_ (i.e., on-chain) transactions that have originated from an account. To find out what the nonce is, you can interrogate the blockchain, for example via the web3 interface. Open a JavaScript console in Geth (or your preferred web3 interface) on Ropsten testnet, then type:
+((("nonces","keeping track of")))С практической точки зрения одноразовый номер - это актуальный подсчет количества _подтвержденных _ (т.е. внутри цепочки) транзакций, которые были произведены со счета. Чтобы узнать, что такое одноразовый номер, вы можете запросить блокчейн, например, через интерфейс web3. Откройте консоль JavaScript в Geth (или предпочитаемый вами интерфейс web3) в Ropsten testnet, затем введите:
 
 ++++
 <pre data-type="programlisting">
@@ -68,17 +68,17 @@ In summary, it is important to note that the use of the nonce is actually vital 
 
 [TIP]
 ====
-The nonce is a zero-based counter, meaning the first transaction has nonce 0. In this example, we have a transaction count of 40, meaning nonces 0 through 39 have been seen. The next transaction's nonce will need to be 40.
+Одноразовый номер - это счетчик, основанный на нуле, что означает, что первая транзакция имеет одноразовый номер 0. В этом примере у нас есть количество транзакций 40, что означает, что были замечены одноразовые номера от 0 до 39. Одноразовый номер следующей транзакции должен быть равен 40.
 ====
 
-Your wallet will keep track of nonces for each address it manages. It's fairly simple to do that, as long as you are only originating transactions from a single point. Let's say you are writing your own wallet software or some other application that originates transactions. How do you track nonces?
+Ваш кошелек будет отслеживать одноразовые номера для каждого адреса, которым он управляет. Это довольно просто сделать, если вы отправляете транзакции только из одной точки. Допустим, вы пишете свое собственное программное обеспечение для кошелька или какое-то другое приложение, которое инициирует транзакции. Как вы отслеживаете одноразовые номера?
 
-When you create a new transaction, you assign the next nonce in the sequence. But until it is confirmed, it will not count toward the pass:[<span class="keep-together"><code>getTransactionCount</code></span>] total.
+Когда вы создаете новую транзакцию, вы назначаете следующий одноразовый номер в последовательности. Но до тех пор, пока он не будет подтвержден, он не будет учитываться в pass:[<span class="keep-together"><code>getTransactionCount</code></span>].
 
 [[get_tx_count_bug]]
 [WARNING]
 ====
-Be careful when using the pass:[<span class="keep-together"><code>getTransactionCount</code></span>] function for counting pending transactions, because you might run into some problems if you send a few transactions in a row.
+Будьте осторожны при использовании функции pass:[<span class="keep-together"><code>getTransactionCount</code></span>] для подсчета ожидающих транзакций, потому что вы можете столкнуться с некоторыми проблемами, если отправите несколько транзакций подряд.
 ====
 
 Let's look at an example:
@@ -107,14 +107,14 @@ Let's look at an example:
 ++++
 [TIP]
 ====
-If you're trying to recreate these code examples yourself in Geth's javascript console, you should use web3.toWei() instead of web3.utils.toWei(). This is because Geth uses an older version of the web3 library.
+Если вы пытаетесь воссоздать эти примеры кода самостоятельно в консоли javascript Geth, вам следует использовать web3.toWei() вместо web3.utils.toWei(). Это связано с тем, что Geth использует более старую версию библиотеки web3.
 ====
 
-As you can see, the first transaction we sent increased the transaction count to 41, showing the pending transaction. But when we sent three more transactions in quick succession, the pass:[<span class="keep-together"><code>getTransactionCount</code></span>] call didn't count them. It only counted one, even though you might expect there to be three pending in the mempool. If we wait a few seconds to allow for network communications to settle down, the pass:[<span class="keep-together"><code>getTransactionCount</code></span>] call will return the expected number. But in the interim, while there is more than one transaction pending, it might not help us.
+Как вы можете видеть, первая отправленная нами транзакция увеличила количество транзакций до 41, показав ожидающую транзакцию. Но когда мы отправили еще три транзакции в быстрой последовательности, вызов pass:[<span class="keep-together"><code>getTransactionCount</code></span>] не подсчитал их. Он насчитал только одну, хотя вы могли бы ожидать, что в mempool будет три ожидающих рассмотрения. Если мы подождем несколько секунд, чтобы сетевое взаимодействие закончилось, вызов pass:[<span class="keep-together"><code>getTransactionCount</code></span>] вернет ожидаемое число. Но в промежуточный период, пока на рассмотрении находится более одной транзакции, это может нам не помочь.
 
-When you build an application that constructs transactions, it cannot rely on pass:[<span class="keep-together"><code>getTransactionCount</code></span>] for pending transactions. Only when the pending and confirmed counts are equal (all outstanding transactions are confirmed) can you trust the output of pass:[<span class="keep-together"><code>getTransactionCount</code></span>] to start your nonce counter. Thereafter, keep track of the nonce in your application until each transaction confirms.
+Когда вы создаете приложение, которое создает транзакции, оно не может полагаться на pass:[<span class="keep-together"><code>getTransactionCount</code></span>] для ожидающих транзакций. Только когда ожидающие и подтвержденные подсчеты равны (все незавершенные транзакции подтверждены), вы можете доверять выводам pass:[<span class="keep-together"><code>getTransactionCount</code></span>] для запуска вашего счетчика одноразовых номеров. После этого следите за одноразовым номером в вашем приложении до подтверждения каждой транзакции.
 
-((("Parity","nonce counting")))Parity's JSON RPC interface offers the pass:[<span class="keep-together"><code>parity_nextNonce</code></span>] function, which returns the next nonce that should be used in a transaction. The pass:[<span class="keep-together"><code>parity_nextNonce</code></span>] function counts nonces correctly, even if you construct several transactions in rapid succession without confirming them:
+((("Четность","подсчет одноразовых номеров")))Интерфейс JSON RPC Parity предлагает функцию pass:[<span class="keep-together"><code>parity_nextNonce</code></span>], которая возвращает следующий одноразовый номер, который следует использовать в транзакция. Функция pass:[<span class="keep-together"><code>parity_nextNonce</code></span>] правильно подсчитывает одноразовые номера, даже если вы быстро создаете несколько транзакций подряд, не подтверждая их:
 
 ++++
 <pre data-type="programlisting">
@@ -130,23 +130,23 @@ $ <strong>curl --data '{"method":"parity_nextNonce", \
 [[parity_curl]]
 [TIP]
 ====
-Parity has a web console for accessing the JSON RPC interface, but here we are using a command-line HTTP client to access it.
+У Parity есть веб-консоль для доступа к интерфейсу JSON RPC, но здесь мы используем HTTP-клиент командной строки для доступа к нему.
 ====
 
 [[gaps_nonce]]
-==== Gaps in Nonces, Duplicate Nonces, and Confirmation
+==== Пробелы в одноразовых номерах, Повторяющиеся одноразовые номера и Подтверждение
 
-((("nonces","gaps in sequence of")))It is important to keep track of nonces if you are creating transactions programmatically, especially if you are doing so from multiple independent processes pass:[<span class="keep-together">simultaneously</span>].
+((("nonces","gaps in sequence of")))Важно отслеживать одноразовые номера, если вы создаете транзакции программно, особенно если вы делаете это из нескольких независимых процессов pass:[<span class="keep-together">одновременно</span>].
 
-The Ethereum network processes transactions sequentially, based on the nonce. That means that if you transmit a transaction with nonce 0 and then transmit a transaction with nonce 2, the second transaction will not be included in any blocks. It will be stored in the mempool, while the Ethereum network waits for the missing nonce to appear. All nodes will assume that the missing nonce has simply been delayed and that the transaction with nonce 2 was received out of sequence.
+Сеть Ethereum обрабатывает транзакции последовательно, на основе одноразового номера. Это означает, что если вы передадите транзакцию с одноразовым номером 0, а затем передадите транзакцию с одноразовым номером 2, вторая транзакция не будет включена ни в какие блоки. Она будет сохранена в mempool, в то время как сеть Ethereum ожидает появления отсутствующего одноразового номера. Все узлы будут предполагать, что отсутствующий одноразовый номер просто был отложен и что транзакция с одноразовым номером 2 была получена не по порядку.
 
-If you then transmit a transaction with the missing nonce 1, both transactions (nonces 1 and 2) will be processed and included (if valid, of course). Once you fill the gap, the network can mine the out-of-sequence transaction that it held in the mempool.
+Если затем вы передадите транзакцию с отсутствующим одноразовым номером 1, обе транзакции (одноразовые номера 1 и 2) будут обработаны и включены (если, конечно, они действительны). Как только вы восполните этот пробел, сеть сможет обработать транзакцию вне последовательности, которую она хранила в mempool.
 
-What this means is that if you create several transactions in sequence and one of them does not get officially included in any blocks, all the subsequent transactions will be "stuck," waiting for the missing nonce. A transaction can create an inadvertent "gap" in the nonce sequence because it is invalid or has insufficient gas. To get things moving again, you have to transmit a valid transaction with the missing nonce. You should be equally mindful that once a transaction with the "missing" nonce is validated by the network, all the broadcast transactions with subsequent nonces will incrementally become valid; it is not possible to "recall" a transaction!
+Это означает, что если вы создадите несколько транзакций последовательно, и одна из них не будет официально включена ни в какие блоки, все последующие транзакции "застрянут", ожидая пропущенного одноразового номера. Транзакция может создать непреднамеренный "пробел" в последовательности одноразовых номеров, поскольку она недействительна или содержит недостаточно газа. Чтобы все снова сдвинулось с мертвой точки, вы должны передать действительную транзакцию с отсутствующим одноразовым номером. Вы также должны помнить, что как только транзакция с "отсутствующим" одноразовым номером будет подтверждена сетью, все широковещательные транзакции с последующими одноразовыми номерами постепенно станут действительными; "отозвать" транзакцию невозможно!
 
-((("nonces","confirmation")))((("nonces","duplicated")))If, on the other hand, you accidentally duplicate a nonce, for example by transmitting two transactions with the same nonce but different recipients or values, then one of them will be confirmed and one will be rejected. Which one is confirmed will be determined by the sequence in which they arrive at the first validating node that receives them&#x2014;i.e., it will be fairly random.
+((("nonces","confirmation")))((("nonces","duplicated")))Если, с другой стороны, вы случайно продублируете одноразовый номер, например, передавая две транзакции с одним и тем же одноразовым номером, но с разными получателями или значениями, то одна из них будет подтверждена, и одна будет отклонена. Какая из них будет подтверждена, будет определяться последовательностью, в которой они поступают для проверки на первый узел, который их получает &#x2014; т.е. это будет довольно случайным образом.
 
-As you can see, keeping track of nonces is necessary, and if your application doesn't manage that process correctly you will run into problems. Unfortunately, things get even more difficult if you are trying to do this concurrently, as we will see in the next section.
+Как вы можете видеть, отслеживание одноразовых номеров необходимо, и если ваше приложение неправильно управляет этим процессом, вы столкнетесь с проблемами. К сожалению, все становится еще сложнее, если вы пытаетесь делать это одновременно, как мы увидим в следующем разделе.
 
 [[concurrency]]
 ==== Concurrency, Transaction Origination, and Nonces
