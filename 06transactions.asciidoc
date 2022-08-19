@@ -149,45 +149,45 @@ $ <strong>curl --data '{"method":"parity_nextNonce", \
 Как вы можете видеть, отслеживание одноразовых номеров необходимо, и если ваше приложение неправильно управляет этим процессом, вы столкнетесь с проблемами. К сожалению, все становится еще сложнее, если вы пытаетесь делать это одновременно, как мы увидим в следующем разделе.
 
 [[concurrency]]
-==== Concurrency, Transaction Origination, and Nonces
+==== Параллелизм, Инициирование транзакций и Одноразовые номера
 
-((("concurrency, nonces and")))((("nonces","concurrency")))((("nonces","transaction origination")))Concurrency is a complex aspect of computer science, and it crops up unexpectedly sometimes, especially in decentralized and distributed real-time systems like pass:[<span class="keep-together">Ethereum</span>].
+((("concurrency, nonces and")))((("nonces","concurrency")))((("nonces","transaction origination")))Параллелизм - это сложный аспект информатики, и иногда он возникает неожиданно, особенно в децентрализованных и распределенных системах реального времени, таких как pass:[<span class="keep-together">Ethereum</span>].
 
-In simple terms, concurrency is when you have simultaneous computation by multiple independent systems. These can be in the same program (e.g., multithreading), on the same CPU (e.g., multiprocessing), or on different computers (i.e., distributed pass:[<span class="keep-together">systems</span>]). Ethereum, by definition, is a system that allows concurrency of operations (nodes, clients, DApps) but enforces a singleton state through consensus.
+Проще говоря, параллелизм - это когда у вас есть одновременные вычисления несколькими независимыми системами. Они могут быть в одной и той же программе (например, многопоточность), на одном и том же процессоре (например, многопроцессорная обработка) или на разных компьютерах (например, распределенных pass:[<span class="keep-together">системах</span>]). Ethereum, по определению, - это система, которая допускает параллелизм операций (узлов, клиентов, dApps), но обеспечивает единое для всех состояние посредством консенсуса.
 
-Now, imagine that you have multiple independent wallet applications that are generating transactions from the same address or addresses. One example of such a situation would be an exchange processing withdrawals from the exchange's hot wallet (a wallet whose keys are stored online, in contrast to a cold wallet where the keys are never online). Ideally, you'd want to have more than one computer processing withdrawals, so that it doesn't become a bottleneck or single point of failure. However, this quickly becomes problematic, as having more than one computer producing withdrawals will result in some thorny concurrency problems, not least of which is the selection of nonces. How do multiple computers generating, signing, and broadcasting transactions from the same hot wallet account coordinate?
+Теперь представьте, что у вас есть несколько независимых приложений кошелька, которые генерируют транзакции с одного и того же адреса или адресов. Одним из примеров такой ситуации может быть обмен, обрабатывающий снятие средств с горячего кошелька (hot wallet) биржи (кошелька, ключи которого хранятся онлайн, в отличие от холодного кошелька, где ключи никогда не находятся в сети). В идеале вы хотели бы иметь несколько компьютеров, обрабатывающих снятие средств, чтобы это не стало узким местом или единственной точкой отказа. Однако это быстро становится проблематичным, поскольку наличие более чем одного компьютера, производящего снятие средств, приведет к некоторым сложным проблемам параллелизма, не последней из которых является выбор одноразовых номеров. Как координируются несколько компьютеров, генерирующих, подписывающих и транслирующих транзакции с одной и той же учетной записи hot wallet?
 
-You could use a single computer to assign nonces, on a first-come first-served basis, to computers signing transactions. However, this computer is now a single point of failure. Worse, if several nonces are assigned and one of them never gets used (because of a failure in the computer processing the transaction with that nonce), all subsequent transactions get stuck.
+Вы могли бы использовать один компьютер для назначения одноразовых номеров в порядке живой очереди компьютерам, подписывающим транзакции. Однако этот компьютер теперь является единственной точкой отказа. Хуже того, если назначено несколько одноразовых номеров, и один из них никогда не используется (из-за сбоя в компьютере, обрабатывающем транзакцию с этим одноразовым номером), все последующие транзакции застревают.
 
-Another approach would be to generate the transactions, but not assign a nonce to them (and therefore leave them unsigned&#x2014;remember that the nonce is an integral part of the transaction data and therefore needs to be included in the digital signature that authenticates the transaction). You could then queue them to a single node that signs them and also keeps track of nonces. Again, though, this would be a choke point in the process: the signing and tracking of nonces is the part of your operation that is likely to become congested under load, whereas the generation of the unsigned transaction is the part you don't really need to parallelize. You would have some concurrency, but it would be lacking in a critical part of the process.
+Другим подходом было бы генерировать транзакции, но не присваивать им одноразовый номер (и, следовательно, оставлять их неподписанными &#x2014; помните, что одноразовый номер является неотъемлемой частью данных транзакции и поэтому должен быть включен в цифровую подпись, которая аутентифицирует транзакцию). Затем вы можете поместить их в очередь на один узел, который их подписывает, а также отслеживает одноразовые номера. Опять же, однако, это было бы затруднительным моментом в процессе: подписание и отслеживание одноразовых номеров - это та часть вашей операции, которая, вероятно, будет перегружена под нагрузкой, в то время как генерация неподписанной транзакции - это та часть, которую вам действительно не нужно распараллеливать. У вас был бы некоторый параллелизм, но его не хватало бы в критической части процесса.
 
-In the end, these concurrency problems, on top of the difficulty of tracking account balances and transaction confirmations in independent processes, force most implementations toward avoiding concurrency and creating bottlenecks such as a single process handling all withdrawal transactions in an exchange, or setting up multiple hot wallets that can work completely independently for withdrawals and only need to be intermittently rebalanced.(((range="endofrange", startref="ix_06transactions-asciidoc2")))(((range="endofrange", startref="ix_06transactions-asciidoc1")))
+В конце концов, эти проблемы с параллелизмом, в дополнение к сложности отслеживания остатков на счетах и подтверждений транзакций в независимых процессах, вынуждают большинство реализаций избегать параллелизма и создавать узкие места, такие как единый процесс, обрабатывающий все транзакции вывода средств на бирже, или настройка нескольких горячих кошельков, которые могут работать полностью независимо для снятия средств и нужно только периодически восстанавливать баланс на них.(((range="endofrange", startref="ix_06transactions-asciidoc2")))(((range="endofrange", startref="ix_06transactions-asciidoc1")))
 
 [[tx_gas]]
-=== Transaction Gas
+=== Транзакционный газ
 
-((("gas","transactions and", id="ix_06transactions-asciidoc3", range="startofrange")))((("transactions","gas", id="ix_06transactions-asciidoc4", range="startofrange")))We talked about gas a little in earlier chapters, and we discuss it in more detail in <<gas>>. However, let's cover some basics about the role of the +gasPrice+ and +gasLimit+ components of a transaction.
+((("gas","transactions and", id="ix_06transactions-asciidoc3", range="startofrange")))((("transactions","gas", id="ix_06transactions-asciidoc4", range="startofrange")))Мы немного говорили о газе в предыдущих главах, и мы обсуждаем его более подробно в <<gas>>. Однако давайте рассмотрим некоторые основы касаемо роли компонентов +gasPrice+ и +gasLimit+ в транзакции.
 
-Gas is the fuel of Ethereum. Gas is not ether&#x2014;it's a separate virtual currency with its own exchange rate against ether. Ethereum uses gas to control the amount of resources that a transaction can use, since it will be processed on thousands of computers around the world. The open-ended (Turing-complete) computation model requires some form of metering in order to avoid denial-of-service attacks or inadvertently resource-devouring transactions.
+Газ - это топливо Эфириума. Газ - это не эфир &#x2014; это отдельная виртуальная валюта со своим собственным обменным курсом по отношению к эфиру. Ethereum использует gas для контроля количества ресурсов, которые может использовать транзакция, поскольку она будет обрабатываться на тысячах компьютеров по всему миру. Открытая (полная по Тьюрингу) вычислительная модель требует некоторой формы учета, чтобы избежать атак типа "отказ в обслуживании" или непреднамеренных транзакций, поглощающих ресурсы.
 
-Gas is separate from ether in order to protect the system from the volatility that might arise along with rapid changes in the value of ether, and also as a way to manage the important and sensitive ratios between the costs of the various resources that gas pays for (namely, computation, memory, and storage).
+Gas отделен от эфира, чтобы защитить систему от нестабильности, которая может возникнуть вместе с быстрыми изменениями стоимости эфира, а также как способ управления важными и чувствительными соотношениями между затратами на различные ресурсы, за которые платит gas (а именно, вычисления, память и хранение).
 
-((("gasPrice field")))The +gasPrice+ field in a transaction allows the transaction originator to set the price they are willing to pay in exchange for gas. The price is measured in wei per gas unit. For example, in the sample transaction in <<intro_chapter>> your wallet set the +gasPrice+ to 3 gwei (3 gigawei or 3 billion wei).
+((("gasPrice field")))Поле +gasPrice+ в транзакции позволяет инициатору транзакции установить цену, которую он готов заплатить в обмен на газ. Цена измеряется в вей за единицу газа. Например, в примере транзакции в <<intro_chapter>> ваш кошелек установил +gasPrice+ равным 3 гвеям (3 гигавея или 3 миллиарда вей).
 
 [TIP]
 ====
-The popular site https://ethgasstation.info/[ETH Gas Station] provides information on the current prices of gas and other relevant gas metrics for the Ethereum main network.
+Популярный сайт https://ethgasstation.info/[Заправочная станция ETH] предоставляет информацию о текущих ценах на газ и других соответствующих показателях газа для основной сети Ethereum.
 ====
 
-Wallets can adjust the +gasPrice+ in transactions they originate to achieve faster confirmation of transactions. The higher the +gasPrice+, the faster the transaction is likely to be confirmed. Conversely, lower-priority transactions can carry a reduced price, resulting in slower confirmation. The minimum value that +gasPrice+ can be set to is zero, which means a fee-free transaction. During periods of low demand for space in a block, such transactions might very well get mined.
+Кошельки могут корректировать +цену на газ+ в транзакциях, которые они инициируют, чтобы добиться более быстрого подтверждения транзакций. Чем выше +цена на газ+, тем быстрее транзакция, скорее всего, будет подтверждена. И наоборот, транзакции с более низким приоритетом могут иметь более низкую цену, что приводит к более медленному подтверждению. Минимальное значение, которое +цена на газ+ может быть установлено равным нулю, что означает транзакцию без комиссии. В периоды низкого спроса на место в блоке такие транзакции вполне могут быть добыты.
 
 [NOTE]
 ====
-The minimum acceptable +gasPrice+ is zero. That means that wallets can generate completely free transactions. Depending on capacity, these may never be confirmed, but there is nothing in the protocol that prohibits free transactions. You can find several examples of such transactions successfully included on the Ethereum blockchain.
+Минимально приемлемая +цена на газ+ равна нулю. Это означает, что кошельки могут генерировать совершенно бесплатные транзакции. В зависимости от пропускной способности они могут никогда не быть подтверждены, но в протоколе нет ничего, что запрещало бы бесплатные транзакции. Вы можете найти несколько примеров таких транзакций, успешно включенных в блокчейн Ethereum.
 ====
 
 [[gas_price_suggestion]]
-The web3 interface offers a +gasPrice+ suggestion, by calculating a median price across several blocks (we can use the truffle console or any JavaScript web3 console to do that):
+Интерфейс web3 предлагает +цену на газ+, рассчитывая среднюю цену по нескольким блокам (для этого мы можем использовать консоль truffle или любую консоль JavaScript web3).:
 
 ++++
 <pre data-type="programlisting">
@@ -197,7 +197,7 @@ The web3 interface offers a +gasPrice+ suggestion, by calculating a median price
 ++++
 
 [[calc_gas_price]]
-((("gasLimit field")))The second important field related to gas is +gasLimit+. In simple terms, +gasLimit+ gives the maximum number of units of gas the transaction originator is willing to buy in order to complete the transaction. For simple payments, meaning transactions that transfer ether from one EOA to another EOA, the gas amount needed is fixed at 21,000 gas units. To calculate how much ether that will cost, you multiply 21,000 by the +gasPrice+ you're willing to pay. For example:
+((("gasLimit field")))Второе важное поле, связанное с газом, - это +ограничение газа+. Проще говоря, +gasLimit+ дает максимальное количество единиц газа, которое инициатор транзакции готов купить для завершения транзакции. Для простых платежей, то есть транзакций, которые переводят эфир из одного EOA в другой EOA, необходимое количество газа фиксировано на уровне 21 000 единиц газа. Чтобы рассчитать, сколько эфира это будет стоить, вы умножаете 21 000 на + цену на газ +, которую вы готовы заплатить. Например:
 
 ++++
 <pre data-type="programlisting">
