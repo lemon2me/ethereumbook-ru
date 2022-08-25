@@ -480,24 +480,24 @@ image::images/published_contract_transactions.png["Etherscan showing the transac
 ((("digital signatures", id="ix_06transactions-asciidoc14", range="startofrange")))((("transactions","digital signatures and", id="ix_06transactions-asciidoc15", range="startofrange")))До сих пор мы не вдавались в какие-либо подробности о цифровых подписях. В этом разделе мы рассмотрим, как работают цифровые подписи и как их можно использовать для представления доказательств владения закрытым ключом, не раскрывая этот закрытый ключ.
 
 [[ecdsa]]
-==== The Elliptic Curve Digital Signature Algorithm
+==== Алгоритм цифровой подписи с эллиптической кривой
 
-((("digital signatures","ECDSA and")))((("Elliptic Curve Digital Signature Algorithm (ECDSA)","about")))The digital signature algorithm used in Ethereum is the _Elliptic Curve Digital Signature Algorithm_ (ECDSA). It's based on elliptic curve private–public key pairs, as described in <<elliptic_curve>>.
+((("digital signatures","ECDSA and")))((("Elliptic Curve Digital Signature Algorithm (ECDSA)","about")))Алгоритм цифровой подписи, используемый в Ethereum, - это _алгоритм цифровой подписи с эллиптической кривой_ (_Elliptic Curve Digital Signature Algorithm_) (ECDSA). Он основан на парах закрытого и открытого ключей с эллиптической кривой, как описано в <<elliptic_curve>>.
 
-A digital signature serves three purposes in Ethereum (see the following sidebar). First, the signature proves that the owner of the private key, who is by implication the owner of an Ethereum account, has _authorized_ the spending of ether, or execution of a contract. ((("non-repudiation")))Secondly, it guarantees _non-repudiation_: the proof of authorization is undeniable. Thirdly, the signature proves that the transaction data has not been and _cannot be modified_ by anyone after the transaction has been signed.
+Цифровая подпись служит трем целям в Ethereum (см. Следующую боковую панель). Во-первых, подпись доказывает, что владелец закрытого ключа, который косвенно является владельцем учетной записи Ethereum, _разрешил_ расходование эфира или выполнение контракта. ((("non-repudiation"))) Во-вторых, это гарантирует отсутствие отказа: доказательство авторизации неоспоримо. В-третьих, подпись доказывает, что данные транзакции не были и не могут быть изменены никем после подписания транзакции.
 
 [[digital_signature_definition]]
-.Wikipedia's Definition of a Digital Signature
+.Определение цифровой подписи в Википедии
 ****
-((("digital signatures","Wikipedia definition")))A _digital signature_ is a mathematical scheme for presenting the authenticity of digital messages or documents. A valid digital signature gives a recipient reason to believe that the message was created by a known sender (authentication), that the sender cannot deny having sent the message (non-repudiation), and that the message was not altered in transit (integrity).
+((("digital signatures","Wikipedia definition")))_Цифровая подпись_ - это математическая схема для представления подлинности цифровых сообщений или документов. Действительная цифровая подпись дает получателю основание полагать, что сообщение было создано известным отправителем (аутентификация), что отправитель не может отрицать отправку сообщения (неотказ) и что сообщение не было изменено при передаче (целостность).
 
-_Source: https://en.wikipedia.org/wiki/Digital_signature_
+_Источник: https://en.wikipedia.org/wiki/Digital_signature_
 ****
 
 [[digital_sign_work]]
-==== How Digital Signatures Work
+==== Как работают Цифровые подписи
 
-((("digital signatures","mechanism of operation")))A digital signature is a mathematical scheme that consists of two parts. The first part is an algorithm for creating a signature, using a private key (the signing key), from a message (which in our case is the transaction). The second part is an algorithm that allows anyone to verify the signature by only using the message and a public key.
+((("digital signatures","mechanism of operation")))Цифровая подпись - это математическая схема, состоящая из двух частей. Первая часть - это алгоритм создания подписи с использованием закрытого ключа (ключа подписи) из сообщения (которым в нашем случае является транзакция). Вторая часть - это алгоритм, который позволяет любому проверить подпись, используя только сообщение и открытый ключ.
 
 [[digital_sign_create]]
 ===== Creating a digital signature
