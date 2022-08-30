@@ -1,96 +1,96 @@
 [[smart_contracts_chapter]]
-== Smart Contracts and Solidity
+== Смарт-контракты и Solidity
 
-((("smart contracts", id="ix_07smart-contracts-solidity-asciidoc0", range="startofrange")))As we discussed in <<intro_chapter>>, there are two different types of accounts in Ethereum: ((("EOA (Externally Owned Account)","contract accounts compared to")))externally owned accounts (EOAs) and contract accounts. EOAs are controlled by users, often via software such as a wallet application that is external to the Ethereum platform. ((("contract accounts","EOAs compared to")))((("smart contracts","EOAs compared to")))In contrast, contract accounts are controlled by program code (also commonly referred to as &#x201c;smart contracts&#x201d;) that is executed by the Ethereum Virtual Machine. In short, EOAs are simple accounts without any associated code or data storage, whereas contract accounts have both associated code and data storage. EOAs are controlled by transactions created and cryptographically signed with a private key in the "real world" external to and independent of the protocol, whereas contract accounts do not have private keys and so "control themselves" in the predetermined way prescribed by their smart contract code. Both types of accounts are identified by an Ethereum address. In this chapter, we will discuss contract accounts and the program code that controls them.
+((("smart contracts", id="ix_07smart-contracts-solidity-asciidoc0", range="startofrange")))Как мы обсуждали в <<intro_chapter>>, в Ethereum существует два разных типа учетных записей: ((("EOA (Externally Owned Account)","contract accounts compared to")))аккаунты, принадлежащие лицам (EOA - Externally Owned Account), и аккаунт с контрактами. EOAS контролируются пользователями, часто с помощью программного обеспечения, такого как приложение кошелька, которое является внешним по отношению к платформе Ethereum. ((("contract accounts","EOAs compared to")))((("smart contracts","EOAs compared to")))Напротив, учетные записи с контрактами управляются программным кодом (также обычно называемым "смарт-контрактами"), который выполняется виртуальной машиной Ethereum. Короче говоря, EOAS - это простые учетные записи без какого-либо связанного кода или хранилища данных, в то время как контрактные учетные записи имеют как связанный код, так и хранилище данных. EOAS контролируются транзакциями, созданными и криптографически подписанными закрытым ключом в "реальном мире", внешнем по отношению к протоколу и независимом от него, в то время как контрактные учетные записи не имеют закрытых ключей и поэтому "контролируют себя" заранее определенным образом, предписанным их кодом смарт-контракта. Оба типа учетных записей идентифицируются по адресу Ethereum. В этой главе мы обсудим контрактные учетные записи и программный код, который ими управляет.
 
 [[smart_contracts_definition]]
-=== What Is a Smart Contract?
+=== Что такое Смарт-контракт?
 
-((("smart contracts","defined")))The term _smart contract_ has been used over the years to describe a wide variety of different things. ((("contract creation transaction")))((("Szabo, Nick")))In the 1990s, cryptographer Nick Szabo coined the term and defined it as “a set of promises, specified in digital form, including protocols within which the parties perform on the other promises.” Since then, the concept of smart contracts has evolved, especially after the introduction of decentralized blockchain platforms with the invention of Bitcoin in 2009. In the context of Ethereum, the term is actually a bit of a misnomer, given that Ethereum smart contracts are neither smart nor legal contracts, but the term has stuck. In this book, we use the term “smart contracts” to refer to immutable computer programs that run deterministically in the context of an Ethereum Virtual Machine as part of the Ethereum network protocol&#x2014;i.e., on the decentralized Ethereum world computer.
+((("smart contracts","defined")))Термин _смарт-контракт_ (_smart-contract_) использовался на протяжении многих лет для описания самых разных вещей. ((("contract creation transaction")))((("Szabo, Nick")))В 1990-х годах криптограф Ник Сабо ввел этот термин в обиход и определил его как “набор обещаний, определенных в цифровой форме, включая протоколы, в рамках которых стороны выполняют другие обещания”. С тех пор концепция смарт-контрактов эволюционировала, особенно после внедрения децентрализованных блокчейн-платформ с изобретением Биткоина в 2009 году. В контексте Ethereum этот термин на самом деле немного неправильный, учитывая, что смарт-контракты Ethereum не являются ни интеллектуальными, ни юридическими контрактами, но этот термин прижился. В этой книге мы используем термин “смарт-контракты” для обозначения неизменяемых компьютерных программ, которые выполняются детерминированно в контексте виртуальной машины Ethereum как часть сетевого протокола Ethereum &#x2014; т.е. на децентрализованном всемирном компьютере Ethereum.
 
-Let’s unpack that definition:
+Давайте разложим это определение:
 
-Computer programs::
-Smart contracts are simply computer programs. The word &#x201c;contract&#x201d; has no legal meaning in this context.
+Компьютерные программы::
+Смарт-контракты - это просто компьютерные программы. Слово "контракт" в данном контексте не имеет юридического значения.
 
-Immutable::
-Once deployed, the code of a smart contract cannot change. Unlike with traditional software, the only way to modify a smart contract is to deploy a new instance.
+Неизменный::
+После развертывания код смарт-контракта не может быть изменен. В отличие от традиционного программного обеспечения, единственный способ изменить смарт-контракт - это развернуть (deploy) новый экземпляр.
 
-Deterministic::
-The outcome of the execution of a smart contract is the same for everyone who runs it, given the context of the transaction that initiated its execution and the state of the Ethereum blockchain at the moment of execution.
+Детерминированный::
+Результат выполнения смарт-контракта одинаков для всех, кто его запускает, учитывая контекст транзакции, которая инициировала его выполнение, и состояние блокчейна Ethereum на момент исполнения.
 
-EVM context::
-Smart contracts operate with a very limited execution context. They can access their own state, the context of the transaction that called them, and some information about the most recent blocks.
+Контекст EVM::
+Смарт-контракты работают с очень ограниченным контекстом исполнения. Они могут получить доступ к своему собственному состоянию, контексту транзакции, которая их вызвала, и некоторой информации о самых последних блоках.
 
-Decentralized world computer::
-The EVM runs as a local instance on every Ethereum node, but because all instances of the EVM operate on the same initial state and produce the same final state, the system as a whole operates as a single "world computer."
+Децентрализованный мировой компьютер::
+EVM работает как локальный экземпляр на каждом узле Ethereum, но поскольку все экземпляры EVM работают в одном и том же начальном состоянии и выдают одно и то же конечное состояние, система в целом работает как единый "мировой компьютер".
 
 [[smart_contract_lifecycle]]
-=== Life Cycle of a Smart Contract
+=== Жизненный цикл Смарт-контракта
 
-((("smart contracts","life cycle of")))Smart contracts are typically written in a high-level language, such as Solidity. But in order to run, they must be compiled to the low-level bytecode that runs in the EVM. Once compiled, they are deployed on the Ethereum platform using a special _contract creation_ transaction, which is identified as such by being sent to the special contract creation address, namely +0x0+ (see <<contract_reg>>). Each contract is identified by an Ethereum address, which is derived from the contract creation transaction as a function of the originating account and nonce. The Ethereum address of a contract can be used in a transaction as the recipient, sending funds to the contract or calling one of the contract’s functions. Note that, unlike with EOAs, there are no keys associated with an account created for a new smart contract. As the contract creator, you don't get any special privileges at the protocol level (although you can explicitly code them into the smart contract). You certainly don't receive the private key for the contract account, which in fact does not exist&#x2014;we can say that smart contract accounts own themselves.
+((("smart contracts","life cycle of")))Смарт-контракты обычно пишутся на языке высокого уровня, таком как Solidity. Но для запуска они должны быть скомпилированы в низкоуровневый байт-код, который выполняется в EVM. После компиляции они развертываются на платформе Ethereum с использованием специальной транзакции _contract creation_, которая идентифицируется как таковая путем отправки на специальный адрес – адрес создания контрактов, а именно +0x0+ (см. <<contract_reg>>). Каждый контракт идентифицируется адресом Ethereum, который является производным от транзакции создания контракта в зависимости от исходной учетной записи и одноразового номера (nonce). Адрес Ethereum контракта может быть использован в транзакции в качестве получателя при отправлении средств или вызывая одну из функций контракта. Обратите внимание, что, в отличие от EOAs, ключей, связанных с учетной записью нового смарт-контракта, нет. Как создатель контракта, вы не получаете никаких особых привилегий на уровне протокола (хотя вы можете явно закодировать их в смарт-контракте). Вы, конечно, не получаете закрытый ключ для учетной записи контракта, которого на самом деле не существует &#x2014; мы можем сказать, что учетные записи смарт-контрактов владеют собой.
 
-((("transactions","smart contracts and")))Importantly, contracts _only run if they are called by a transaction_. All smart contracts in Ethereum are executed, ultimately, because of a transaction initiated from an EOA. A contract can call another contract that can call another contract, and so on, but the first contract in such a chain of execution will always have been called by a transaction from an EOA. Contracts never run “on their own” or “in the background.” Contracts effectively lie dormant until a transaction triggers execution, either directly or indirectly as part of a chain of contract calls. It is also worth noting that smart contracts are not executed "in parallel" in any sense&#x2014;the Ethereum world computer can be considered to be a single-threaded machine.
+((("transactions","smart contracts and")))Важно отметить, что контракты _выполняются только в том случае, если они вызываются транзакцией_. Все смарт-контракты в Ethereum выполняются, в конечном счете, из-за транзакции, инициированной EOA. Контракт может вызывать другой контракт, который может вызывать другой контракт, и так далее, но первый контракт в такой цепочке выполнения всегда будет вызван транзакцией из EOA. Контракты никогда не выполняются “сами по себе” или “в фоновом режиме”. Контракты фактически бездействуют до тех пор, пока транзакция не инициирует выполнение, прямо или косвенно, как часть цепочки вызовов контрактов. Также стоит отметить, что смарт-контракты ни в коем случае не выполняются "параллельно" &#x2014; мировой компьютер Ethereum можно считать однопоточной машиной.
 
-((("transactions","as atomic")))Transactions are _atomic_, they are either successfully terminated or reverted. A successful termination of a transaction means different things under different scenarios: (1) if a transaction is sent from an EOA to another EOA then any changes to the global state (e.g. account balances) made by the transaction are recorded; (2) if a transaction is sent from an EOA to a contract that does not invoke any other contracts, then any changes to the global state are recorded (e.g. account balances, state variables of the contracts) (3) if a transaction is sent from an EOA to a contract that only invokes other contracts in a manner that propagates errors, then any changes to the global state are recorded (e.g. account balances, state variables of the contracts); and (4) if a transaction is sent from an EOA to a contract that invokes other contracts in a manner that does not propagates errors, then there may only be some changes to the global state recorded (e.g. account balances, state variables of the non erroring contracts), whereas other changes to the global state are not recorded (e.g. state variables of the erroring contracts). Otherwise, if a transaction is reverted, all of its effects (changes in state) are “rolled back” as if the transaction never ran.  A failed transaction is still recorded as having been attempted, and the ether spent on gas for the execution is deducted from the originating account, but it otherwise has no other effects on contract or account state. 
+((("transactions","as atomic")))Транзакции являются _атомарными_ (_atomic_), они либо успешно завершаются, либо отменяются. Успешное завершение транзакции означает разные вещи в разных сценариях: (1) если транзакция отправляется из EOA в другой EOA, то записываются любые изменения глобального состояния (например, остатки на счетах), внесенные транзакцией; (2) если транзакция отправляется из EOA в контракт который не вызывает никаких других контрактов, тогда записываются любые изменения глобального состояния (например остатки на счетах, переменные состояния контрактов) (3) если транзакция отправляется из EOA в контракт, который только вызывает другие контракты способом, который распространяет ошибки, тогда записываются любые изменения глобального состояния (например, остатки на счетах, переменные состояния контрактов); и (4) если транзакция отправляется из EOA в контракт, который вызывает другие контракты способом, который не распространяет ошибки, тогда могут быть записаны только некоторые изменения глобального состояния (например остатки на счетах, переменные состояния контрактов без ошибок), в то время как другие изменения глобального состояния не регистрируются (например, переменные состояния контрактов с ошибками). В противном случае, если транзакция отменяется, все ее последствия (изменения состояния) “откатываются”, как если бы транзакция никогда не выполнялась.  Неудачная транзакция по-прежнему регистрируется как попытка, и эфир, потраченный на газ для выполнения, вычитается из исходного счета, но в остальном это не оказывает никакого другого влияния на контракт или состояние счета.
 
-((("smart contracts","deleting")))As mentioned previously, it is important to remember that a contract’s code cannot be changed. However, a contract can be “deleted,” removing the code and its internal state (storage) from its address, leaving a blank account. Any transactions sent to that account address after the contract has been deleted do not result in any code execution, because there is no longer any code there to execute. ((("SELFDESTRUCT opcode")))To delete a contract, you execute an EVM opcode called +SELFDESTRUCT+ (previously called +SUICIDE+). ((("negative gas")))That operation costs “negative gas,” a gas refund, thereby incentivizing the release of network client resources from the deletion of stored state. Deleting a contract in this way does not remove the transaction history (past) of the contract, since the blockchain itself is immutable. It is also important to note that the +SELFDESTRUCT+ capability will only be available if the contract author programmed the smart contract to have that functionality. If the contract's code does not have a +SELFDESTRUCT+ opcode, or it is inaccessible, the smart contract cannot be deleted.
+((("smart contracts","deleting")))Как упоминалось ранее, важно помнить, что код контракта не может быть изменен. Однако контракт можно “удалить”, удалив код и его внутреннее состояние (хранилище) из его адреса, оставив пустую учетную запись. Любые транзакции, отправленные на этот адрес учетной записи после удаления контракта, не приводят к выполнению какого-либо кода, поскольку там больше нет никакого кода для выполнения. ((("SELFDESTRUCT opcode")))Чтобы удалить контракт, вы выполняете код операции EVM с именем +SELFDESTRUCT+ (ранее называвшийся +SUICIDE+). ((("negative gas")))Эта операция обходится в “отрицательный газ”, возврат газа, тем самым стимулируя высвобождение ресурсов сетевого клиента из-за удаления сохраненного состояния. Удаление контракта таким образом не приводит к удалению истории транзакций (прошлого) контракта, поскольку сам блокчейн является неизменяемым. Также важно отметить, что возможность +SELFDESTRUCT+ будет доступна только в том случае, если автор контракта запрограммировал смарт-контракт на такую функциональность. Если в коде контракта нет кода операции +SELFDESTRUCT+ или он недоступен, смарт-контракт не может быть удален.
 
 [[high_level_languages]]
-=== Introduction to Ethereum High-Level Languages
+=== Введение в языки высокого уровня Ethereum
 
-((("EVM (Ethereum Virtual Machine)","and Ethereum high-level languages", id="ix_07smart-contracts-solidity-asciidoc1", range="startofrange")))((("smart contracts","and Ethereum high-level languages", id="ix_07smart-contracts-solidity-asciidoc2", range="startofrange")))The EVM is a virtual machine that runs a ((("EVM bytecode")))special form of code called _EVM bytecode_, analogous to your computer's CPU, which runs machine code such as x86_64. We will examine the operation and language of the EVM in much more detail in <<evm_chapter>>. In this section we will look at how smart contracts are written to run on the EVM.
+((("EVM (Ethereum Virtual Machine)","and Ethereum high-level languages", id="ix_07smart-contracts-solidity-asciidoc1", range="startofrange")))((("smart contracts","and Ethereum high-level languages", id="ix_07smart-contracts-solidity-asciidoc2", range="startofrange")))EVM - это виртуальная машина, которая запускает ((("EVM bytecode"))) специальную форму кода, называемую _EVM bytecode_, аналогичную процессору вашего компьютера, который запускает машинный код, такой как x86_64. Мы рассмотрим работу и язык EVM гораздо более подробно в <<evm_chapter>>. В этом разделе мы рассмотрим, как пишутся смарт-контракты для работы на EVM.
 
-While it is possible to program smart contracts directly in bytecode, EVM bytecode is rather unwieldy and very difficult for programmers to read and understand. Instead, most Ethereum developers use a high-level language to write programs, and a compiler to convert them into bytecode.
+В то время как можно программировать смарт-контракты непосредственно в байт-коде, байт-код EVM довольно громоздкий и очень трудный для чтения и понимания программистами. Вместо этого большинство разработчиков Ethereum используют язык высокого уровня для написания программ и компилятор для преобразования их в байт-код.
 
-While any high-level language could be adapted to write smart contracts, adapting an arbitrary language to be compilable to EVM bytecode is quite a cumbersome exercise and would in general lead to some amount of confusion. Smart contracts operate in a highly constrained and minimalistic execution environment (the EVM). In addition, a special set of EVM-specific system variables and functions needs to be available. As such, it is easier to build a smart contract language from scratch than it is to make a general-purpose language suitable for writing smart contracts. As a result, a number of special-purpose languages have emerged for programming smart contracts. Ethereum has several such languages, together with the compilers needed to produce EVM-executable bytecode.
+В то время как любой язык высокого уровня может быть адаптирован для написания смарт-контрактов, адаптация произвольного языка для компиляции в байт-код EVM является довольно громоздким занятием и в целом приведет к некоторой путанице. Смарт-контракты работают в сильно ограниченной и минималистичной среде исполнения (EVM). Кроме того, должен быть доступен специальный набор системных переменных и функций, специфичных для EVM. Таким образом, проще создать язык смарт-контрактов с нуля, чем создать язык общего назначения, подходящий для написания смарт-контрактов. В результате появился ряд языков специального назначения для программирования смарт-контрактов. В Ethereum есть несколько таких языков, а также компиляторы, необходимые для создания EVM-исполняемого байт-кода.
 
-((("declarative programming")))In general, programming languages can be classified into two broad programming paradigms: _declarative_ and _imperative_, also known as _functional_ and _procedural_, respectively. In declarative programming, we write functions that express the _logic_ of a program, but not its _flow_. ((("side effects")))Declarative programming is used to create programs where there are no _side effects_, meaning that there are no changes to state outside of a function. Declarative programming languages include Haskell and SQL. ((("hybrid programming languages")))((("imperative programming")))Imperative programming, by contrast, is where a programmer writes a set of procedures that combine the logic and flow of a program. Imperative programming languages include C++ and Java. Some languages are “hybrid,” meaning that they encourage declarative programming but can also be used to express an imperative programming paradigm. Such hybrids include Lisp, JavaScript, and Python. In general, any imperative language can be used to write in a declarative paradigm, but it often results in inelegant code. By comparison, pure declarative languages cannot be used to write in an imperative paradigm. In purely declarative languages, _there are no “variables.”_
+((("declarative programming")))В целом языки программирования можно разделить на две широкие парадигмы программирования: _декларативная_ (_declarative_) и _императивная_ (_imperative_), также известные как _функциональная_ (_functional_) и _процедурная_ (_procedural_) соответственно. В декларативном программировании мы пишем функции, которые выражают _логику_ (_logic_) программы, но не ее _поток выполнения_ (_flow_). ((("side effects")))Декларативное программирование используется для создания программ, в которых нет _сайд-эффектов_ (_side effects_), что означает, что нет никаких изменений состояния вне функции. Декларативные языки программирования включают Haskell и SQL. ((("hybrid programming languages")))((("imperative programming")))Императивное программирование, напротив, - это когда программист пишет набор процедур, которые объединяют логику и поток программы. Императивные языки программирования включают C++ и Java. Некоторые языки являются “гибридными”, что означает, что они поощряют декларативное программирование, но также могут использоваться для выражения императивной парадигмы программирования. Такие гибриды включают Lisp, JavaScript и Python. В общем, любой императивный язык можно использовать для написания в декларативной парадигме, но это часто приводит к неэлегантному коду. Для сравнения, чисто декларативные языки не могут использоваться для написания в императивной парадигме. В чисто декларативных языках _не существует никаких “переменных”_.
 
-While imperative programming is more commonly used by programmers, it can be very difficult to write programs that execute _exactly as expected_. The ability of any part of the program to change the state of any other makes it difficult to reason about a program’s execution and introduces many opportunities for bugs. Declarative programming, by comparison, makes it easier to understand how a program will behave: since it has no side effects, any part of a program can be understood in isolation.
+В то время как императивное программирование чаще используется программистами, может быть очень трудно писать программы, которые выполняются точно так, как ожидалось. Способность любой части программы изменять состояние любой другой части затрудняет рассуждения о выполнении программы и создает много возможностей для ошибок. Декларативное программирование, для сравнения, облегчает понимание того, как будет вести себя программа: поскольку оно не имеет побочных эффектов, любая часть программы может быть понята изолированно.
 
-In smart contracts, bugs literally cost money. As a result, it is critically important to write smart contracts without unintended effects. To do that, you must be able to clearly reason about the expected behavior of the program. So, declarative languages play a much bigger role in smart contracts than they do in general-purpose software. Nevertheless, as you will see, the most widely used language for smart contracts (Solidity) is imperative. Programmers, like most humans, resist change!
+В смарт-контрактах ошибки в буквальном смысле стоят денег. В результате критически важно писать смарт-контракты без непреднамеренных последствий. Чтобы сделать это, вы должны быть в состоянии четко рассуждать об ожидаемом поведении программы. Таким образом, декларативные языки играют гораздо большую роль в смарт-контрактах, чем в программном обеспечении общего назначения. Тем не менее, как вы увидите, наиболее широко используемый язык для смарт-контрактов (Solidity) является императивным. Программисты, как и большинство людей, сопротивляются переменам!
 
-Currently supported high-level programming languages for smart contracts include (ordered by approximate age):
+Поддерживаемые в настоящее время языки программирования высокого уровня для смарт-контрактов включают в себя (упорядоченные по приблизительному возрасту):
 
-LLL:: ((("LLL")))A functional (declarative) programming language, with Lisp-like syntax. It was the first high-level language for Ethereum smart contracts but is rarely used today.
+LLL:: ((("LLL"))) Функциональный (декларативный) язык программирования с синтаксисом, подобным Lisp. Это был первый язык высокого уровня для смарт-контрактов Ethereum, но сегодня он редко используется.
 
-Serpent:: ((("Serpent")))A procedural (imperative) programming language with a syntax similar to Python. Can also be used to write functional (declarative) code, though it is not entirely free of side effects.
+Serpent:: ((("Serpent")))Процедурный (императивный) язык программирования с синтаксисом, похожим на Python. Может также использоваться для написания функционального (декларативного) кода, хотя он не полностью свободен от побочных эффектов.
 
-Solidity:: ((("Solidity")))A procedural (imperative) programming language with a syntax similar to JavaScript, pass:[C++], or Java. The most popular and frequently used language for Ethereum smart contracts.
+Solidity:: ((("Solidity"))) Процедурный (императивный) язык программирования с синтаксисом, похожим на JavaScript, pass:[C++] или Java. Самый популярный и часто используемый язык для смарт-контрактов Ethereum.
 
-Vyper:: ((("Vyper")))A more recently developed language, similar to Serpent and again with Python-like syntax. Intended to get closer to a pure-functional Python-like language than Serpent, but not to replace Serpent.
+Vyper:: ((("Vyper"))) Более недавно разработанный язык, похожий на Serpent и опять же с синтаксисом, подобным Python. Предназначен для того, чтобы приблизиться к чисто функциональному языку, подобному Python, чем Serpent, но не для замены Serpent.
 
-Bamboo:: ((("Bamboo")))A newly developed language, influenced by Erlang, with explicit state transitions and without iterative flows (loops). Intended to reduce side effects and increase auditability. Very new and yet to be widely adopted.
+Bamboo:: ((("Bamboo"))) Недавно разработанный язык, на который повлиял Erlang, с явными переходами состояний и без итеративных потоков (циклов). Предназначен для уменьшения побочных эффектов и повышения проверяемости. Очень новый и еще не получивший широкого распространения.
 
-As you can see, there are many languages to choose from. However, of all of these Solidity is by far the most popular, to the point of being the _de facto_ high-level language of Ethereum and even other EVM-like blockchains. We will spend most of our time using Solidity, but will also explore some of the examples in other high-level languages to gain an understanding of their different philosophies.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc2")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc1")))
+Как вы можете видеть, есть много языков на выбор. Однако из всех них Solidity, безусловно, является самым популярным, вплоть до того, что фактически является языком высокого уровня Ethereum и даже других блокчейнов, подобных EVM. Мы проведем большую часть нашего времени, используя Solidity, но также рассмотрим некоторые примеры на других языках высокого уровня, чтобы получить представление об их различных философиях.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc2")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc1")))
 
 [[building_a_smart_contract_sec]]
-=== Building a Smart Contract with Solidity
+=== Построение Смарт-контракта на Solidity
 
-((("smart contracts","building with Solidity", id="ix_07smart-contracts-solidity-asciidoc3", range="startofrange")))((("Solidity","building a smart contract with", id="ix_07smart-contracts-solidity-asciidoc4", range="startofrange")))Solidity ((("smart contracts","Solidity and", id="ix_07smart-contracts-solidity-asciidoc5", range="startofrange")))((("Solidity","smart contracts and", id="ix_07smart-contracts-solidity-asciidoc6", range="startofrange")))was created by ((("Wood, Dr. Gavin","and Solidity")))Dr. Gavin Wood (coauthor of this book) as a language explicitly for writing smart contracts with features to directly support execution in the decentralized environment of the Ethereum world computer. The resulting attributes are quite general, and so it has ended up being used for coding smart contracts on several other blockchain platforms. It was developed by Christian Reitiwessner and then also by Alex Beregszaszi, Liana Husikyan, Yoichi Hirai, and several former Ethereum core contributors. Solidity is now developed and maintained as an independent project https://github.com/ethereum/solidity[on GitHub].
+((("smart contracts","building with Solidity", id="ix_07smart-contracts-solidity-asciidoc3", range="startofrange")))((("Solidity","building a smart contract with", id="ix_07smart-contracts-solidity-asciidoc4", range="startofrange")))Solidity ((("smart contracts","Solidity and", id="ix_07smart-contracts-solidity-asciidoc5", range="startofrange")))((("Solidity","smart contracts and", id="ix_07smart-contracts-solidity-asciidoc6", range="startofrange")))был создан ((("Wood, Dr. Gavin","and Solidity")))доктором Гэвин Вуд (соавтор этой книги) как язык, предназначенный специально для написания смарт-контрактов с функциями, непосредственно поддерживающими выполнение в децентрализованной среде мирового компьютера Ethereum. Результирующие атрибуты являются довольно общими, и поэтому в конечном итоге они используются для кодирования смарт-контрактов на нескольких других блокчейн-платформах. Он был разработан Кристианом Рейтивесснером, а затем также Алексом Берегсаззи, Лианой Хусикян, Йоичи Хираи и несколькими бывшими участниками Ethereum core. Solidity в настоящее время разрабатывается и поддерживается как независимый проект https://github.com/ethereum/solidity[на GitHub].
 
-The main "product" of the Solidity project is the Solidity compiler, +solc+, which converts programs written in the Solidity language to EVM bytecode. The project also manages the important application binary interface (ABI) standard for Ethereum smart contracts, which we will explore in detail in this chapter. Each version of the Solidity compiler corresponds to and compiles a specific version of the Solidity pass:[<span class="keep-together">language</span>].
+Основным "продуктом" проекта Solidity является компилятор Solidity +solc+, который преобразует программы, написанные на языке Solidity, в байт-код EVM. Проект также управляет важным стандартом application binary interface (ABI) для смарт-контрактов Ethereum, который мы подробно рассмотрим в этой главе. Каждая версия компилятора Solidity соответствует и компилирует определенную версии Solidity pass:[<span class="keep-together">языка</span>].
 
-To get started, we will download a binary executable of the Solidity compiler. Then we will develop and compile a simple contract, following on from the example we started with in <<intro_chapter>>.
+Для начала мы загрузим двоичный исполняемый файл компилятора Solidity. Затем мы разработаем и скомпилируем простой контракт, следуя примеру, с которого мы начали в <<intro_chapter>>.
 
-==== Selecting a Version of Solidity
+==== Выбор версии Solidity
 
-((("semantic versioning")))((("Solidity","selecting version of")))Solidity follows a versioning model called https://semver.org/[_semantic versioning_], which specifies version numbers structured as three numbers separated by dots: __++MAJOR.MINOR.PATCH++__. The "major" number is incremented for major and _backward-incompatible_ changes, the "minor" number is incremented as backward-compatible features are added in between major releases, and the "patch" number is incremented for backward-compatible bug fixes.
+((("semantic versioning")))((("Solidity","selecting version of")))Solidity следует модели управления версиями, называемой https://semver.org/[_semantic versioning_], которая определяет номера версий, структурированные в виде трех чисел, разделенных точками: __++MAJOR.MINOR.PATCH++__. Число "major" увеличивается для основных изменений и изменений, несовместимых с предыдущими версиями, число "minor" увеличивается по мере добавления обратно совместимых функций между основными выпусками, а число "patch" увеличивается для исправлений ошибок, совместимых с предыдущими версиями.
 
-At the time of writing, Solidity is at version 0.6.4.  The rules for major version 0, which is for initial development of a project, are different: anything may change at any time. In practice, Solidity treats the "minor" number as if it were the major version and the "patch" number as if it were the minor version. Therefore, in 0.6.4, 6 is considered to be the major version and 4 the minor version.
+На момент написания статьи Solidity находится на версии 0.6.4. Правила для основной версии 0, которая предназначена для начальной разработки проекта, отличаются: все может измениться в любое время. На практике Solidity изменяет "minor" номер так, как если бы это была основная версия, а номер "patch" - как если бы это была второстепенная версия. Поэтому в версии 0.6.4 6 считается основной версией (major), а 4 - второстепенной (minor).
 
-The 0.5 major version release of Solidity is anticipated imminently.
+В ближайшее время ожидается выпуск основной версии Solidity версии 0.5.
 
-As you saw in <<intro_chapter>>, your Solidity programs can contain a pragma directive that specifies the minimum and maximum versions of Solidity that it is compatible with, and can be used to compile your contract.
+Как вы видели в <<intro_chapter>>, ваши программы Solidity могут содержать директиву pragma, которая определяет минимальную и максимальную версии Solidity, с которыми она совместима, и может использоваться для компиляции вашего контракта.
 
-Since Solidity is rapidly evolving, it is often better to install the latest release.
+Поскольку Solidity быстро развивается, часто лучше установить последнюю версию.
 
-==== Download and Install
+==== Загрузка и установка
 
-((("Solidity","downloading/installing")))There are a number of methods you can use to download and install Solidity, either as a binary release or by compiling from source code. You can find detailed instructions in http://bit.ly/2RrZmup[the Solidity documentation].
+((("Solidity","downloading/installing")))Существует несколько методов, которые вы можете использовать для загрузки и установки Solidity, либо в виде двоичной версии, либо путем компиляции из исходного кода. Вы можете найти подробные инструкции в http://bit.ly/2RrZmup[документации к Solidity].
 
-Here's how to install the latest binary release of Solidity on an Ubuntu/Debian operating system, using the +apt+ package manager:
+Вот как установить последнюю двоичную версию Solidity в операционную систему Ubuntu/Debian, используя менеджер пакетов +apt+:
 
 ++++
 <pre data-type="programlisting">
@@ -100,7 +100,7 @@ $ <strong>sudo apt install solc</strong>
 </pre>
 ++++
 
-Once you have +solc+ installed, check the version by running:
+После установки +solc+ проверьте версию, запустив:
 
 ++++
 <pre data-type="programlisting">
@@ -110,26 +110,26 @@ Version: 0.6.4+commit.1dca32f3.Linux.g++
 </pre>
 ++++
 
-There are a number of other ways to install Solidity, depending on your operating system and requirements, including compiling from the source code directly. For more information see https://github.com/ethereum/solidity[].
+Существует ряд других способов установки Solidity, в зависимости от вашей операционной системы и требований, включая компиляцию непосредственно из исходного кода. Для получения дополнительной информации смотрите https://github.com/ethereum/solidity[].
 
 
 
-==== Development Environment
+==== Среда разработки
 
-((("Solidity","development environment")))To develop in Solidity, you can use any text editor and +solc+ on the command line. However, you might find that some text editors designed for development, such as Emacs, Vim, and Atom, offer additional features such as syntax highlighting and macros that make Solidity development easier.
+((("Solidity","development environment")))Для разработки в Solidity вы можете использовать любой текстовый редактор и +solc+ в командной строке. Однако вы можете обнаружить, что некоторые текстовые редакторы, предназначенные для разработки, такие как Emacs, Vim и Atom, предлагают дополнительные функции, такие как подсветка синтаксиса и макросы, которые упрощают разработку Solidity.
 
-There are also web-based development environments, such as https://remix.ethereum.org/[Remix IDE] and https://ethfiddle.com/[EthFiddle].
+Существуют также веб-среды разработки, такие как https://remix.ethereum.org/[Remix IDE] и https://ethfiddle.com/[EthFiddle].
 
-Use the tools that make you productive. In the end, Solidity programs are just plain text files. While fancy editors and development environments can make things easier, you don't need anything more than a simple text editor, such as nano (Linux/Unix), TextEdit (macOS), or even NotePad (Windows). Simply save your program source code with a _.sol_ extension and it will be recognized by the Solidity compiler as a Solidity program.
+Используйте инструменты, которые делают вас продуктивными. В конце концов, программы Solidity - это просто текстовые файлы. В то время как модные редакторы и среды разработки могут упростить задачу, вам не нужно ничего, кроме простого текстового редактора, такого как nano (Linux / Unix), TextEdit (macOS) или даже NotePad (Windows). Просто сохраните исходный код вашей программы с расширением _.sol_, и компилятор Solidity распознает его как программу Solidity.
 
-==== Writing a Simple Solidity Program
+==== Написание простой программы на Solidity
 
-((("Solidity","writing a simple program in")))In <<intro_chapter>>, we wrote our first Solidity program.  When we first built the +Faucet+ contract, we used the Remix IDE to compile and deploy the contract. In this section, we will revisit, improve, and embellish +Faucet+.
+((("Solidity","writing a simple program in")))В <<intro_chapter>> мы написали нашу первую программу Solidity. Когда мы впервые создали контракт +Faucet+, мы использовали среду разработки Remix IDE для компиляции и развертывания контракта. В этом разделе мы рассмотрим, улучшим и приукрасим +Faucet+.
 
-Our first attempt looked like <<original_sol_faucet>>.
+Наша первая попытка выглядела так <<original_sol_faucet>>.
 
 [[original_sol_faucet]]
-.Faucet.sol: A Solidity contract implementing a faucet
+.Faucet.sol:  Solidity контракт, реализующий кран
 ====
 [source,solidity,linenums]
 ----
@@ -137,11 +137,11 @@ include::code/Solidity/Faucet.sol[]
 ----
 ====
 
-==== Compiling with the Solidity Compiler (solc)
+==== Компиляция с помощью компилятора Solidity (solc)
 
-((("Faucet.sol contract (test example)","compiling")))((("solc (Solidity compiler)")))((("Solidity compiler (solc)")))Now, we will use the Solidity compiler on the command line to compile our contract directly. The Solidity compiler +solc+ offers a variety of options, which you can see by passing the +--help+ argument.
+((("Faucet.sol contract (test example)","compiling")))((("solc (Solidity compiler)")))((("Solidity compiler (solc)")))Теперь мы будем использовать компилятор Solidity в командной строке для непосредственной компиляции нашего контракта. Компилятор Solidity +solc+ предлагает множество опций, которые вы можете увидеть, передав аргумент +--help+.
 
-We use the +--bin+ and +--optimize+ arguments of +solc+ to produce an optimized binary of our example contract:
+Мы используем аргументы +--bin+ и +--optimize+ в +solc+ для создания оптимизированного двоичного файла нашего контракта из примера:
 
 
 ++++
@@ -159,18 +159,18 @@ Binary:
 ++++
 
 
-The result that +solc+ produces is a hex-serialized binary that can be submitted to the Ethereum blockchain.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc6")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc5")))
+Результат, который выдает +solc+, представляет собой шестнадцатеричный двоичный файл, который может быть отправлен в блокчейн Ethereum.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc6")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc5")))
 
 [[eth_contract_abi_sec]]
-=== The Ethereum Contract ABI
+=== ABI для контрактов Ethereum
 
-((("ABI (application binary interface)", id="ix_07smart-contracts-solidity-asciidoc7", range="startofrange")))((("application binary interface (ABI)", id="ix_07smart-contracts-solidity-asciidoc8", range="startofrange")))((("smart contracts","ABI", id="ix_07smart-contracts-solidity-asciidoc9", range="startofrange")))In computer software, an _application binary interface_ is an interface between two program modules; often, between the operating system and user programs. An ABI defines how data structures and functions are accessed in _machine code_; this is not to be confused with an API, which defines this access in high-level, often human-readable formats as _source code_. The ABI is thus the primary way of encoding and decoding data into and out of machine code.
+((("ABI (application binary interface)", id="ix_07smart-contracts-solidity-asciidoc7", range="startofrange")))((("application binary interface (ABI)", id="ix_07smart-contracts-solidity-asciidoc8", range="startofrange")))((("smart contracts","ABI", id="ix_07smart-contracts-solidity-asciidoc9", range="startofrange")))В компьютерном программном обеспечении _двоичный интерфейс приложения_ (_application binary interface_) (ABI) - это интерфейс между двумя программными модулями; часто между операционной системой и пользовательскими программами. ABI определяет, как осуществляется доступ к структурам данных и функциям в _машинном коде_ (_machine code_); это не следует путать с API, который определяет этот доступ в высокоуровневых, часто удобочитаемых форматах в _исходном коде_ (_source code_). Таким образом, ABI является основным способом кодирования и декодирования данных в машинный код и из него.
 
-In Ethereum, the ABI is used to encode contract calls for the EVM and to read data out of transactions. The purpose of an ABI is to define the functions in the contract that can be invoked and describe how each function will accept arguments and return its result.
+В Ethereum ABI используется для кодирования вызовов контрактов для EVM и считывания данных из транзакций. Цель ABI - определить функции в контракте, которые могут быть вызваны, и описать, как каждая функция будет принимать аргументы и возвращать свой результат.
 
-A contract's ABI is specified as a JSON array of function descriptions (see <<solidity_functions>>) and events (see <<solidity_events>>). A function description is a JSON object with fields `type`, `name`, `inputs`, `outputs`, `constant`, and `payable`. An event description object has fields `type`, `name`, `inputs`, and `anonymous`.
+ABI контракта указывается в виде массива JSON с описанием функций (см. <<solidity_functions>>) и событий (см. <<solidity_events>>). Описание функции представляет собой объект JSON с полями `type`, `name`, `inputs`, `outputs`, `constant` и `payable`. Объект описания события имеет поля `type", "name`, `inputs` и `anonymous`.
 
-We use the +solc+ command-line Solidity compiler to produce the ABI for our pass:[<span class="keep-together"><em>Faucet.sol</em></span>] example contract:
+Мы используем Solidity компилятор +solc+ в командной строке для создания ABI для нашего pass:[<span class="keep-together"><em>Faucet.sol</em></span>] контракта:
 
 ++++
 <pre data-type="programlisting">
@@ -183,28 +183,28 @@ Contract JSON ABI
 </pre>
 ++++
 
-As you can see, the compiler produces a JSON array describing the two functions that are defined by _Faucet.sol_. This JSON can be used by any application that wants to access the +Faucet+ contract once it is deployed. Using the ABI, an application such as a wallet or DApp browser can construct transactions that call the functions in +Faucet+ with the correct arguments and argument types. For example, a wallet would know that to call the function +withdraw+ it would have to provide a +uint256+ argument named +withdraw_amount+. The wallet could prompt the user to provide that value, then create a transaction that encodes it and executes the +withdraw+ function.
+Как вы можете видеть, компилятор создает массив JSON, описывающий две функции, определенные _Faucet.sol_. Этот JSON может быть использован любым приложением, которое хочет получить доступ к контракту +Faucet+ после его развертывания. Используя ABI, приложение, такое как кошелек или браузер DApp, может создавать транзакции, которые вызывают функции в +Faucet+ с правильными аргументами и типами аргументов. Например, кошелек будет знать, что для вызова функции +withdraw+ он должен предоставить +uint256+ аргумент с именем +withdraw_amount+. Кошелек может предложить пользователю указать это значение, затем создать транзакцию, которая кодирует его и выполняет функцию +withdraw+.
 
-All that is needed for an application to interact with a contract is an ABI and the address where the contract has been deployed.
+Все, что необходимо для взаимодействия приложения с контрактом, - это ABI и адрес, по которому был развернут контракт.
 
 [[solidity_pragma]]
-==== Selecting a Solidity Compiler and Language Version
+==== Выбор компилятора Solidity и версии языка
 
-((("Solidity","selecting compiler and language version")))As we saw in the previous code, our +Faucet+ contract compiles successfully with Solidity version 0.6.4. But what if we had used a different version of the Solidity compiler? The language is still in constant flux and things may change in unexpected ways. Our contract is fairly simple, but what if our program used a feature that was only added in Solidity version 0.6.1 and we tried to compile it with 0.6.0?
+((("Solidity","selecting compiler and language version")))Как мы видели в предыдущем коде, наш контракт +Faucet+ успешно компилируется с Solidity версии 0.6.4. Но что, если бы мы использовали другую версию компилятора Solidity? Язык все еще находится в постоянном движении, и все может измениться самым неожиданным образом. Наш контракт довольно прост, но что, если наша программа использовала функцию, которая была добавлена только в Solidity версии 0.6.1, и мы попытались скомпилировать ее с помощью 0.6.0?
 
-((("compiler directive")))((("version pragma")))To resolve such issues, Solidity offers a _compiler directive_ known as a _version pragma_ that instructs the compiler that the program expects a specific compiler (and language) version. Let’s look at an example:
+((("compiler directive")))((("version pragma")))Для решения таких проблем Solidity предлагает _команду для компилятора_ (_compiler directive_), известную как _version pragma_, которая сообщает компилятору, что программа ожидает конкретную версию компилятора (и языка). Давайте рассмотрим пример:
 
 [[compiler_version]]
 ----
 pragma solidity ^0.6.0;
 ----
 
-The Solidity compiler reads the version pragma and will produce an error if the compiler version is incompatible with the version pragma. In this case, our version pragma says that this program can be compiled by a Solidity compiler with a minimum version of 0.6.0. The symbol +^+ states, however, that we allow compilation with any _minor revision_ above 0.6.0; e.g., 0.6.1, but not 0.7.0 (which is a major revision, not a minor revision). Pragma directives are not compiled into EVM bytecode. They are only used by the compiler to check compatibility.
+Компилятор Solidity считывает _version pragma_ и выдает ошибку, если версия компилятора несовместима с _version pragma_. В этом случае наша _version pragma_ говорит, что эта программа может быть скомпилирована компилятором Solidity с минимальной версией 0.6.0. Символ +^+ указывает, однако, что мы разрешаем компиляцию с любым _minor revision_ выше 0.6.0; например, 0.6.1, но не 0.7.0 (что является major версией, а не minor). Директивы "pragma" не компилируются в байт-код EVM. Они используются компилятором только для проверки совместимости.
 
-Let’s add a pragma directive to our +Faucet+ contract. We will name the new file pass:[<span class="keep-together"><em>Faucet2.sol</em></span>], to keep track of our changes as we proceed through these examples starting in <<add_pragma_to_faucet>>.
+Давайте добавим директиву pragma в наш контракт +Faucet+. Мы назовем новый файл pass:[<span class="keep-together"><em>Faucet2.sol</em></span>], чтобы отслеживать наши изменения по мере прохождения этих примеров, начиная с <<add_pragma_to_faucet>>.
 
 [[add_pragma_to_faucet]]
-.Faucet2.sol: Adding the version pragma to Faucet
+.Faucet2.sol: Добавление version pragma в Faucet
 ====
 [source,solidity,linenums]
 ----
@@ -212,7 +212,7 @@ include::code/Solidity/Faucet2.sol[]
 ----
 ====
 
-Adding a version pragma is a best practice, as it avoids problems with mismatched compiler and language versions. We will explore other best practices and continue to improve the +Faucet+ contract throughout this chapter.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc9")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc8")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc7")))
+Добавление version pragma является наилучшей практикой, поскольку это позволяет избежать проблем с несовпадением версий компилятора и языка. Мы изучим другие лучшие практики и продолжим совершенствовать контракт +Faucet+ на протяжении всей этой главы.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc9")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc8")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc7")))
 
 === Programming with Solidity
 
