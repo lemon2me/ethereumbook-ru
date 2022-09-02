@@ -214,76 +214,76 @@ include::code/Solidity/Faucet2.sol[]
 
 Добавление version pragma является наилучшей практикой, поскольку это позволяет избежать проблем с несовпадением версий компилятора и языка. Мы изучим другие лучшие практики и продолжим совершенствовать контракт +Faucet+ на протяжении всей этой главы.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc9")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc8")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc7")))
 
-=== Programming with Solidity
+=== Программирование на Solidity
 
-((("Solidity","programming with", id="ix_07smart-contracts-solidity-asciidoc10", range="startofrange")))In this section, we will look at some of the capabilities of the Solidity language. As we mentioned in <<intro_chapter>>, our first contract example was very simple and also flawed in various ways. We'll gradually improve it here, while exploring how to use Solidity. This won't be a comprehensive Solidity tutorial, however, as Solidity is quite complex and rapidly evolving. We'll cover the basics and give you enough of a foundation to be able to explore the rest on your own. The documentation for Solidity can be found
-https://solidity.readthedocs.io/en/latest/[on the project website].
+((("Solidity","programming with", id="ix_07smart-contracts-solidity-asciidoc10", range="startofrange")))В этом разделе мы рассмотрим некоторые возможности языка Solidity. Как мы упоминали в <<intro_chapter>>, наш первый пример контракта был очень простым, а также имел различные недостатки. Мы будем постепенно улучшать его здесь, изучая, как использовать Solidity. Однако это не будет всеобъемлющим руководством по Solidity, поскольку Solidity довольно сложна и быстро развивается. Мы рассмотрим основы и дадим вам достаточную основу, чтобы вы могли изучить остальное самостоятельно. Документацию по Solidity можно найти
+https://solidity.readthedocs.io/en/latest/[на сайте проекта].
 
-==== Data Types
+==== Типы данных
 
-((("Solidity","data types", id="ix_07smart-contracts-solidity-asciidoc11", range="startofrange")))First, let's look at some of the basic data types offered in Solidity:
+((("Solidity","data types", id="ix_07smart-contracts-solidity-asciidoc11", range="startofrange")))Во-первых, давайте рассмотрим некоторые из основных типов данных, предлагаемых в Solidity:
 
-Boolean (+bool+):: Boolean value, +true+ or +false+, with logical operators +!+ (not), +&&+ (and), +||+ (or), +==+ (equal), and +!=+ (not equal).
+Булево значение (+bool+):: Логическое значение, +true+ или +false+, с логическими операторами +!+ (не), +&&+ (и), +||+ (или), +==+ (равно) и +!=+ (не равно).
 
-Integer (+int+, +uint+):: Signed (+int+) and unsigned (+uint+) integers, declared in increments of 8 bits from +int8+ to +uint256+. Without a size suffix, 256-bit quantities are used, to match the word size of the EVM.
+Целое число (+int+, +uint+):: Целые числа со знаком (+int+) и без знака (+uint+), объявляемые с шагом 8 бит от +int8+ до +uint256+. Без суффикса размера используются 256-битные величины, соответствующие размеру слова EVM.
 
-Fixed point (+fixed+, +ufixed+):: Fixed-point numbers, declared with pass:[(<code>u</code>)<code>fixed<em>M</em>x<em>N</em></code>] where __++M++__ is the size in bits (increments of 8 up to 256) and __++N++__ is the number of decimals after the point (up to 18); e.g., +ufixed32x2+.
+Фиксированная точка (+fixed+, +ufixed+):: Числа с фиксированной точкой, объявленные с помощью pass:[(<code>u</code>)<code>fixed<em>M</em>x<em>N</em></code>], где __++M++__ - размер в битах (с шагом от 8 до 256), а __++N++__ - количество десятичных знаков после запятой (до 18); например, +ufixed32x2+.
 
-Address:: A 20-byte Ethereum address. The +address+ object has many helpful member functions, the main ones being +balance+ (returns the account balance) and pass:[<span class="keep-together"><code>transfer</code></span>] (transfers ether to the account).
+Адрес:: 20-байтовый адрес Ethereum. Объект +address+ имеет много полезных функций-членов, основными из которых являются +balance+ (возвращает баланс счета) и pass:[<span class="keep-together"><code>transfer</code></span>] (переводит эфир на счет).
 
-Byte array (fixed):: Fixed-size arrays of bytes, declared with +bytes1+ up to +bytes32+.
+Массив байтов (фиксированный):: Массивы байтов фиксированного размера, объявленные от +байт1+ до +байт32+.
 
-Byte array (dynamic):: Variable-sized arrays of bytes, declared with +bytes+ or +string+.
+Массив байтов (динамический):: Массивы байтов переменного размера, объявленные с помощью +bytes+ или +string+.
 
-Enum:: User-defined type for enumerating discrete values: +enum NAME {LABEL1, LABEL 2, pass:[...]}+.
+Enum:: Определяемый пользователем тип для перечисления дискретных значений: +enum NAME {LABEL1, LABEL 2, pass:[...]}+.
 
-Arrays:: An array of any type, either fixed or dynamic: +uint32[][5]+ is a fixed-size array of five dynamic arrays of unsigned integers.
+Массивы:: Массив любого типа, фиксированный или динамический: +uint32[][5]+ представляет собой массив фиксированного размера из пяти динамических массивов целых чисел без знака.
 
-Struct:: User-defined data containers for grouping variables: pass:[<code>struct NAME {TYPE1 <span class="keep-together">VARIABLE1</span>; TYPE2 VARIABLE2; ...}</code>].
+Структура:: Определяемые пользователем контейнеры данных для группировки переменных: pass:[<code>struct NAME {TYPE1 <span class="keep-together">VARIABLE1</span>; TYPE2 VARIABLE2; ...}</code>].
 
-Mapping:: Hash lookup tables for __++key++__ +=>+ _++value++_ pairs: +mapping(KEY_TYPE => VALUE_TYPE) NAME+.
+Сопоставление:: Таблицы хэш-поиска для __++key++__ +=>+ _++value++_ pairs: +mapping(KEY_TYPE => VALUE_TYPE) NAME+.
 
-In addition to these data types, Solidity also offers a variety of value literals that can be used to calculate different units:
+В дополнение к этим типам данных Solidity также предлагает множество литералов, которые можно использовать для вычисления различных единиц измерения:
 
-Time units:: The units +seconds+, +minutes+, +hours+, and +days+ can be used as suffixes, converting to multiples of the base unit +seconds+.
+Единицы измерения времени:: Единицы измерения +секунды+, +минуты+, +часы+ и +дни+ могут использоваться в качестве суффиксов, преобразуясь в кратные базовой единице (+секунда+) значения.
 
-Ether units:: The units +wei+, +finney+, +szabo+, and +ether+ can be used as suffixes, converting to multiples of the base unit +wei+.
+Единицы эфира:: Единицы +wei+, +finney+, +szabo+ и +ether+ могут использоваться в качестве суффиксов, преобразуясь в кратные базовой единице (+wei+) значения.
 
-In our +Faucet+ contract example, we used a +uint+ (which is an alias for +uint256+) for the +withdraw_amount+ variable. We also indirectly used an +address+ variable, which we set with +msg.sender+. We will use more of these data types in our examples in the rest of this chapter.
+В нашем примере контракта +Faucet+ мы использовали +uint+ (который является псевдонимом +uint256+) для переменной +withdraw_amount+. Мы также косвенно использовали переменную +address+, которую мы установили с помощью +msg.sender+. Мы будем использовать больше этих типов данных в наших примерах в остальной части этой главы.
 
-Let's use one of the unit multipliers to improve the readability of our example contract. In the +withdraw+ function we limit the maximum withdrawal, expressing the limit in wei, the base unit of ether:
+Давайте используем один из множителей для единиц измерения, чтобы улучшить читаемость нашего примера контракта. В функции +withdraw+ мы ограничиваем максимальный вывод средств, выражая предел в wei, базовой единице эфира:
 
 ----
 require(withdraw_amount <= 100000000000000000);
 ----
 
-That's not very easy to read. We can improve our code by using the unit multiplier +ether+, to express the value in ether instead of wei:(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc11")))
+Это не очень легко читать. Мы можем улучшить наш код, используя множитель для единиц измерения +ether+, чтобы выразить значение в эфире вместо wei:(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc11")))
 
 ----
 require(withdraw_amount <= 0.1 ether);
 ----
 
-==== Predefined Global Variables and Functions
+==== Предопределенные глобальные переменные и функции
 
-((("Solidity","predefined global variables/functions", id="ix_07smart-contracts-solidity-asciidoc12", range="startofrange")))When a contract is executed in the EVM, it has access to a small set of global objects. These include the +block+, +msg+, and +tx+ objects. In addition, Solidity exposes a number of EVM opcodes as predefined functions. In this section we will examine the variables and functions you can access from within a smart contract in Solidity.
+((("Solidity","predefined global variables/functions", id="ix_07smart-contracts-solidity-asciidoc12", range="startofrange")))Когда контракт выполняется в EVM, он имеет доступ к небольшому набору глобальных объектов. К ним относятся объекты +block+, +msg+ и +tx+. Кроме того, Solidity предоставляет ряд кодов операций EVM в качестве предопределенных функций. В этом разделе мы рассмотрим переменные и функции, к которым вы можете получить доступ из смарт-контракта в Solidity.
 
-===== Transaction/message call context
+===== Контекст вызова транзакции/сообщения
 
-((("message call")))((("msg object")))((("transaction call")))The +msg+ object is the transaction call (EOA originated) or message call (contract originated) that launched this contract execution. It contains a number of useful attributes:
+((("message call")))((("msg object")))((("transaction call")))Объект +msg+ - это вызов транзакции (инициированный EOA) или вызов сообщения (инициированный контрактом), который запустил выполнение этого контракта. Он содержит ряд полезных атрибутов:
 
-+msg.sender+:: We've already used this one. It represents the address that initiated this contract call, not necessarily the originating EOA that sent the transaction. If our contract was called directly by an EOA transaction, then this is the address that signed the transaction, but otherwise it will be a contract address.
++msg.sender+:: Мы уже использовали его. Он представляет адрес, который инициировал вызов этого контракта, не обязательно исходный EOA, отправивший транзакцию. Если наш контракт был вызван непосредственно транзакцией EOA, то это адрес, который подписал транзакцию, но в противном случае это будет адрес контракта.
 
-+msg.value+:: The value of ether sent with this call (in wei).
++msg.value+:: Значение эфира, отправленного с этим вызовом (в wei).
 
-+msg.gas+:: The amount of gas left in the gas supply of this execution environment. This was deprecated in Solidity v0.4.21 and replaced by the +gasleft+ function.
++msg.gas+:: Количество газа, оставшегося для данной среды выполнения. Эта функция устарела в Solidity v0.4.21 и была заменена функцией +gasleft+.
 
-+msg.data+:: The data payload of this call into our contract.
++msg.data+:: Полезная нагрузка данных этого вызова в наш контракт.
 
-+msg.sig+:: The first four bytes of the data payload, which is the function selector.
++msg.sig+:: Первые четыре байта полезной нагрузки данных, которая является селектором функций.
 
 [NOTE]
 ====
-Whenever a contract calls another contract, the values of all the attributes of +msg+ change to reflect the new caller's information. The only exception to this is the +delegatecall+ function, which runs the code of another contract/library within the original +msg+ pass:[<span class="keep-together">context</span>].
+Всякий раз, когда контракт вызывает другой контракт, значения всех атрибутов +msg+ изменяются, чтобы отразить информацию о новом вызывающем абоненте. Единственным исключением из этого правила является функция +delegatecall+, которая запускает код другого контракта/библиотеки в исходном +msg+ pass:[<span class="keep-together">контексте</span>].
 ====
 
 ===== Transaction context
