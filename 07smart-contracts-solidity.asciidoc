@@ -286,75 +286,75 @@ require(withdraw_amount <= 0.1 ether);
 Всякий раз, когда контракт вызывает другой контракт, значения всех атрибутов +msg+ изменяются, чтобы отразить информацию о новом вызывающем абоненте. Единственным исключением из этого правила является функция +delegatecall+, которая запускает код другого контракта/библиотеки в исходном +msg+ pass:[<span class="keep-together">контексте</span>].
 ====
 
-===== Transaction context
+===== Контекст транзакции
 
-((("tx object")))The +tx+ object provides a means of accessing transaction-related information:
+((("tx object")))Объект +tx+ предоставляет средство доступа к информации, связанной с транзакцией:
 
-++tx.gasprice++:: The gas price in the calling transaction.
+++tx.gasprice++:: Цена на газ в вызывающей транзакции.
 
-++tx.origin++:: The address of the originating EOA for this transaction. WARNING: unsafe!
+++tx.origin++:: Адрес отправителя EOA для этой транзакции. ВНИМАНИЕ: небезопасно!
 
-===== Block context
+===== Контекст блока
 
-((("block object")))The +block+ object contains information about the current block:
+((("block object")))Объект +block+ содержит информацию о текущем блоке:
 
-++block.blockhash(__blockNumber__)++:: The block hash of the specified block number, up to 256 blocks in the past. Deprecated and replaced with the +blockhash+ function in Solidity v0.4.22.
+++block.blockhash(__blockNumber__)++:: Хэш блока для указанного номера блока, до 256 блоков в прошлом. Устарел и заменен функцией +blockhash+ в Solidity v0.4.22.
 
-++block.coinbase++:: The address of the recipient of the current block's fees and block reward.
+++block.coinbase++:: Адрес получателя сборов за текущий блок и вознаграждения за блок.
 
-++block.difficulty++:: The difficulty (proof of work) of the current block.
+++block.difficulty++:: Сложность (proof of work) текущего блока.
 
-++block.gaslimit++:: The maximum amount of gas that can be spent across all transactions included in the current block.
+++block.gaslimit++:: Максимальное количество газа, которое может быть потрачено на все транзакции, включенные в текущий блок.
 
-++block.number++:: The current block number (blockchain height).
+++block.number++:: Текущий номер блока (высота блокчейна).
 
-++block.timestamp++:: The timestamp placed in the current block by the miner (number of seconds since the Unix epoch).
+++block.timestamp++:: Временная метка, помещенная майнером в текущий блок (количество секунд, прошедших с эпохи Unix).
 
 [[solidity_address_object]]
-===== address object
+===== Адрес объекта
 
-((("address object")))Any address, either passed as an input or cast from a contract object, has a number of attributes and methods:
+((("address object")))Любой адрес, либо переданный в качестве входных данных, либо полученный из контракта, имеет ряд атрибутов и методов:
 
-+address.balance+:: The balance of the address, in wei. For example, the current contract balance is +address(this).balance+.
++address.balance+:: Баланс адреса в вэй. Например, текущий баланс контракта равен +address(this).balance+.
 
-++address.transfer(__amount__)++:: Transfers the amount (in wei) to this address, throwing an exception on any error. We used this function in our +Faucet+ example as a method on the +msg.sender+ address, as +msg.sender.transfer+.
+++address.transfer(__amount__)++:: Переводит сумму (в wei) на этот адрес, вызывая исключение при любой ошибке. Мы использовали эту функцию в нашем примере +Faucet+ в качестве метода для адреса +msg.sender+, как +msg.sender.transfer+.
 
-++address.send(__amount__)++:: Similar to +transfer+, only instead of throwing an exception, it returns +false+ on error. WARNING: always check the return value of +send+.
+++address.send(__amount__)++:: Аналогично +transfer+, только вместо того, чтобы выдавать исключение, он возвращает +false+ при ошибке. ПРЕДУПРЕЖДЕНИЕ: всегда проверяйте возвращаемое значение +send+.
 
-++address.call(__payload__)++:: Low-level +CALL+ function&#x2014;can construct an arbitrary message call with a data payload. Returns +false+ on error. WARNING: unsafe&#x2014;recipient can (accidentally or maliciously) use up all your gas, causing your contract to halt with an +OOG+ exception; always check the return value of +call+.
+++address.call(__payload__)++:: Низкоуровневая +CALL+ функция&#x2014; может создавать произвольный вызов сообщения с полезной нагрузкой данных. Возвращает +false+ при ошибке. ПРЕДУПРЕЖДЕНИЕ: небезопасный получатель может (случайно или злонамеренно) израсходовать весь ваш газ, что приведет к остановке вашего контракта с исключением +OOG+; всегда проверяйте возвращаемое значение +call+.
 
-+address.delegatecall(__payload__)+:: Low-level +DELEGATECALL+ function, like +callcode(pass:[...])+ but with the full +msg+ context seen by the current contract. Returns +false+ on error. WARNING: advanced use only!
++address.delegatecall(__payload__)+:: Низкоуровневая функция +DELEGATECALL+, например +call code(pass:[...])+ , но с полным контекстом +msg+, видимым текущим контрактом. Возвращает +false+ при ошибке. ВНИМАНИЕ: только для продвинутого использования!
 
-===== Built-in functions
+===== Встроенные функции
 
-Other functions worth noting are:
+Другими функциями, которые стоит отметить, являются:
 
-+addmod+, +mulmod+:: For modulo addition and multiplication. For example, +addmod(x,y,k)+ calculates +pass:[(x + y) % k]+.
++addmod+, +mulmod+:: Для сложения и умножения по модулю. Например, +addmod(x,y,k)+ вычисляет +pass:[(x + y) % k]+.
 
-+keccak256+, +sha256+, +sha3+, +ripemd160+:: Functions to calculate hashes with various standard hash algorithms.
++keccak256+, +sha256+, +sha3+, +ripemd160+:: Функции для вычисления хэшей с помощью различных стандартных алгоритмов хэширования.
 
-+ecrecover+:: Recovers the address used to sign a message from the signature.
++ecrecover+:: Восстанавливает из подписи адрес, используемый для подписывания сообщения.
 
-++selfdestruct(__recipient_address__)++:: Deletes the current contract, sending any remaining ether in the account to the recipient address.
+++selfdestruct(__recipient_address__)++:: Удаляет текущий контракт, отправляя любой оставшийся эфир на счете на адрес получателя.
 
-+this+:: The address of the currently executing contract account.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc12")))
++this+:: Адрес учетной записи текущего исполняемого контракта.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc12")))
 
-==== Contract Definition
+==== Определение контракта
 
-((("contract data type")))((("contract definition, Solidity")))((("Solidity","contract definition")))Solidity's principal data type is +contract+; our +Faucet+ example simply defines a pass:[<span class="keep-together"><code>contract</code></span>] object. Similar to any object in an object-oriented language, the contract is a container that includes data and methods.
+((("contract data type")))((("contract definition, Solidity")))((("Solidity","contract definition")))Основным типом данных Solidity является +contract+; в нашем примере +Faucet+ просто определяет объект контракта: pass:[<span class="keep-together"><code>contract</code></span>]. Подобно любому объекту в объектно-ориентированном языке, контракт представляет собой контейнер, включающий данные и методы.
 
-Solidity offers two other object types that are similar to a contract:
+Solidity предлагает два других типа объектов, похожих на контракт:
 
-+interface+:: ((("interface object type")))((("stub")))An interface definition is structured exactly like a contract, except none of the functions are defined, they are only declared. This type of declaration is often called a _stub_; it tells you the functions' arguments and return types without any implementation. An interface specifies the "shape" of a contract; when inherited, each of the functions declared by the interface must be defined by the child.
++interface+:: ((("interface object type")))((("stub")))Определение интерфейса структурировано точно так же, как контракт, за исключением того, что ни одна из функций не определена, они только объявлены. Этот тип объявления часто называют _stub_; он сообщает вам аргументы функций и возвращаемые типы без какой-либо реализации. Интерфейс определяет "форму" контракта; при наследовании каждая из функций, объявленных интерфейсом, должна быть определена дочерним элементом.
 
-+library+:: ((("library contract")))A library contract is one that is meant to be deployed only once and used by other contracts, using the +delegatecall+ method (see <<solidity_address_object>>).
++library+:: ((("library contract")))Библиотечный контракт - это контракт, который предназначен для развертывания только один раз и использования другими контрактами с использованием метода +delegatecall+ (см. <<solidity_address_object>>).
 
 [[solidity_functions]]
-==== Functions
+==== Функции
 
-((("Solidity","functions", id="ix_07smart-contracts-solidity-asciidoc13", range="startofrange")))Within a contract, we define functions that can be called by an EOA transaction or another contract. In our +Faucet+ example, we have two functions: +withdraw+ and the (unnamed) _fallback_ function.
+((("Solidity","functions", id="ix_07smart-contracts-solidity-asciidoc13", range="startofrange")))В контракте мы определяем функции, которые могут быть вызваны транзакцией EOA или другим контрактом. В нашем примере +Faucet+ у нас есть две функции: +withdraw+ и (безымянная) функция _fallback_.
 
-((("Solidity","function syntax")))The syntax we use to declare a function in Solidity is as follows:
+((("Solidity","function syntax")))Синтаксис, который мы используем для объявления функции в Solidity, выглядит следующим образом:
 
 ++++
 <pre data-type="programlisting">
@@ -364,19 +364,19 @@ function FunctionName([<em>parameters</em>]) {public|private|internal|external}
 ++++
 
 
-Let's look at each of these components:
+Давайте рассмотрим каждый из этих компонентов:
 
-++FunctionName++:: The name of the function, which is used to call the function in a transaction (from an EOA), from another contract, or even from within the same contract. ((("fallback function")))One function in each contract may be defined as a fallback function using the "fallback" keyword or a receive ether function defined using the "receive" keyword. If present, the receive ether function is called whenever the call data is empty (whether or not ether is received). Otherwise, the fallback function is called when no other function is named. The fallback function cannot have any arguments or return anything.
+++FunctionName++:: Имя функции, которое используется для вызова функции в транзакции (из EOA), из другого контракта или даже из того же контракта. ((("fallback function"))) Одна функция в каждом контракте может быть определена как _резервная функция_ (_fallback function_) с использованием ключевого слова ""fallback или функция приема эфира, определенная с использованием ключевого слова "receive". Если функция приема эфира присутствует, то она вызывается всякий раз, когда данные вызова пусты (независимо от того, получен эфир или нет). А резервная функция вызывается, когда никакая другая функция не вызвана. Резервная функция не может иметь никаких аргументов или возвращать что-либо.
 
-__++parameters++__:: Following the name, we specify the arguments that must be passed to the function, with their names and types. In our +Faucet+ example we defined +uint withdraw_amount+ as the only argument to the pass:[<code><span class="keep-together">withdraw</span></code>] function.
+__++parameters++__:: После имени мы указываем аргументы, которые должны быть переданы функции, с их именами и типами. В нашем примере +Faucet+ мы определили +uint withdraw_amount+ в качестве единственного аргумента для pass:[<code><span class="keep-together">withdraw</span></code>] функции.
 
-The next set of keywords (+public+, +private+, +internal+, +external+) specify the function's _visibility_:
+Следующий набор ключевых слов (+public+, +private+, +internal+, +external+) определяет видимость функции:
 
-+public+:: ((("public function")))Public is the default; such functions can be called by other contracts or EOA transactions, or from within the contract. In our +Faucet+ example, both functions are defined as public.
++public+:: ((("public function")))По умолчанию используется значение public; такие функции могут вызываться другими контрактами или транзакциями EOA или изнутри контракта. В нашем примере +Faucet+ обе функции определены как общедоступные (public).
 
-+external+:: ((("external function")))External functions are like public functions, except they cannot be called from within the contract unless explicitly prefixed with the keyword +this+.
++external+:: ((("external function")))Внешние функции подобны общедоступным функциям, за исключением того, что они не могут быть вызваны из контракта, если явно не указано ключевое слово +this+.
 
-+internal+:: ((("internal function")))Internal functions are only accessible from within the contract&#x2014;they cannot be called by another contract or EOA transaction. They can be called by derived contracts (those that inherit this one).
++internal+:: ((("internal function")))Внутренние функции доступны только из контракта &#x2014; они не могут быть вызваны другим контрактом или транзакцией EOA. Они могут быть вызваны производными контрактами (теми, которые наследуют этот контракт).
 
 +private+:: ((("private function")))Private functions are like internal functions but cannot be called by derived pass:[<span class="keep-together">contracts</span>].
 
