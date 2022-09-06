@@ -435,9 +435,9 @@ selfdestruct(address recipient);
 
 ==== Добавление конструктора и selfdestruct к нашему примеру Faucet
 
-((("constructor function","adding to faucet example")))((("Faucet.sol contract (test example)","adding constructor and selfdestruct to")))((("Solidity","adding constructor/selfdestruct to faucet example")))The +Faucet+ example contract we introduced in <<intro_chapter>> does not have any constructor or +selfdestruct+ functions. It is an eternal contract that cannot be deleted. Let's change that, by adding a constructor and +selfdestruct+ function. We probably want +selfdestruct+ to be callable _only_ by the EOA that originally created the contract. By convention, this is usually stored in an address variable called +owner+. Our constructor sets the +owner+ variable, and the +selfdestruct+ function will first check that the owner called it directly.
+((("constructor function","adding to faucet example")))((("Faucet.sol contract (test example)","adding constructor and selfdestruct to")))((("Solidity","adding constructor/selfdestruct to faucet example")))Пример контракта +Faucet+, который мы представили в <<intro_chapter>>, не имеет никакого конструктора или функций +selfdestruct+. Это вечный контракт, который не может быть удален. Давайте изменим это, добавив конструктор и функцию +selfdestruct+. Вероятно, мы хотим, чтобы +selfdestruct+ вызывался только EOA, который первоначально создал контракт. По соглашению, его значение обычно хранится в адресной переменной, называемой +owner+. Наш конструктор устанавливает переменную +owner+, и функция +selfdestruct+ сначала проверит, что владелец вызвал ее напрямую.
 
-First, our constructor:
+Во-первых, наш конструктор:
 
 [source,solidity]
 ----
@@ -458,11 +458,11 @@ contract Faucet {
 }
 ----
 
-Our contract now has an +address+ type variable named +owner+. The name "owner" is not special in any way. We could call this address variable "potato" and still use it the same way. The name +owner+ simply makes its purpose clear.
+В нашем контракте теперь есть переменная типа +address+ с именем +owner+. Название "owner" никоим образом не является особенным. Мы могли бы назвать эту переменную адреса "potato" и по-прежнему использовать ее таким же образом. Название "owner" просто проясняет её назначение.
 
-Next, our constructor, which runs as part of the contract creation transaction, assigns the address from +msg.sender+ to the +owner+ variable. We used +msg.sender+ in the pass:[<span class="keep-together"><code>withdraw</code></span>] function to identify the initiator of the withdrawal request. In the constructor, however, the +msg.sender+ is the EOA or contract address that initiated contract creation. We know this is the case _because_ this is a constructor function: it only runs once, during contract creation.
+Далее наш конструктор, который выполняется как часть транзакции создания контракта, присваивает адрес из +msg.sender+ переменной +owner+. Мы использовали +msg.sender+ в функции pass:[<span class="keep-together"><code>withdraw</code></span>] для идентификации инициатора запроса на вывод средств. Однако в конструкторе +msg.sender+ - это EOA или адрес контракта, который инициировал создание контракта. Мы знаем, что это так, потому что это функция конструктора: она выполняется только один раз, во время создания контракта.
 
-Now we can add a function to destroy the contract. We need to make sure that only the owner can run this function, so we will use a +require+ statement to control access. Here's how it will look:
+Теперь мы можем добавить функцию для уничтожения контракта. Нам нужно убедиться, что только владелец может запустить эту функцию, поэтому мы будем использовать оператор +require+ для управления доступом. Вот как это будет выглядеть:
 
 [source,solidity]
 ----
@@ -473,11 +473,11 @@ function destroy() public {
 }
 ----
 
-If anyone calls this +destroy+ function from an address other than +owner+, it will fail. But if the same address stored in +owner+ by the constructor calls it, the contract will self-destruct and send any remaining balance to the +owner+ address. Note that we did not use the unsafe +tx.origin+ to determine whether the owner wished to destroy the contract&#x2014;using +tx.origin+ would allow malign contracts to destroy your contract without your permission.
+Если кто-либо вызовет функцию +destroy+ с адреса, отличного от +owner+, она завершится неудачей. Но если тот же адрес, сохраненный в +owner+ конструктором, вызовет его, контракт самоуничтожится и отправит любой оставшийся остаток на адрес +owner+. Обратите внимание, что мы не использовали небезопасный +tx.origin+, чтобы определить, желает ли владелец уничтожить контракт &#x2014; использование +tx.origin + позволит вредоносным контрактам уничтожить ваш контракт без вашего разрешения.
 
-==== Function Modifiers
+==== Модификаторы функций
 
-((("function modifiers")))((("Solidity","function modifiers")))Solidity offers a special type of function called a _function modifier_. You apply modifiers to functions by adding the modifier name in the function declaration. Modifiers are most often used to create conditions that apply to many functions within a contract. We have an access control statement already, in our +destroy+ function. Let's create a function modifier that expresses that condition:
+((("function modifiers")))((("Solidity","function modifiers")))Solidity предлагает специальный тип функции, называемый _модификатор функции_ (_function modifier_). Вы применяете модификаторы к функциям, добавляя имя модификатора в объявление функции. Модификаторы чаще всего используются для создания условий, которые применяются ко многим функциям в контракте. У нас уже есть оператор управления доступом в нашей функции +destroy+. Давайте создадим модификатор функции, который выражает это условие:
 
 [source,solidity]
 ----
@@ -488,13 +488,13 @@ modifier onlyOwner {
 ----
 
 
-This function modifier, named +onlyOwner+, sets a condition on any function that it modifies, requiring that the address stored as the +owner+ of the contract is the same as the address of the transaction's +msg.sender+. This is the basic design pattern for access control, allowing only the owner of a contract to execute any function that has the +onlyOwner+ modifier.
+Этот модификатор функции с именем +onlyOwner+ устанавливает условие для любой функции, которую он изменяет, требуя, чтобы адрес, сохраненный в качестве +владельца+ контракта, совпадал с адресом +msg.sender+ транзакции. Это базовый шаблон проектирования для управления доступом, позволяющий только владельцу контракта выполнять любую функцию, имеющую модификатор +onlyOwner+.
 
-You may have noticed that our function modifier has a peculiar syntactic "placeholder" in it, an underscore followed by a semicolon (+&#95;;+). This placeholder is replaced by the code of the function that is being modified. Essentially, the modifier is "wrapped around" the modified function, placing its code in the location identified by the underscore character.
+Возможно, вы заметили, что наш модификатор функции содержит своеобразный синтаксический "плейсхолдер" - символ подчеркивания, за которым следует точка с запятой &#95;;. Этот плейсхолдер заменяется кодом изменяемой функции. По сути, модификатор "оборачивается" вокруг измененной функции, помещая ее код в место, обозначенное символом подчеркивания.
 
-To apply a modifier, you add its name to the function declaration. More than one modifier can be applied to a function; they are applied in the sequence they are declared, as a space-separated list.
+Чтобы применить модификатор, вы добавляете его имя в объявление функции. К функции может быть применено более одного модификатора; они применяются в той последовательности, в которой они объявлены, в виде списка, разделенного пробелами.
 
-Let's rewrite our +destroy+ function to use the +onlyOwner+ modifier:
+Давайте перепишем нашу функцию +destroy+, чтобы использовать модификатор +onlyOwner+:
 
 [source,solidity]
 ----
@@ -503,15 +503,15 @@ function destroy() public onlyOwner {
 }
 ----
 
-The function modifier's name (+onlyOwner+) is after the keyword +public+ and tells us that the +destroy+ function is modified by the +onlyOwner+ modifier. Essentially, you can read this as "Only the owner can destroy this contract." In practice, the resulting code is equivalent to "wrapping" the code from +onlyOwner+ around +destroy+.
+Имя модификатора функции (+onlyOwner+) стоит после ключевого слова +public+ и сообщает нам, что функция +destroy+ модифицируется модификатором +onlyOwner+. По сути, вы можете прочитать это как "Только владелец может уничтожить этот контракт". На практике результирующий код эквивалентен "обертыванию" кода из +onlyOwner+ вокруг +destroy+.
 
-Function modifiers are an extremely useful tool because they allow us to write preconditions for functions and apply them consistently, making the code easier to read and, as a result, easier to audit for security. They are most often used for access control, but they are quite versatile and can be used for a variety of other purposes.
+Модификаторы функций - чрезвычайно полезный инструмент, поскольку они позволяют нам писать предварительные условия для функций и последовательно применять их, облегчая чтение кода и, как следствие, облегчая аудит безопасности. Чаще всего они используются для контроля доступа, но они достаточно универсальны и могут использоваться для множества других целей.
 
-Inside a modifier, you can access all the values (variables and arguments) visible to the modified function. In this case, we can access the +owner+ variable, which is declared within the contract. However, the inverse is not true: you cannot access any of the modifier's variables inside the modified function.
+Внутри модификатора вы можете получить доступ ко всем значениям (переменным и аргументам), видимым для измененной функции. В этом случае мы можем получить доступ к переменной +owner+, которая объявлена в контракте. Однако обратное неверно: вы не можете получить доступ ни к одной из переменных модификатора внутри измененной функции.
 
-==== Contract Inheritance
+==== Наследование контрактов
 
-((("contract object", id="ix_07smart-contracts-solidity-asciidoc14", range="startofrange")))((("inheritance", id="ix_07smart-contracts-solidity-asciidoc15", range="startofrange")))((("smart contracts","inheritance", id="ix_07smart-contracts-solidity-asciidoc16", range="startofrange")))((("Solidity","contract inheritance", id="ix_07smart-contracts-solidity-asciidoc17", range="startofrange")))Solidity's +contract+ object supports _inheritance_, which is a mechanism for extending a base contract with additional functionality. To use inheritance, specify a parent contract with the keyword +is+:
+((("contract object", id="ix_07smart-contracts-solidity-asciidoc14", range="startofrange")))((("inheritance", id="ix_07smart-contracts-solidity-asciidoc15", range="startofrange")))((("smart contracts","inheritance", id="ix_07smart-contracts-solidity-asciidoc16", range="startofrange")))((("Solidity","contract inheritance", id="ix_07smart-contracts-solidity-asciidoc17", range="startofrange")))Solidity контракты поддерживают _наследование_ (_inheritance_), которое представляет собой механизм расширения базового контракта дополнительными функциональными возможностями. Чтобы использовать наследование, укажите родительский контракт с ключевым словом +is+:
 
 [source,solidity]
 ----
@@ -520,7 +520,7 @@ contract Child is Parent {
 }
 ----
 
-With this construct, the +Child+ contract inherits all the methods, functionality, and variables of +Parent+. Solidity also supports multiple inheritance, which can be specified by comma-separated contract names after the keyword +is+:
+С помощью этой конструкции контракт +Child+ наследует все методы, функциональные возможности и переменные +Parent+. Solidity также поддерживает множественное наследование, которое может быть задано именами контрактов, разделенными запятыми, после ключевого слова +is+:
 
 [source,solidity]
 ----
@@ -529,11 +529,11 @@ contract Child is Parent1, Parent2 {
 }
 ----
 
-Contract inheritance allows us to write our contracts in such a way as to achieve modularity, extensibility, and reuse. We start with contracts that are simple and implement the most generic capabilities, then extend them by inheriting those capabilities in more specialized contracts.
+Наследование контрактов позволяет нам писать наши контракты таким образом, чтобы обеспечить модульность, расширяемость и повторное использование. Мы начинаем с простых контрактов, реализующих наиболее общие возможности, затем расширяем их, наследуя эти возможности в более специализированных контрактах.
 
-In our +Faucet+ contract, we introduced the constructor and destructor, together with access control for an owner, assigned on construction. Those capabilities are quite generic: many contracts will have them. We can define them as generic contracts, then use inheritance to extend them to the +Faucet+ contract.
+В нашем контракте +Faucet+ мы ввели конструктор и деструктор вместе с контролем доступа для владельца, назначенного в конструкторе. Эти возможности довольно универсальны: они будут присутствовать во многих контрактах. Мы можем определить их как общие контракты, а затем использовать наследование, чтобы распространить их на контракт +Faucet+.
 
-We start by defining a base contract +Owned+, which has an +owner+ variable, setting it in the contract's constructor:
+Мы начинаем с определения базового контракта +Owned+, который имеет переменную +owner+, устанавливая ее в конструкторе контракта:
 
 [source,solidity]
 ----
@@ -553,7 +553,7 @@ contract Owned {
 }
 ----
 
-Next, we define a base contract +Mortal+, which inherits +Owned+:
+Далее мы определяем базовый контракт +Mortal+, который наследует +Owned+:
 
 [source,solidity]
 ----
@@ -565,9 +565,9 @@ contract Mortal is Owned {
 }
 ----
 
-As you can see, the +Mortal+ contract can use the +onlyOwner+ function modifier, defined in +Owned+. It indirectly also uses the +owner+ address variable and the constructor defined in +Owned+. Inheritance makes each contract simpler and focused on its specific functionality, allowing us to manage the details in a modular way.
+Как вы можете видеть, контракт +Mortal+ может использовать модификатор функции +onlyOwner+, определенный в +Owned+. Он косвенно также использует переменную адреса +owner+ и конструктор, определенный в +Owned+. Наследование упрощает каждый контракт и фокусирует его на конкретной функциональности, позволяя нам управлять деталями модульным способом.
 
-Now we can further extend the +Owned+ contract, inheriting its capabilities in +Faucet+:
+Теперь мы можем еще больше расширить контракт +Owned+, унаследовав его возможности в +Faucet+:
 
 [source,solidity]
 ----
@@ -584,42 +584,42 @@ contract Faucet is Mortal {
 }
 ----
 
-By inheriting +Mortal+, which in turn inherits +Owned+, the +Faucet+ contract now has the constructor and +destroy+ functions, and a defined owner. The functionality is the same as when those functions were within +Faucet+, but now we can reuse those functions in other contracts without writing them again. Code reuse and modularity make our code cleaner, easier to read, and easier to audit.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc17")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc16")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc15")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc14")))
+Наследуя +Mortal+, который, в свою очередь, наследует +Owned+, контракт +Faucet+ теперь имеет функции constructor и +destroy+, а также определенного владельца. Функциональность такая же, как и тогда, когда эти функции были в +Faucet+, но теперь мы можем повторно использовать эти функции в других контрактах, не записывая их снова. Повторное использование кода и модульность делают наш код более чистым, удобным для чтения и аудита.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc17")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc16")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc15")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc14")))
 
-==== Error Handling (assert, require, revert)
+==== Обработка ошибок (assert, require, revert)
 
-((("error handling, Solidity")))((("Solidity","error handling")))A contract call can terminate and return an error. Error handling in Solidity is handled by four functions: +assert+, +require+, +revert+, and +throw+ (now deprecated).
+((("error handling, Solidity")))((("Solidity","error handling")))Вызов контракта может завершиться и вернуть ошибку. Обработка ошибок в Solidity выполняется четырьмя функциями: +assert+, +require+, +revert+ и +throw+ (в настоящее время устарела).
 
-When a contract terminates with an error, all the state changes (changes to variables, balances, etc.) are reverted, all the way up the chain of contract calls if more than one contract was called. This ensures that transactions are _atomic_, meaning they either complete successfully or have no effect on state and are reverted entirely.
+Когда контракт завершается с ошибкой, все изменения состояния (изменения переменных, балансов и т.д.) отменяются, вплоть до цепочки вызовов контрактов, если было вызвано более одного контракта. Это гарантирует, что транзакции являются _atomic_, что означает, что они либо завершаются успешно, либо не влияют на состояние и полностью отменяются.
 
-((("assert function","Solidity and")))((("require function")))The +assert+ and +require+ functions operate in the same way, evaluating a condition and stopping execution with an error if the condition is false. By convention, +assert+ is used when the outcome is expected to be true, meaning that we use +assert+ to test internal conditions. By comparison, +require+ is used when testing inputs (such as function arguments or transaction fields), setting our expectations for those pass:[<span class="keep-together">conditions</span>].
+((("assert function","Solidity and")))((("require function")))Функции +assert+ и +require+ работают одинаково, оценивая условие и останавливая выполнение с ошибкой, если условие ложно. По соглашению, +assert+ используется, когда ожидается, что результат будет истинным, что означает, что мы используем +assert+ для проверки внутренних условий. Для сравнения, +require+ используется при тестировании входных данных (таких как аргументы функции или поля транзакции), устанавливая наши ожидания для этих pass:[<span class="keep-together">условий</span>].
 
-We've used +require+ in our function modifier +onlyOwner+, to test that the message sender is the owner of the contract:
+Мы использовали +require+ в нашем модификаторе функции +onlyOwner+, чтобы проверить, что отправитель сообщения является владельцем контракта:
 
 [source,solidity]
 ----
 require(msg.sender == owner);
 ----
 
-The +require+ function acts as a _gate condition_, preventing execution of the rest of the function and producing an error if it is not satisfied.
+Функция +require+ действует как условие _gate condition_, предотвращая выполнение остальной части функции и выдавая ошибку, если оно не выполняется.
 
-As of Solidity v0.6.0, +require+ can also include a helpful text message that can be used to show the reason for the error. The error message is recorded in the transaction log. So, we can improve our code by adding an error message in our +require+ function:
+Начиная с Solidity v0.6.0, +require+ также может содержать полезное текстовое сообщение, которое можно использовать для отображения причины ошибки. Сообщение об ошибке записывается в журнал транзакций. Итак, мы можем улучшить наш код, добавив сообщение об ошибке в нашу функцию +require+:
 
 [source,solidity]
 ----
 require(msg.sender == owner, "Only the contract owner can call this function");
 ----
 
-((("revert function")))((("throw function")))The +revert+ and +throw+ functions halt the execution of the contract and revert any state changes. The +throw+ function is obsolete and will be removed in future versions of Solidity; you should use +revert+ instead. The +revert+ function can also take an error message as the only argument, which is recorded in the transaction log.
+((("revert function")))((("throw function")))Функции +revert+ и +throw+ останавливают выполнение контракта и отменяют любые изменения состояния. Функция +throw+ устарела и будет удалена в будущих версиях Solidity; вместо этого вам следует использовать +revert+. Функция +revert+ также может принимать сообщение об ошибке в качестве единственного аргумента, который записывается в журнал транзакций.
 
-Certain conditions in a contract will generate errors regardless of whether we explicitly check for them. For example, in our +Faucet+ contract, we don't check whether there is enough ether to satisfy a withdrawal request. That's because the +transfer+ function will fail with an error and revert the transaction if there is insufficient balance to make the transfer:
+Определенные условия в контракте будут генерировать ошибки независимо от того, проверяем ли мы их явно. Например, в нашем контракте +Faucet+ мы не проверяем, достаточно ли эфира для удовлетворения запроса на вывод средств. Это связано с тем, что функция +transfer+ завершится с ошибкой и отменит транзакцию, если баланс будет недостаточным для осуществления перевода:
 
 [source,solidity]
 ----
 msg.sender.transfer(withdraw_amount);
 ----
 
-However, it might be better to check explicitly and provide a clear error message on failure. We can do that by adding a +require+ statement before the transfer:
+Однако, возможно, было бы лучше проверить явно и предоставить четкое сообщение об ошибке при сбое. Мы можем сделать это, добавив +require + условие перед передачей:
 
 [source,solidity]
 ----
@@ -628,18 +628,18 @@ require(this.balance >= withdraw_amount,
 msg.sender.transfer(withdraw_amount);
 ----
 
-Additional error-checking code like this will increase gas consumption slightly, but it offers better error reporting than if omitted. You will need to find the right balance between gas consumption and verbose error checking based on the expected use of your contract. In the case of a +Faucet+ contract intended for a testnet, we'd probably err on the side of extra reporting even if it costs more gas. Perhaps for a mainnet contract we'd choose to be frugal with our gas usage instead.
+Дополнительный код проверки ошибок, подобный этому, немного увеличит потребление газа, но он обеспечивает лучший отчёт об ошибках, чем если бы он был опущен. Вам нужно будет найти правильный баланс между потреблением газа и подробной проверкой ошибок на основе ожидаемого использования вашего контракта. В случае контракта +Faucet+, предназначенного для тестовой сети, мы, вероятно, склонились бы в сторону дополнительной отчетности, даже если это стоит больше газа. Возможно, для контракта в главной сети мы предпочли бы быть экономными в использовании газа.
 
 [[solidity_events]]
-==== Events
+==== События
 
-((("events","Solidity", id="ix_07smart-contracts-solidity-asciidoc18", range="startofrange")))((("Solidity","event objects", id="ix_07smart-contracts-solidity-asciidoc19", range="startofrange")))When ((("transaction receipt")))a transaction completes (successfully or not), it produces a _transaction receipt_, as we will see in <<evm_chapter>>. The transaction receipt contains _log_ entries that provide information about the actions that occurred during the execution of the transaction. _Events_ are the Solidity high-level objects that are used to construct these logs.
+((("events","Solidity", id="ix_07smart-contracts-solidity-asciidoc18", range="startofrange")))((("Solidity","event objects", id="ix_07smart-contracts-solidity-asciidoc19", range="startofrange")))Когда ((("transaction receipt")))транзакция завершается (успешно или нет), она создает _отчёт о транзакции_ (_transaction receipt_), как мы увидим в <<evm_chapter>>. Отчёт транзакции содержит записи логов, которые предоставляют информацию о действиях, которые произошли во время выполнения транзакции. _События_ (_Events_) - это объекты высокого уровня Solidity, которые используются для создания этих журналов.
 
-Events are especially useful for light clients and DApp services, which can "watch" for specific events and report them to the user interface, or make a change in the state of the application to reflect an event in an underlying contract.
+События особенно полезны для лёгких клиентов и приложений DApp, которые могут "следить" за конкретными событиями и сообщать о них в пользовательский интерфейс или вносить изменения в состояние приложения, чтобы отразить событие в базовом контракте.
 
-Event objects take arguments that are serialized and recorded in the transaction logs, in the blockchain. You can supply the keyword +indexed+ before an argument, to make the value part of an indexed table (hash table) that can be searched or filtered by an application.
+Объекты событий принимают аргументы, которые сериализуются и записываются в журналы транзакций в блокчейне. Вы можете указать ключевое слово +indexed+ перед аргументом, чтобы сделать значение частью индексированной таблицы (хэш-таблицы), которую приложение может искать или фильтровать.
 
-((("Faucet.sol contract (test example)","adding events to", id="ix_07smart-contracts-solidity-asciidoc20", range="startofrange")))We have not added any events in our +Faucet+ example so far, so let's do that. We will add two events, one to log any withdrawals and one to log any deposits. We will call these events +Withdrawal+ and +Deposit+, respectively. First, we define the events in the +Faucet+ contract:
+((("Faucet.sol contract (test example)","adding events to", id="ix_07smart-contracts-solidity-asciidoc20", range="startofrange")))Мы пока не добавили никаких событий в наш пример +Faucet+, так что давайте сделаем это. Мы добавим два события: одно для регистрации любых снятий средств и одно для регистрации любых депозитов. Мы будем называть эти события +Withdrawal+ и +Deposit+ соответственно. Во-первых, мы определяем события в контракте +Faucet+:
 
 [source,solidity]
 ----
@@ -651,9 +651,9 @@ contract Faucet is Mortal {
 }
 ----
 
-We've chosen to make the addresses +indexed+, to allow searching and filtering in any user interface built to access our +Faucet+.
+Мы решили сделать адреса +индексируемыми+ (+indexed+), чтобы разрешить поиск и фильтрацию в любом пользовательском интерфейсе, созданным для доступа к нашему +Faucet+.
 
-Next, we use the +emit+ keyword to incorporate the event data in the transaction logs:
+Затем мы используем ключевое слово +emit+ для включения данных о событиях в журналы транзакций:
 
 [source,solidity]
 ----
@@ -669,10 +669,10 @@ receive () external payable {
 }
 ----
 
-The resulting _Faucet.sol_ contract looks like <<Faucet8_sol>>.
+В результате контракт _Faucet.sol_ выглядит следующим образом <<Faucet8_sol>>.
 
 [[Faucet8_sol]]
-.Faucet8.sol: Revised Faucet contract, with events
+.Faucet8.sol: Пересмотренный контракт Faucet с событиями
 ====
 [source,solidity,linenums]
 ----
@@ -680,11 +680,11 @@ include::code/Solidity/Faucet8.sol[]
 ----
 ====
 
-===== Catching events
+===== Отслеживание событий
 
-((("events","catching")))((("Faucet.sol contract (test example)","catching events")))OK, so we've set up our contract to emit events. How do we see the results of a transaction and "catch" the events? The web3.js library provides a data structure that contains a transaction's logs. Within those we can see the events generated by the transaction.
+((("events","catching")))((("Faucet.sol contract (test example)","catching events")))Итак, мы настроили наш контракт на выдачу событий. Как мы видим результаты транзакции и "отслеживаем" события? В web3.js библиотека предоставляет структуру данных, содержащую журналы транзакций. Внутри них мы можем видеть события, сгенерированные транзакцией.
 
-((("Truffle","running test transaction with")))Let's use +truffle+ to run a test transaction on the revised +Faucet+ contract. Follow the instructions in <<truffle>> to set up a project directory and compile the pass:[<span class="keep-together"><code>Faucet</code></span>] code. The source code can be found in https://github.com/ethereumbook/ethereumbook[the book's GitHub repository] under _code/truffle/FaucetEvents_.
+((("Truffle","running test transaction with")))Давайте используем +truffle+ для запуска тестовой транзакции в пересмотренный контракт +Faucet+. Следуйте инструкциям в <<truffle>>, чтобы настроить каталог проекта и скомпилировать pass:[<span class="keep-together"><code>Faucet</code></span>] код. Исходный код можно найти в https://github.com/ethereumbook/ethereumbook[GitHub репозитории этой книги] в _code/truffle/FaucetEvents_.
 
 ++++
 <pre data-type="programlisting">
@@ -720,31 +720,31 @@ Withdrawal { to: '0x627306090abab3a6e1400e9345bc60c78a8bef57',
 </pre>
 ++++
 
-After deploying the contract using the +deployed+ function, we execute two transactions. The first transaction is a deposit (using +send+), which emits a +Deposit+ event in the transaction logs:
+После развертывания контракта с помощью функции +deployed+ мы выполняем две транзакции. Первая транзакция - это депозит (с использованием +send+), который генерирует событие +Deposit+ в журналах транзакций:
 
 ----
 Deposit { from: '0x627306090abab3a6e1400e9345bc60c78a8bef57',
   amount: BigNumber { s: 1, e: 18, c: [ 10000 ] } }
 ----
 
-Next, we use the +withdraw+ function to make a withdrawal. This emits a +Withdrawal+ event:
+Далее мы используем функцию +withdraw+ для вывода средств. Это вызывает событие +Withdrawal+:
 
 ----
 Withdrawal { to: '0x627306090abab3a6e1400e9345bc60c78a8bef57',
   amount: BigNumber { s: 1, e: 17, c: [ 1000 ] } }
 ----
 
-To get these events, we looked at the +logs+ array returned as a result (+res+) of the transactions. The first log entry (+logs[0]+) contains an event name in +logs[0].event+ and the event arguments in +logs[0].args+. By showing these on the console, we can see the emitted event name and the event arguments.
+Чтобы получить эти события, мы просмотрели массив +logs+, возвращаемый в результате (+res+) транзакций. Первая запись журнала (+logs[0]+) содержит имя события в +logs[0].event+ и аргументы события в +logs[0].args+. Показывая их на консоли, мы можем увидеть имя передаваемого события и аргументы события.
 
-Events are a very useful mechanism, not only for intra-contract communication, but also for debugging during development(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc20"))).(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc19")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc18")))
+События - это очень полезный механизм не только для внутриконтрактного взаимодействия, но и для отладки во время разработки(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc20"))).(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc19")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc18")))
 
-==== Calling Other Contracts (send, call, callcode, delegatecall)
+==== Вызов других контрактов (send, call, callcode, delegatecall)
 
-((("smart contracts","calling other contracts from within a contract", id="ix_07smart-contracts-solidity-asciidoc21", range="startofrange")))((("Solidity","calling other contracts from within a contract", id="ix_07smart-contracts-solidity-asciidoc22", range="startofrange")))Calling other contracts from within your contract is a very useful but potentially dangerous operation. We'll examine the various ways you can achieve this and evaluate the risks of each method. In short, the risks arise from the fact that you may not know much about a contract you are calling into or that is calling into your contract. When writing smart contracts, you must keep in mind that while you may mostly expect to be dealing with EOAs, there is nothing to stop arbitrarily complex and perhaps malign contracts from calling into and being called by your code.
+((("smart contracts","calling other contracts from within a contract", id="ix_07smart-contracts-solidity-asciidoc21", range="startofrange")))((("Solidity","calling other contracts from within a contract", id="ix_07smart-contracts-solidity-asciidoc22", range="startofrange")))Вызов других контрактов из вашего контракта - очень полезная, но потенциально опасная операция. Мы рассмотрим различные способы, которыми вы можете достичь этого, и оценим риски каждого метода. Короче говоря, риски возникают из-за того, что вы можете мало что знать о контракте, на который вы ссылаетесь, или о том, что касается вашего контракта. При написании смарт-контрактов вы должны иметь в виду, что, хотя вы, возможно, в основном ожидаете иметь дело с EOAS, ничто не мешает произвольным, сложным и, возможно, вредоносным контрактам вызывать ваш код.
 
-===== Creating a new instance
+===== Создание нового экземпляра
 
-((("smart contracts","creating new instance")))The safest way to call another contract is if you create that other contract yourself. That way, you are certain of its interfaces and behavior. To do this, you can simply instantiate it, using the keyword +new+, as in other object-oriented languages. In Solidity, the keyword +new+ will create the contract on the blockchain and return an object that you can use to reference it. Let's say you want to create and call a +Faucet+ contract from within another contract called +Token+:
+((("smart contracts","creating new instance")))Самый безопасный способ вызвать другой контракт - это если вы создадите этот другой контракт самостоятельно. Таким образом, вы уверены в его интерфейсах и поведении. Чтобы сделать это, вы можете просто создать его экземпляр, используя ключевое слово +new+, как и в других объектно-ориентированных языках. В Solidity ключевое слово +new+ создаст контракт в блокчейне и вернет объект, который вы можете использовать для ссылки на него. Допустим, вы хотите создать и вызвать контракт +Faucet+ из другого контракта, называемого +Token+:
 
 [role="pagebreak-before"]
 [source,solidity]
@@ -758,7 +758,7 @@ contract Token is Mortal {
 }
 ----
 
-This mechanism for contract construction ensures that you know the exact type of the contract and its interface. The contract +Faucet+ must be defined within the scope of +Token+, which you can do with an +import+ statement if the definition is in another file:
+Этот механизм построения контракта гарантирует, что вы знаете точный тип контракта и его интерфейс. Контракт +Faucet+ должен быть определен в рамках +Token+, что вы можете сделать с помощью инструкции +import+, если определение находится в другом файле:
 
 [source,solidity]
 ----
@@ -773,7 +773,7 @@ contract Token is Mortal {
 }
 ----
 
-You can optionally specify the +value+ of ether transfer on creation, and pass arguments to the new contract's constructor:
+Вы можете дополнительно указать +значение+ (+value+) передачи эфира при создании и передать аргументы конструктору нового контракта:
 
 [source,solidity]
 ----
@@ -788,7 +788,7 @@ contract Token is Mortal {
 }
 ----
 
-You can also then call the +Faucet+ functions. In this example, we call the +destroy+ function of +Faucet+ from within the +destroy+ function of +Token+:
+Затем вы также можете вызвать функции +Faucet+. В этом примере мы вызываем функцию +destroy+ для +Faucet+ из функции +destroy+ для +Token+:
 
 [source,solidity]
 ----
@@ -807,11 +807,11 @@ contract Token is Mortal {
 }
 ----
 
-Note that while you are the owner of the +Token+ contract, the +Token+ contract itself owns the new +Faucet+ contract, so only the +Token+ contract can destroy it.
+Обратите внимание, что, хотя вы являетесь владельцем контракта +Token+, сам контракт +Token+ владеет новым контрактом +Faucet+, поэтому только контракт +Token+ может его уничтожить.
 
-===== Addressing an existing instance
+===== Обращение к существующему экземпляру
 
-((("smart contracts","addressing an existing instance")))Another way you can call a contract is by casting the address of an existing instance of the contract. With this method, you apply a known interface to an existing instance. It is therefore critically important that you know, for sure, that the instance you are addressing is in fact of the type you assume. Let's look at an example:
+((("smart contracts","addressing an existing instance")))Другой способ вызова контракта - это приведение (casting) адреса существующего экземпляра контракта. С помощью этого метода вы применяете известный интерфейс к существующему экземпляру. Поэтому крайне важно, чтобы вы точно знали, что экземпляр, к которому вы обращаетесь, на самом деле относится к тому типу, который вы предполагаете. Давайте рассмотрим пример:
 
 [source,solidity]
 ----
@@ -828,13 +828,13 @@ contract Token is Mortal {
 }
 ----
 
-Here, we take an address provided as an argument to the constructor, +_f+, and we cast it to a +Faucet+ object. This is much riskier than the previous mechanism, because we don't know for sure whether that address actually is a +Faucet+ object. When we call +withdraw+, we are assuming that it accepts the same arguments and executes the same code as our +Faucet+ declaration, but we can't be sure. For all we know, the +withdraw+ function at this address could execute something completely different from what we expect, even if it is named the same. Using addresses passed as input and casting them into specific objects is therefore much more dangerous than creating the contract yourself.
+Здесь мы берем адрес, предоставленный в качестве аргумента конструктору, +_f+, и приводим его к объекту +Faucet+. Это намного более рискованно, чем предыдущий механизм, потому что мы не знаем наверняка, действительно ли этот адрес является объектом +Faucet+. Когда мы вызываем +withdraw+, мы предполагаем, что он принимает те же аргументы и выполняет тот же код, что и наше объявление +Faucet+, но мы не можем быть уверены. Насколько нам известно, функция +withdraw+ по этому адресу может выполнить что-то совершенно отличное от того, что мы ожидаем, даже если она названа так же. Поэтому использование адресов, переданных в качестве входных данных, и приведение их к определенным объектам гораздо опаснее, чем самостоятельное создание контракта.
 
-===== Raw call, delegatecall
+===== Необработанный вызов, делегированный вызов (delegatecall)
 
-Solidity offers some even more "low-level" functions for calling other contracts. These correspond directly to EVM opcodes of the same name and allow us to construct a contract-to-contract call manually. As such, they represent the most flexible _and_ the most dangerous mechanisms for calling other contracts.
+Solidity предлагает некоторые еще более "низкоуровневые" функции для вызова других контрактов. Они непосредственно соответствуют кодам операций EVM с тем же именем и позволяют нам создавать вызов от контракта к контракту вручную. Как таковые, они представляют собой наиболее гибкие и наиболее опасные механизмы для вызова других контрактов.
 
-((("smart contracts","call method", id="ix_07smart-contracts-solidity-asciidoc23", range="startofrange")))Here's the same example, using a +call+ method:
+((("smart contracts","call method", id="ix_07smart-contracts-solidity-asciidoc23", range="startofrange")))Вот тот же пример, с использованием метода +call+:
 
 [source,solidity]
 ----
@@ -845,7 +845,7 @@ contract Token is Mortal {
 }
 ----
 
-((("blind calls")))As you can see, this type of +call+ is a _blind_ call into a function, very much like constructing a raw transaction, only from within a contract's context. ((("reentrancy attacks","blind calls and")))It can expose your contract to a number of security risks, most importantly _reentrancy_, which we will discuss in more detail in <<reentrancy_security>>. The +call+ function will return +false+ if there is a problem, so you can evaluate the return value for error handling:
+((("blind calls")))Как вы можете видеть, данный способ выхова представляет собой _blind_ вызов функции, очень похожий на построение необработанной транзакции, только из контекста контракта. ((("reentrancy attacks","blind calls and")))Это может подвергнуть ваш контракт ряду рисков безопасности, наиболее важным из которых является _reentrancy_ (повторный вход), которые мы обсудим более подробно в разделе <<reentrancy_security>>. Функция +call+ вернет +false+, если есть проблема, так что вы можете оценить возвращаемое значение для обработки ошибок:
 
 [source,solidity]
 ----
@@ -858,16 +858,16 @@ contract Token is Mortal {
 }
 ----
 
-((("delegatecall method")))((("smart contracts","delegatecall method")))Another variant of +call+ is +delegatecall+, which replaced the more dangerous +callcode+. The pass:[<code><span class="keep-together">callcode</span></code>] method will be deprecated soon, so it should not be used.
+((("delegatecall method")))((("smart contracts","delegatecall method")))Другим вариантом +call+ является +delegatecall+, который заменил более опасный +callcode+. Метод pass:[<code><span class="keep-together">callcode</span></code>] скоро устареет, поэтому его не следует использовать.
 
-As mentioned in <<solidity_address_object>>, a +delegatecall+ is different from a +call+ in that the +msg+ context does not change. For example, whereas a +call+ changes the value of +msg.sender+ to be the calling contract, a +delegatecall+ keeps the same +msg.sender+ as in the calling contract. Essentially, +delegatecall+ runs the code of another contract inside the context of the execution of the current contract. It is most often used to invoke code from a library. It also allows you to draw on the pattern of using library functions stored elsewhere, but have that code work with the storage data of your contract.
+Как упоминалось в <<solidity_address_object>>, +delegatecall+ отличается от +call+ тем, что контекст +msg+ не изменяется. Например, в то время как +call+ изменяет значение +msg.sender+ на вызывающий контракт, a +delegatecall+ сохраняет то же значение +msg.sender+, что и в вызывающем контракте. По сути, +delegatecall+ запускает код другого контракта в контексте выполнения текущего контракта. Чаще всего он используется для вызова кода из библиотеки. Это также позволяет вам использовать шаблон использования библиотечных функций, хранящихся в другом месте, но заставить этот код работать с данными хранилища вашего контракта.
 
-The +delegate+ call should be used with great caution. It can have some unexpected effects, especially if the contract you call was not designed as a library.
+Вызов +delegatecall+ следует использовать с большой осторожностью. Это может иметь некоторые неожиданные последствия, особенно если вызываемый вами контракт не был разработан как библиотека.
 
-Let's use an example contract to demonstrate the various call semantics used by +call+ and +delegatecall+ for calling libraries and contracts. In <<call_examples_code>>, we use an event to log the details of each call and see how the calling context changes depending on the call type.
+Давайте воспользуемся примером контракта, чтобы продемонстрировать различную семантику вызовов, используемую +call+ и +delegatecall+ для вызова библиотек и контрактов. В <<call_examples_code>> мы используем событие для регистрации деталей каждого вызова и просмотра того, как меняется контекст вызова в зависимости от типа вызова.
 
 [[call_examples_code]]
-.CallExamples.sol: An example of different call semantics
+.CallExamples.sol: Пример разных call семантик 
 ====
 [source,solidity,linenums]
 ----
@@ -875,11 +875,11 @@ include::code/truffle/CallExamples/contracts/CallExamples.sol[]
 ----
 ====
 
-As you can see in this example, our main contract is +caller+, which calls a library +calledLibrary+ and a contract +calledContract+. Both the called library and the contract have identical +calledFunction+ functions, which emit an event +callEvent+. The event +callEvent+ logs three pieces of data: +msg.sender+, +tx.origin+, and +this+. Each time +calledFunction+ is called it may have a different execution context (with different values for potentially all the context variables), depending on whether it is called directly or through +delegatecall+.
+Как вы можете видеть в этом примере, нашим основным контрактом является +caller+, который вызывает библиотеку +calledLibrary+ и контракт +calledContract+. Вызываемая библиотека и контракт имеют идентичные функции +calledFunction+, которые выдают событие +callEvent+. Событие +callEvent+ регистрирует три фрагмента данных: +msg.sender+, +tx.origin+ и +this+. Каждый раз, когда вызывается +calledFunction+, у нее может быть другой контекст выполнения (с разными значениями возможно для всех переменных контекста), в зависимости от того, вызывается ли она напрямую или через +delegatecall+.
 
-In +caller+, we first call the contract and library directly, by invoking +calledFunction+ in each. Then, we explicitly use the low-level functions +call+ and +delegatecall+ to call +calledContract.calledFunction+. This way we can see how the various calling mechanisms behave.
+В +caller+ мы сначала вызываем контракт и библиотеку напрямую, вызывая +calledFunction+ в каждом из них. Затем мы явно используем низкоуровневые функции +call+ и +delegatecall+ для вызова +calledContract.calledFunction+. Таким образом, мы можем видеть, как ведут себя различные механизмы вызова.
 
-Let's run this in a Truffle development environment and capture the events, to see how it looks:
+Давайте запустим это в среде разработки Truffle и отловим события, чтобы посмотреть, как это выглядит:
 
 ++++
 <pre data-type="programlisting">
@@ -914,15 +914,15 @@ truffle(develop)> <strong>callerDeployed.make_calls(calledContract.address).then
 </pre>
 ++++
 
-Let's see what happened here. We called the +make_calls+ function and passed the address of +calledContract+, then caught the four events emitted by each of the different calls. Let's look at the +make_calls+ function and walk through each step.
+Давайте посмотрим, что здесь произошло. Мы вызвали функцию +make_calls+ и передали адрес +calledContract+, затем перехватили четыре события, вызванные каждым из разных вызовов. Давайте посмотрим на функцию +make_calls+ и пройдемся по каждому шагу.
 
-The first call is:
+Первый вызов - это:
 
 ----
 _calledContract.calledFunction();
 ----
 
-Here, we're calling +calledContract.calledFunction+ directly, using the high-level ABI for +calledFunction+. The event emitted is:
+Здесь мы вызываем +calledContract.calledFunction+ напрямую, используя высокоуровневый ABI для +calledFunction+. Генерируемое событие:
 
 ----
 sender: '0x8f0483125fcb9aaaefa9209d8e9d7b9c8b9fb90f',
@@ -930,15 +930,15 @@ origin: '0x627306090abab3a6e1400e9345bc60c78a8bef57',
 from: '0x345ca3e014aaf5dca488057592ee47305d9b3e10'
 ----
 
-As you can see, +msg.sender+ is the address of the +caller+ contract. The +tx.origin+ is the address of our account, +web3.eth.accounts[0]+, that sent the transaction to +caller+. The event was emitted by +calledContract+, as we can see from the last argument in the event.
+Как вы можете видеть, +msg.sender+ - это адрес +вызывающего+ контракта. +tx.origin+ - это адрес нашей учетной записи, +web3.eth.accounts[0]+, которая отправила транзакцию на +caller+. Событие было вызвано +calledContract+, как мы можем видеть из последнего аргумента в событии.
 
-The next call in +make_calls+ is to the library:
+Следующий вызов в +make_calls+ относится к библиотеке:
 
 ----
 calledLibrary.calledFunction();
 ----
 
-It looks identical to how we called the contract, but behaves very differently. Let's look at the second event emitted:
+Он выглядит идентично тому, как мы назвали контракт, но ведет себя совсем по-другому. Давайте посмотрим на второе событие.:
 
 ----
 sender: '0x627306090abab3a6e1400e9345bc60c78a8bef57',
@@ -946,57 +946,57 @@ origin: '0x627306090abab3a6e1400e9345bc60c78a8bef57',
 from: '0x8f0483125fcb9aaaefa9209d8e9d7b9c8b9fb90f'
 ----
 
-This time, the +msg.sender+ is not the address of +caller+. Instead, it is the address of our account, and is the same as the transaction origin. That's because when you call a library, the call is always +delegatecall+ and runs within the context of the caller. So, when the +calledLibrary+ code was running, it inherited the execution context of +caller+, as if its code was running inside +caller+. The variable +this+ (shown as +from+ in the event emitted) is the address of +caller+, even though it is accessed from within pass:[<span class="keep-together"><code>calledLibrary</code></span>].
+На этот раз +msg.sender+ не является адресом +caller+ (того, кто вызвал контракт). Вместо этого это адрес нашей учетной записи, который совпадает с источником транзакции. Это потому, что когда вы вызываете библиотеку, вызов происходит всегда через +delegatecall+ и выполняется в контексте caller. Итак, когда код +calledLibrary+ был запущен, он унаследовал контекст выполнения +caller+, как если бы его код выполнялся внутри +caller+. Переменная +this+ (показанная как +from+ в генерируемом событии) является адресом +caller+, даже если доступ к ней осуществляется из pass:[<span class="keep-together"><code>calledLibrary</code></span>].
 
-The next two calls, using the low-level +call+ and +delegatecall+, verify our expectations, emitting events that mirror what we just(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc23"))) saw(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc22")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc21"))).(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc10")))
+Следующие два вызова, используя низкоуровневые +call + и +delegatecall+, подтверждают наши ожидания, посылая события, которые отражают то, что мы только что  (((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc23"))) видели(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc22")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc21"))).(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc10")))
 
 [[gas_sec]]
-=== Gas Considerations
+=== Рассуждения о газе
 
-((("gas","conserving", id="ix_07smart-contracts-solidity-asciidoc24", range="startofrange")))((("smart contracts","gas considerations", id="ix_07smart-contracts-solidity-asciidoc25", range="startofrange")))((("Solidity","gas considerations", id="ix_07smart-contracts-solidity-asciidoc26", range="startofrange")))Gas, described in more detail in <<gas>>, is an incredibly important consideration in smart contract programming. Gas is a resource constraining the maximum amount of computation that Ethereum will allow a transaction to consume. If the gas limit is exceeded during computation, the following series of events occurs:
+((("gas","conserving", id="ix_07smart-contracts-solidity-asciidoc24", range="startofrange")))((("smart contracts","gas considerations", id="ix_07smart-contracts-solidity-asciidoc25", range="startofrange")))((("Solidity","gas considerations", id="ix_07smart-contracts-solidity-asciidoc26", range="startofrange")))Газ, более подробно описанный в <<газ>>, является невероятно важным фактором в программировании смарт-контрактов. Газ - это ресурс, ограничивающий максимальный объем вычислений, который Ethereum позволит использовать транзакции. Если во время вычисления превышен предел газа, происходит следующая серия событий:
 
-* An "out of gas" exception is thrown.
-* The state of the contract prior to execution is restored (reverted).
-* All ether used to pay for the gas is taken as a transaction fee; it is _not_ refunded.
+* Выдается исключение "кончился газ".
+* Состояние контракта восстанавливается как было до исполнения (reverted).
+* Весь эфир, использованный для оплаты газа, берется в качестве комиссии за транзакцию; он не возвращается.
 
-Because gas is paid by the user who initiates the transaction, users are discouraged from calling functions that have a high gas cost. It is thus in the programmer's best interest to minimize the gas cost of a contract's functions. To this end, there are certain practices that are recommended when constructing smart contracts, so as to minimize the gas cost of a function call.
+Поскольку газ оплачивается пользователем, который инициирует транзакцию, пользователи не любят вызывать функции, которые имеют высокую стоимость газа. Таким образом, в интересах программиста минимизировать затраты на газ, связанные с функциями контракта. С этой целью существуют определенные практики, которые рекомендуются при построении смарт-контрактов, чтобы минимизировать затраты на газ при вызове функции.
 
-==== Avoid Dynamically Sized Arrays
+==== Избегайте массивов динамического размера
 
-((("dynamically sized arrays")))((("gas","dynamically sized arrays and")))Any loop through a dynamically sized array where a function performs operations on each element or searches for a particular element introduces the risk of using too much gas. Indeed, the contract may run out of gas before finding the desired result, or before acting on every element, thus wasting time and ether without giving any result at all.
+((("dynamically sized arrays")))((("gas","dynamically sized arrays and")))Любой цикл по массиву динамического размера, в котором функция выполняет операции над каждым элементом или выполняет поиск определенного элемента, создает риск использования слишком большого количества газа. Действительно, контракт может истратить газ до того, как будет найден желаемый результат, или до того, как будут предприняты действия по каждому элементу, таким образом, будет тратить время и эфир, не давая никакого результата вообще.
 
-==== Avoid Calls to Other Contracts
+==== Избегайте вызовов других контрактов
 
-((("gas","avoiding calls to other contracts")))Calling other contracts, especially when the gas cost of their functions is not known, introduces the risk of running out of gas. Avoid using libraries that are not well tested and broadly used. The less scrutiny a library has received from other programmers, the greater the risk of using it.
+((("gas","avoiding calls to other contracts")))Обращение к другим контрактам, особенно когда стоимость газа для их функций неизвестна, создает риск нехватки газа. Избегайте использования библиотек, которые недостаточно хорошо протестированы и не используются широко. Чем меньше внимания библиотека получила от других программистов, тем выше риск ее использования.
 
-==== Estimating Gas Cost
+==== Оценка стоимости газа
 
-((("gas","estimating cost of", id="ix_07smart-contracts-solidity-asciidoc27", range="startofrange")))If you need to estimate the gas necessary to execute a certain method of a contract considering its arguments, you could use the following procedure:
+((("gas","estimating cost of", id="ix_07smart-contracts-solidity-asciidoc27", range="startofrange")))Если вам нужно оценить газ, необходимый для выполнения определенного метода контракта, учитывая его аргументы, вы можете использовать следующую процедуру:
 
 [source, javascript]
 var contract = web3.eth.contract(abi).at(address);
 var gasEstimate = contract.myAweSomeMethod.estimateGas(arg1, arg2,
     {from: account});
 
-+gasEstimate+ will tell you the number of gas units needed for its execution. It is an estimate because of the Turing completeness of the EVM&#x2014;it is relatively trivial to create a function that will take vastly different amounts of gas to execute different calls. Even production code can change execution paths in subtle ways, resulting in hugely different gas costs from one call to the next. However, most functions are sensible and +estimateGas+ will give a good estimate most of the time.
++gasEstimate+ сообщит вам количество единиц газа, необходимых для его выполнения. Это только оценка, так как из-за полноты EVM по Тьюрингу относительно тривиально создать функцию, для выполнения разных вызовов которой потребуется значительно различное количество газа. Даже производственный код может незаметно изменять пути выполнения, что приводит к огромным различиям в затратах на газ от одного вызова к следующему. Тем не менее, большинство функций являются разумными, и +estimateGas+ даст хорошую оценку большую часть времени.
 
-To obtain the gas price from the network you can use:
+Чтобы получить цену на газ из сети, вы можете использовать:
 
 [source, javascript]
 var gasPrice = web3.eth.getGasPrice();
 
-And from there you can estimate the gas cost:
+И оттуда вы можете оценить стоимость газа:
 
 [source, javascript]
 var gasCostInEther = web3.utils.fromWei((gasEstimate * gasPrice), 'ether');
 
-Let's apply our gas estimation functions to estimating the gas cost of our +Faucet+ example, using the code http://bit.ly/2zf0SIO[from the book's repository].
+Давайте применим наши функции оценки газа для оценки стоимости газа в нашем примере +Faucet +, используя код http://bit.ly/2zf0SIO[из репозитория книги].
 
-Start Truffle in development mode and execute the JavaScript file in <<estimateGas_function>>, _gas_estimates.js_.
+Запустите Truffle в режиме разработки и запустите файл JavaScript <<estimateGas_function>> – _gas_estimates.js_.
 
 [source, javascript]
 [[estimateGas_function]]
-.gas_estimates.js: Using the estimateGas function
+.gas_estimates.js: Использование функции estimateGas
 ====
 [source,javascript]
 ----
@@ -1026,7 +1026,7 @@ FaucetContract.web3.eth.getGasPrice(function(error, result) {
 ----
 ====
 
-Here's how that looks in the Truffle development console:
+Вот как это выглядит в консоли разработки Truffle:
 
 ++++
 <pre data-type="programlisting">
@@ -1042,8 +1042,8 @@ gas cost estimation = 0.00062794 ether
 </pre>
 ++++
 
-It is recommended that you evaluate the gas cost of functions as part of your development workflow, to avoid any surprises when deploying contracts to the mainnet(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc27"))).(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc26")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc25")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc24")))
+Рекомендуется оценивать стоимость функций как часть рабочего процесса разработки, чтобы избежать каких-либо неожиданностей при развертывании контрактов в основной сети(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc27"))).(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc26")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc25")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc24")))
 
-=== Conclusions
+=== Заключение
 
-In this chapter we started working with smart contracts in detail and explored the Solidity contract programming language.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc4")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc3"))) We took a simple example contract, _Faucet.sol_, and gradually improved it and made it more complex, using it to explore various aspects of the Solidity language. In <<vyper_chap>> we will work with Vyper, another contract-oriented programming language. We will compare Vyper to Solidity, showing some of the differences in the design of these two languages and deepening our understanding of smart contract programming.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc0")))
+В этой главе мы начали подробно работать со смарт-контрактами и изучили язык программирования Solidity contract.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc4")))(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc3"))) Мы взяли простой пример контракта, _Faucet.sol_, и постепенно улучшали его и усложняли, используя для изучения различных аспектов языка Solidity. В <<vyper_chap>> мы будем работать с Vyper, другим контрактно-ориентированным языком программирования. Мы сравним Vyper с Solidity, показав некоторые различия в дизайне этих двух языков и углубив наше понимание программирования смарт-контрактов.(((range="endofrange", startref="ix_07smart-contracts-solidity-asciidoc0")))
